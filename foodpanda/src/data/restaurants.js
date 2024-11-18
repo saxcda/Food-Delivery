@@ -1,14 +1,19 @@
 export const restaurantData = [
     {
-      name: "小吉咖哩 (台北八德店)",
-      image: "/mnt/data/image.png",
-      rating: 4.7,
-      type: "台式",
-      details: "這是一家提供經典台式咖哩的餐廳，餐點豐富多樣，特別適合午餐和晚餐。",
-      promotions: ["滿 $100 享 95 折", "迎新禮：免外送服務費"],
-      location: "台北市八德路",
-      city: "台北市",
-    },
+        name: "小吉咖哩 (台北八德店)",
+        image: "/mnt/data/image.png",
+        rating: 4.7,
+        type: "台式",
+        details: "這是一家提供經典台式咖哩的餐廳，餐點豐富多樣，特別適合午餐和晚餐。",
+        promotions: ["滿 $100 享 95 折", "迎新禮：免外送服務費"],
+        location: "台北市八德路",
+        city: "台北市",
+        menu: [
+          { name: "經典咖哩飯", price: 162, originalPrice: 180, image: "/mnt/data/image.png" },
+          { name: "辣味咖哩飯", price: 171, originalPrice: 190, image: "/mnt/data/image.png" },
+          { name: "炸雞排咖哩飯", price: 181, originalPrice: 200, image: "/mnt/data/image.png" },
+        ],
+      },
     {
       name: "樂炒炒物專門店",
       image: "/mnt/data/image.png",
