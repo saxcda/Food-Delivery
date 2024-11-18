@@ -6,6 +6,7 @@ const cities = [
   { name: "新北市", image: "https://example.com/newtaipei.jpg" },
   { name: "台中市", image: "https://example.com/taichung.jpg" },
   { name: "高雄市", image: "https://example.com/kaohsiung.jpg" },
+  { name: "新竹市", image: "https://example.com/shinchu.jpg" },
 ];
 
 const CityGrid = ({ onCityClick }) => {

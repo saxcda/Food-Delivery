@@ -9,14 +9,9 @@ import {
   Button,
 } from "@mui/material";
 
-const RestaurantDetails = ({ restaurant, onBack }) => {
+const RestaurantDetails = ({ restaurant }) => {
   return (
     <Box>
-      <Button variant="contained" color="secondary" onClick={onBack} sx={{ mb: 3 }}>
-        返回餐廳列表
-      </Button>
-
-      {/* 餐廳基本資訊 */}
       <Card sx={{ mb: 4 }}>
         <Grid container spacing={2}>
           <Grid item xs={12} md={4}>
@@ -55,7 +50,6 @@ const RestaurantDetails = ({ restaurant, onBack }) => {
         </Grid>
       </Card>
 
-      {/* 可用菜單 */}
       <Typography variant="h5" gutterBottom>
         菜單
       </Typography>

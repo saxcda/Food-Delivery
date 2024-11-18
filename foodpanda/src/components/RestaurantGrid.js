@@ -1,29 +1,25 @@
 import React from "react";
-import { Grid, Button } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import RestaurantCard from "./RestaurantCard";
 
-const RestaurantGrid = ({ restaurants, onRestaurantClick, onBack }) => {
+const RestaurantGrid = ({ restaurants = [], onRestaurantClick }) => {
   return (
-    <>
-      <Button
-        variant="contained"
-        color="secondary"
-        onClick={onBack}
-        sx={{ mb: 2 }}
-      >
-        返回縣市選單
-      </Button>
-      <Grid container spacing={3} justifyContent="center">
-        {restaurants.map((restaurant, index) => (
+    <Grid container spacing={3} justifyContent="center">
+      {restaurants.length === 0 ? (
+        <Typography variant="h6" color="textSecondary">
+          沒有找到符合條件的餐廳。
+        </Typography>
+      ) : (
+        restaurants.map((restaurant, index) => (
           <Grid item key={index}>
             <RestaurantCard
               restaurant={restaurant}
               onClick={() => onRestaurantClick(restaurant)}
             />
           </Grid>
-        ))}
-      </Grid>
-    </>
+        ))
+      )}
+    </Grid>
   );
 };
 
