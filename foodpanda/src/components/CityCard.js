@@ -1,20 +1,17 @@
 import React from "react";
-import { Card, CardContent, CardMedia, Typography } from "@mui/material";
+import { Card, CardMedia, CardContent, Typography, CardActionArea } from "@mui/material";
 
-const CityCard = ({ city, image }) => {
+const CityCard = ({ city, image, onClick }) => {
   return (
-    <Card sx={{ maxWidth: 250, m: 2 }}>
-      <CardMedia
-        component="img"
-        height="140"
-        image={image}
-        alt={city}
-      />
-      <CardContent>
-        <Typography variant="h6" component="div" align="center">
-          {city}
-        </Typography>
-      </CardContent>
+    <Card sx={{ maxWidth: 300 }}>
+      <CardActionArea onClick={onClick}>
+        <CardMedia component="img" height="140" image={image} alt={city} />
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div">
+            {city}
+          </Typography>
+        </CardContent>
+      </CardActionArea>
     </Card>
   );
 };

@@ -10,12 +10,16 @@ const cities = [
   { name: "高雄市", image: "https://example.com/kaohsiung.jpg" },
 ];
 
-const CityGrid = () => {
+const CityGrid = ({ onCityClick }) => {
   return (
     <Grid container spacing={3} justifyContent="center">
       {cities.map((city, index) => (
         <Grid item key={index}>
-          <CityCard city={city.name} image={city.image} />
+          <CityCard
+            city={city.name}
+            image={city.image}
+            onClick={() => onCityClick(city.name)} // 傳回被點擊的城市名稱
+          />
         </Grid>
       ))}
     </Grid>
