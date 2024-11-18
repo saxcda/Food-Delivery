@@ -1,12 +1,10 @@
 import React from "react";
-import { Grid } from "@mui/material";
-import CityCard from "./CityCard";
+import { Grid, Card, CardActionArea, CardContent, Typography } from "@mui/material";
 
 const cities = [
   { name: "台北市", image: "https://example.com/taipei.jpg" },
   { name: "新北市", image: "https://example.com/newtaipei.jpg" },
   { name: "台中市", image: "https://example.com/taichung.jpg" },
-  { name: "台南市", image: "https://example.com/tainan.jpg" },
   { name: "高雄市", image: "https://example.com/kaohsiung.jpg" },
 ];
 
@@ -15,11 +13,20 @@ const CityGrid = ({ onCityClick }) => {
     <Grid container spacing={3} justifyContent="center">
       {cities.map((city, index) => (
         <Grid item key={index}>
-          <CityCard
-            city={city.name}
-            image={city.image}
-            onClick={() => onCityClick(city.name)} // 傳回被點擊的城市名稱
-          />
+          <Card sx={{ maxWidth: 300 }}>
+            <CardActionArea onClick={() => onCityClick(city.name)}>
+              <img
+                src={city.image}
+                alt={city.name}
+                style={{ width: "100%", height: "140px", objectFit: "cover" }}
+              />
+              <CardContent>
+                <Typography variant="h6" component="div">
+                  {city.name}
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
         </Grid>
       ))}
     </Grid>
