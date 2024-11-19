@@ -7,14 +7,23 @@ import {
   CardContent,
   Grid,
   Button,
-  Chip,
-  Divider,
   TextField,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Divider,
+  Chip,
 } from "@mui/material";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import './RestaurantDetails.css'; // 导入 CSS 样式
 
 const RestaurantDetails = ({ restaurant }) => {
   const categoryRefs = useRef([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [cart, setCart] = useState([]);
+  const [deliveryType, setDeliveryType] = useState("外帶");
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const scrollToCategory = (index) => {
     categoryRefs.current[index]?.scrollIntoView({ behavior: "smooth" });
@@ -24,6 +33,19 @@ const RestaurantDetails = ({ restaurant }) => {
     setSearchQuery(event.target.value.toLowerCase());
   };
 
+  const addToCart = (item) => {
+    setCart((prevCart) => [...prevCart, item]);
+  };
+
+  const removeFromCart = (indexToRemove) => {
+    setCart((prevCart) =>
+      prevCart.filter((_, index) => index !== indexToRemove)
+    );
+  };
+
+  const openDialog = () => setIsDialogOpen(true);
+  const closeDialog = () => setIsDialogOpen(false);
+
   if (!restaurant || !Array.isArray(restaurant.categories)) {
     return (
       <Typography variant="body1" color="error">
@@ -31,6 +53,8 @@ const RestaurantDetails = ({ restaurant }) => {
       </Typography>
     );
   }
+
+  const totalPrice = cart.reduce((total, item) => total + item.price, 0).toFixed(2);
 
   return (
     <Box>
@@ -72,7 +96,7 @@ const RestaurantDetails = ({ restaurant }) => {
         </Grid>
       </Card>
 
-      {/* 類別總覽 Bar (固定浮動 + 搜尋欄) */}
+      {/* 類別總覽 Bar */}
       <Box
         sx={{
           position: "sticky",
@@ -86,7 +110,6 @@ const RestaurantDetails = ({ restaurant }) => {
           borderBottom: "2px solid",
         }}
       >
-        {/* 搜尋欄 (固定長度) */}
         <TextField
           variant="outlined"
           placeholder="搜尋菜單..."
@@ -94,8 +117,6 @@ const RestaurantDetails = ({ restaurant }) => {
           onChange={handleSearchChange}
           sx={{ width: 300 }}
         />
-
-        {/* 類別按鈕 */}
         {restaurant.categories.map((category, index) => (
           <Button
             key={index}
@@ -108,57 +129,174 @@ const RestaurantDetails = ({ restaurant }) => {
         ))}
       </Box>
 
-      {/* 菜單 */}
-      <Typography variant="h5" gutterBottom>
-        菜單
-      </Typography>
-      {restaurant.categories.map((category, categoryIndex) => (
-        <Box
-          key={categoryIndex}
-          ref={(el) => (categoryRefs.current[categoryIndex] = el)}
-          sx={{ mb: 4 }}
-        >
-          <Typography variant="h6" gutterBottom>
-            {category.displayName}
+      {/* 菜單和購物車佈局 */}
+      <Grid container spacing={2}>
+        {/* 菜單 */}
+        <Grid item xs={12} md={8}>
+          <Typography variant="h5" gutterBottom>
+            菜單
           </Typography>
-          <Grid container spacing={2}>
-            {category.items
-              .filter((menuItem) =>
-                menuItem.name.toLowerCase().includes(searchQuery)
-              )
-              .map((menuItem, index) => (
-                <Grid item xs={12} sm={6} md={4} key={index}>
-                  <Card>
-                    <CardMedia
-                      component="img"
-                      alt={menuItem.name}
-                      image={menuItem.image}
-                      sx={{ height: 150 }}
-                    />
-                    <CardContent>
-                      <Typography variant="h6" gutterBottom>
-                        {menuItem.name}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        color="textSecondary"
-                        gutterBottom
-                      >
-                        ${menuItem.price}{" "}
-                        {menuItem.originalPrice && (
-                          <del>${menuItem.originalPrice}</del>
-                        )}
-                      </Typography>
-                      <Button variant="outlined" size="small">
-                        加入購物車
-                      </Button>
-                    </CardContent>
-                  </Card>
-                </Grid>
-              ))}
-          </Grid>
-        </Box>
-      ))}
+          {restaurant.categories.map((category, categoryIndex) => (
+            <Box
+              key={categoryIndex}
+              ref={(el) => (categoryRefs.current[categoryIndex] = el)}
+              sx={{ mb: 4 }}
+            >
+              <Typography variant="h6" gutterBottom>
+                {category.displayName}
+              </Typography>
+              <Grid container spacing={2}>
+                {category.items
+                  .filter((menuItem) =>
+                    menuItem.name.toLowerCase().includes(searchQuery)
+                  )
+                  .map((menuItem, index) => (
+                    <Grid item xs={12} sm={6} md={4} key={index}>
+                      <Card>
+                        <CardMedia
+                          component="img"
+                          alt={menuItem.name}
+                          image={menuItem.image}
+                          sx={{ height: 150 }}
+                        />
+                        <CardContent>
+                          <Typography variant="h6" gutterBottom>
+                            {menuItem.name}
+                          </Typography>
+                          <Typography
+                            variant="body2"
+                            color="textSecondary"
+                            gutterBottom
+                          >
+                            ${menuItem.price}{" "}
+                            {menuItem.originalPrice && (
+                              <del>${menuItem.originalPrice}</del>
+                            )}
+                          </Typography>
+                          <Button
+                            variant="outlined"
+                            size="small"
+                            onClick={() => addToCart(menuItem)}
+                          >
+                            加入購物車
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    </Grid>
+                  ))}
+              </Grid>
+            </Box>
+          ))}
+        </Grid>
+
+        {/* 右側購物車 */}
+        <Grid item xs={12} md={4}>
+          <Box sx={{
+                position: "sticky",
+                top: 80,
+                border: "2px solid",
+                borderRadius: 2,
+                p: 2,
+                height: "400px", // 设置固定高度
+                overflowY: "auto", // 如果内容超出，则可以滚动
+              }}>
+          <Typography variant="h6" gutterBottom>
+              購物車
+            </Typography>
+          <Box sx={{ mt: 2, display: "flex", justifyContent: "center", gap: 2 }}>
+            <Button
+              variant={deliveryType === "外帶" ? "contained" : "outlined"}
+              onClick={() => setDeliveryType("外帶")}
+            >
+              外帶
+            </Button>
+            <Button
+              variant={deliveryType === "外送自取" ? "contained" : "outlined"}
+              onClick={() => setDeliveryType("外送自取")}
+            >
+              外送自取
+            </Button>
+          </Box>
+
+            {cart.length === 0 ? (
+              <Box sx={{
+                display: 'flex',       // 使用 flexbox 布局
+                flexDirection: 'column', // 垂直排列
+                justifyContent: 'center', // 垂直居中
+                alignItems: 'center',    // 水平居中
+                height: '100%',         // 确保高度足够
+                textAlign: 'center',    // 文本水平居中
+              }}>
+                <ShoppingCartIcon sx={{ fontSize: 80, color: "gray" }} />
+                <Typography variant="body1" color="textSecondary">
+                  購物車目前是空的
+                </Typography>
+              </Box>
+            ) : (
+              <Box>
+                {cart.map((item, index) => (
+                  <Box
+                    key={index}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      mb: 2,
+                      borderBottom: "1px solid gray",
+                    }}
+                  >
+                    <Typography variant="body2">{item.name}</Typography>
+                    <Button
+                      size="small"
+                      variant="text"
+                      color="error"
+                      onClick={() => removeFromCart(index)}
+                    >
+                      移除
+                    </Button>
+                  </Box>
+                ))}
+                <Typography variant="h6" sx={{ mt: 2 }}>
+                  總計: ${totalPrice}
+                </Typography>
+                <Button variant="contained" color="primary" onClick={openDialog}>
+                  查看明細
+                </Button>
+                {/* 外送/自取按鈕 */}
+                
+              </Box>
+            )}
+          </Box>
+        </Grid>
+      </Grid>
+
+      {/* 明細對話框 */}
+      <Dialog open={isDialogOpen} onClose={closeDialog}>
+        <DialogTitle>購物車明細</DialogTitle>
+        <DialogContent>
+          {cart.map((item, index) => (
+            <Box
+              key={index}
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                mb: 2,
+              }}
+            >
+              <Typography variant="body2">{item.name}</Typography>
+              <Typography variant="body2">${item.price}</Typography>
+            </Box>
+          ))}
+          <Divider sx={{ my: 2 }} />
+          <Typography variant="h6">總計: ${totalPrice}</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeDialog} color="primary">
+            關閉
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };

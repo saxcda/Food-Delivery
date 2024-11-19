@@ -1,0 +1,14 @@
+.container {
+    display: flex;
+  }
+  
+  .menu {
+    flex: 3;
+  }
+  
+  .sidebar {
+    flex: 1;
+    position: sticky;
+    top: 0;
+  }
+  
