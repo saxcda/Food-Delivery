@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -16,7 +16,7 @@ import {
   Chip,
 } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import './RestaurantDetails.css'; // 导入 CSS 样式
+import "./RestaurantDetails.css";
 
 const RestaurantDetails = ({ restaurant }) => {
   const categoryRefs = useRef([]);
@@ -24,6 +24,7 @@ const RestaurantDetails = ({ restaurant }) => {
   const [cart, setCart] = useState([]);
   const [deliveryType, setDeliveryType] = useState("外帶");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [activeCategory, setActiveCategory] = useState(0); // 新增：追踪当前可见分类
 
   const scrollToCategory = (index) => {
     categoryRefs.current[index]?.scrollIntoView({ behavior: "smooth" });
@@ -46,10 +47,35 @@ const RestaurantDetails = ({ restaurant }) => {
   const openDialog = () => setIsDialogOpen(true);
   const closeDialog = () => setIsDialogOpen(false);
 
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 0.3, // 30% 可见性时触发
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const index = categoryRefs.current.indexOf(entry.target);
+          setActiveCategory(index);
+        }
+      });
+    }, observerOptions);
+
+    categoryRefs.current.forEach((ref) => {
+      if (ref) observer.observe(ref);
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
   if (!restaurant || !Array.isArray(restaurant.categories)) {
     return (
       <Typography variant="body1" color="error">
-        餐厅信息不完整，请检查数据。
+        餐廳訊息不完整
       </Typography>
     );
   }
@@ -120,8 +146,8 @@ const RestaurantDetails = ({ restaurant }) => {
         {restaurant.categories.map((category, index) => (
           <Button
             key={index}
-            variant="contained"
-            color="secondary"
+            variant={activeCategory === index ? "contained" : "outlined"}
+            color={activeCategory === index ? "secondary" : "default"}
             onClick={() => scrollToCategory(index)}
           >
             {category.displayName} ({category.items.length})
@@ -189,44 +215,55 @@ const RestaurantDetails = ({ restaurant }) => {
           ))}
         </Grid>
 
-        {/* 右側購物車 */}
+        {/* 購物車 */}
         <Grid item xs={12} md={4}>
-          <Box sx={{
-                position: "sticky",
-                top: 80,
-                border: "2px solid",
-                borderRadius: 2,
-                p: 2,
-                height: "400px", // 设置固定高度
-                overflowY: "auto", // 如果内容超出，则可以滚动
-              }}>
-          <Typography variant="h6" gutterBottom>
+          <Box
+            sx={{
+              position: "sticky",
+              top: 80,
+              border: "2px solid",
+              borderRadius: 2,
+              p: 2,
+              height: "400px",
+              overflowY: "auto",
+            }}
+          >
+            <Typography variant="h6" gutterBottom>
               購物車
             </Typography>
-          <Box sx={{ mt: 2, display: "flex", justifyContent: "center", gap: 2 }}>
-            <Button
-              variant={deliveryType === "外帶" ? "contained" : "outlined"}
-              onClick={() => setDeliveryType("外帶")}
+            <Box
+              sx={{
+                mt: 2,
+                display: "flex",
+                justifyContent: "center",
+                gap: 2,
+              }}
             >
-              外帶
-            </Button>
-            <Button
-              variant={deliveryType === "外送自取" ? "contained" : "outlined"}
-              onClick={() => setDeliveryType("外送自取")}
-            >
-              外送自取
-            </Button>
-          </Box>
+              <Button
+                variant={deliveryType === "外帶" ? "contained" : "outlined"}
+                onClick={() => setDeliveryType("外帶")}
+              >
+                外帶
+              </Button>
+              <Button
+                variant={deliveryType === "外送自取" ? "contained" : "outlined"}
+                onClick={() => setDeliveryType("外送自取")}
+              >
+                外送自取
+              </Button>
+            </Box>
 
             {cart.length === 0 ? (
-              <Box sx={{
-                display: 'flex',       // 使用 flexbox 布局
-                flexDirection: 'column', // 垂直排列
-                justifyContent: 'center', // 垂直居中
-                alignItems: 'center',    // 水平居中
-                height: '100%',         // 确保高度足够
-                textAlign: 'center',    // 文本水平居中
-              }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "100%",
+                  textAlign: "center",
+                }}
+              >
                 <ShoppingCartIcon sx={{ fontSize: 80, color: "gray" }} />
                 <Typography variant="body1" color="textSecondary">
                   購物車目前是空的
@@ -262,8 +299,6 @@ const RestaurantDetails = ({ restaurant }) => {
                 <Button variant="contained" color="primary" onClick={openDialog}>
                   查看明細
                 </Button>
-                {/* 外送/自取按鈕 */}
-                
               </Box>
             )}
           </Box>
@@ -275,25 +310,18 @@ const RestaurantDetails = ({ restaurant }) => {
         <DialogTitle>購物車明細</DialogTitle>
         <DialogContent>
           {cart.map((item, index) => (
-            <Box
-              key={index}
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                mb: 2,
-              }}
-            >
-              <Typography variant="body2">{item.name}</Typography>
-              <Typography variant="body2">${item.price}</Typography>
-            </Box>
+            <Typography key={index} variant="body1">
+              {item.name} - ${item.price}
+            </Typography>
           ))}
-          <Divider sx={{ my: 2 }} />
-          <Typography variant="h6">總計: ${totalPrice}</Typography>
+          <Typography variant="h6" sx={{ mt: 2 }}>
+            總計: ${totalPrice}
+          </Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={closeDialog} color="primary">
-            關閉
+          <Button onClick={closeDialog}>關閉</Button>
+          <Button variant="contained" color="primary">
+            確認下單
           </Button>
         </DialogActions>
       </Dialog>
