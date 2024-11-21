@@ -126,7 +126,22 @@ const RestaurantDetails = ({ restaurant }) => {
           >
             更多資訊
           </Button>
+          
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            onClick={() => alert("已收藏該餐廳！")} // 收藏按鈕功能，替換為你的收藏邏輯
+            sx={{
+              ml: "auto", // 靠右對齊
+            }}
+          >
+            收藏
+          </Button>
+
         </Box>
+
+        
 
         {/* 餐廳詳細描述 */}
         <Typography variant="body2" color="text.secondary" gutterBottom>
