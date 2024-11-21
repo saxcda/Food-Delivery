@@ -6,19 +6,24 @@ import {
   CardMedia,
   CardContent,
   Grid,
-  Button,
   TextField,
+  Divider,
+  Chip,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
-  Divider,
-  Chip,
+  DialogContentText,
+  Button,
 } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import "./RestaurantDetails.css";
 
+
 const RestaurantDetails = ({ restaurant }) => {
+  const [showReviews, setShowReviews] = useState(false);
+  const [showMoreInfo, setShowMoreInfo] = useState(false);
+
   const categoryRefs = useRef([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [cart, setCart] = useState([]);
@@ -85,42 +90,99 @@ const RestaurantDetails = ({ restaurant }) => {
   return (
     <Box>
       {/* 店家資訊 */}
-      <Card sx={{ mb: 4, mt: 2 }}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={4}>
-            <CardMedia
-              component="img"
-              alt={restaurant.name}
-              image={restaurant.image}
-              sx={{ height: "100%", objectFit: "cover" }}
-            />
-          </Grid>
-          <Grid item xs={12} md={8}>
-            <CardContent>
-              <Typography variant="h4" gutterBottom>
-                {restaurant.name}
-              </Typography>
-              <Typography variant="body1" color="textSecondary" gutterBottom>
-                {restaurant.type} | {restaurant.rating} ⭐
-              </Typography>
-              <Typography variant="body1" gutterBottom>
-                地址：{restaurant.location}
-              </Typography>
-              <Divider sx={{ my: 2 }} />
-              <Typography variant="h6" gutterBottom>
-                可使用的優惠
-              </Typography>
-              <Grid container spacing={2}>
-                {restaurant.promotions.map((promo, index) => (
-                  <Grid item key={index}>
-                    <Chip label={promo} color="primary" />
-                  </Grid>
-                ))}
-              </Grid>
-            </CardContent>
-          </Grid>
-        </Grid>
-      </Card>
+      {/* 餐廳資訊 */}
+      <Card sx={{ mb: 4 }}>
+      <CardContent>
+        {/* 餐廳類型 */}
+        <Typography variant="subtitle1" color="text.secondary" gutterBottom>
+          {restaurant.type}
+        </Typography>
+
+        {/* 餐廳名稱 */}
+        <Typography variant="h5" gutterBottom>
+          {restaurant.name}
+        </Typography>
+
+        {/* 餐廳評分與操作按鈕 */}
+        <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 1 }}>
+          <Typography variant="body2" sx={{ display: "flex", alignItems: "center", color: "text.secondary" }}>
+            ⭐ {restaurant.rating} / 5
+          </Typography>
+
+          {/* 查看評論按鈕 */}
+          <Button
+            variant="outlined"
+            size="small"
+            onClick={() => setShowReviews(true)} // 彈出評論視窗
+          >
+            查看評論
+          </Button>
+
+          {/* 更多資訊按鈕 */}
+          <Button
+            variant="outlined"
+            size="small"
+            onClick={() => setShowMoreInfo(true)} // 彈出更多資訊視窗
+          >
+            更多資訊
+          </Button>
+        </Box>
+
+        {/* 餐廳詳細描述 */}
+        <Typography variant="body2" color="text.secondary" gutterBottom>
+          {restaurant.details}
+        </Typography>
+
+        {/* 餐廳地址 */}
+        <Typography variant="body2" color="text.secondary">
+          地址：{restaurant.location}
+        </Typography>
+
+        {/* 可用優惠 */}
+        <Box sx={{ mt: 2 }}>
+          <Typography variant="body1" gutterBottom>
+            可使用的優惠：
+          </Typography>
+          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
+            {restaurant.promotions.map((promotion, index) => (
+              <Chip key={index} label={promotion} sx={{ backgroundColor: "#f5f5f5", fontWeight: "bold" }} />
+            ))}
+          </Box>
+        </Box>
+
+        {/* 彈跳視窗：評論 */}
+        {showReviews && (
+          <Dialog open={showReviews} onClose={() => setShowReviews(false)}>
+            <DialogTitle>評論</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                這裡顯示餐廳的評論內容...
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={() => setShowReviews(false)}>關閉</Button>
+            </DialogActions>
+          </Dialog>
+        )}
+
+        {/* 彈跳視窗：更多資訊 */}
+        {showMoreInfo && (
+          <Dialog open={showMoreInfo} onClose={() => setShowMoreInfo(false)}>
+            <DialogTitle>更多資訊</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                這裡顯示餐廳的詳細資訊，例如營業時間、聯絡方式等。
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={() => setShowMoreInfo(false)}>關閉</Button>
+            </DialogActions>
+          </Dialog>
+        )}
+      </CardContent>
+    </Card>
+
+
 
       {/* 類別總覽 Bar */}
       <Box
