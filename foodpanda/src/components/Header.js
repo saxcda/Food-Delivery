@@ -19,7 +19,11 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import LanguageIcon from "@mui/icons-material/Language";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+
+//add img
+import foodpanda_logo from "./Pictures/foodpanda_logo.jpg";
 
 const GOOGLE_MAPS_API_KEY = "";
 
@@ -68,20 +72,35 @@ const Header = () => {
 
   return (
     <AppBar
-      position="static"
+      position="sticky"
       color="inherit"
-      sx={{ boxShadow: "none", borderBottom: "1px solid #e0e0e0" }}
+      //adding shadow to the bar
+      sx={{ boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", 
+            borderBottom: "1px solid #e0e0e0",
+            padding: "0 60px", // Padding on left and right
+      }}
     >
+
       <Toolbar>
+        {/*}
         <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
           <MenuIcon />
         </IconButton>
-        <Typography variant="h6" sx={{ flexGrow: 1 }}>
-          foodpanda
-        </Typography>
+        */}
+        <Box
+          component="img"
+          src={foodpanda_logo}
+          alt="Foodpanda Logo"
+          sx={{ height: 30}} // Optional styling
+        />
+
+        <Box sx={{ flexGrow: 1 }} />
+         
+         {/*
         <IconButton color="inherit" onClick={handleLocationOpen}>
           <LocationOnIcon />
         </IconButton>
+        
         <Popover
           open={Boolean(locationAnchorEl)}
           anchorEl={locationAnchorEl}
@@ -119,11 +138,82 @@ const Header = () => {
             </List>
           </Box>
         </Popover>
-        <Button color="inherit">登入</Button>
-        <Button variant="contained" color="secondary" sx={{ ml: 1 }}>
+        */}
+
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center", // Center horizontally
+              alignItems: "center",    // Center vertically
+              width: "75px",         // Example container height
+              position: "relative",    // Optional for further positioning
+              margin: "0 5px", //add space right left (outside)
+            }}
+          >
+        <Button variant="contained" color="inherit" 
+          sx={{
+            
+            backgroundColor: "transparent",
+            //color: "#ffffff", // White text
+            boxShadow:"none",
+            ml: 1,
+            border: "1px solid #4a4a4a", // Optional: matching border,
+            //margin: "0 15px", //add space right left (outside)
+            borderRadius: "8px",        // Rounded corners (increase for more roundness)
+            height: "33px",              // Set height (adjust as needed)
+            transition: "all 0.4s ease", // Smooth transition for hover effects
+            fontWeight: 'bold',
+            
+            "&:hover": {
+              boxShadow:"none",
+              backgroundColor: "#F5F5F5", // Darker on hover
+              border: "1px solid #4a4a4a", // Optional: matching border,
+              borderRadius: "8px",        // Rounded corners (increase for more roundness)
+              height: "38px",              // Set height (adjust as needed)
+              width:"70px",
+            },
+          }}>登入</Button>
+          
+        </Box>
+
+        <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center", // Center horizontally
+              alignItems: "center",    // Center vertically
+              width: "75px",         // Example container height
+              position: "relative",    // Optional for further positioning
+              margin: "0 5px", //add space right left (outside)
+            }}
+        >
+        <Button
+          variant="contained"
+          //sx override the css, able to custom the css here
+          sx={{
+            backgroundColor: "#D70F64", // Food panda color pink
+            color: "#ffffff", // White text
+            boxShadow:"none",
+            ml: 1,
+            //margin: "0 15px", //add space right left (outside)
+            borderRadius: "8px",        // Rounded corners (increase for more roundness)
+            height: "33px",              // Set height (adjust as needed)
+            transition: "all 0.3s ease", // Smooth transition for hover effects
+            fontWeight: 'bold',
+            "&:hover": {
+              boxShadow:"none",
+              backgroundColor: "#b10c52", // Darker pink on hover
+              borderRadius: "8px",        // Rounded corners (increase for more roundness)
+              height: "38px",              // Set height (adjust as needed)
+              width:"70px",
+            },
+          }}
+        >
           註冊
         </Button>
-        <IconButton color="inherit" onClick={handleMenuOpen}>
+
+        </Box>
+
+        <IconButton color="inherit" onClick={handleMenuOpen} >
           <LanguageIcon />
         </IconButton>
         <Menu
@@ -134,10 +224,12 @@ const Header = () => {
           <MenuItem onClick={handleMenuClose}>繁體中文</MenuItem>
           <MenuItem onClick={handleMenuClose}>English</MenuItem>
         </Menu>
-        <IconButton color="inherit" sx={{ ml: 1 }}>
-          <ShoppingCartIcon />
+        <IconButton color="inherit" 
+        sx={{ 
+         }}>
+          <ShoppingBagIcon />
         </IconButton>
-        <Avatar sx={{ ml: 1 }}>F</Avatar>
+        {/*<Avatar sx={{ ml: 1 }}>F</Avatar>*/}
       </Toolbar>
     </AppBar>
   );

@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/hans/Documents/軟體工程/Food-Delivery/foodpanda/src/components",
+      "program": "/Users/hans/Documents/軟體工程/Food-Delivery/foodpanda/src/components/build/Debug/outDebug"
+    }
+  ]
+}
