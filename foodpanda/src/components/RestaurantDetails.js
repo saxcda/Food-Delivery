@@ -20,6 +20,8 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import "./RestaurantDetails.css";
 import { useNavigate, useParams } from "react-router-dom";
 import restaurantData from "../data/restaurantData"; // Assuming you have this data available
+import { PiHeart } from "react-icons/pi";
+import panda_cart from "./Pictures/panda_cart.jpg";
 
 
 
@@ -168,16 +170,30 @@ const RestaurantDetails = () => {
             </Button>
             
             <Button
-              variant="contained"
-              color="primary"
-              size="small"
-              onClick={() => alert("已收藏該餐廳！")} // 收藏按鈕功能，替換為你的收藏邏輯
-              sx={{
-                ml: "auto", // 靠右對齊
-              }}
-            >
-              收藏
-            </Button>
+                variant="contained"
+                color="primary"
+                size="large"
+                onClick={() => alert("已收藏該餐廳！")} // 收藏按鈕功能，替換為你的收藏邏輯
+                sx={{
+                  ml: "auto", // 靠右對齊
+                  backgroundColor: "transparent",
+                  boxShadow: "none",
+                  border: "1px solid black",
+                  color: "black",
+                  padding: "10px 20px", // Adjust padding for box size
+                  fontSize: "1.1rem", // Increase text size
+                  borderRadius: "12px", // Optional: Rounded corners
+                  "& .icon": {
+                    fontSize: "1.6rem", // Adjust icon size
+                  },
+                  "&:hover":{
+                    backgroundColor:"#f5f5f5", 
+                  } 
+                }}
+              >
+                <PiHeart className="icon" style={{ marginRight: "8px" }} />
+                加入收藏
+              </Button>
 
           </Box>
 
@@ -193,7 +209,7 @@ const RestaurantDetails = () => {
             地址：{restaurant.location}
           </Typography>
 
-          {/* 可用優惠 */}
+          {/* 可用優惠 
           <Box sx={{ mt: 2 }}>
             <Typography variant="body1" gutterBottom>
               可使用的優惠：
@@ -204,6 +220,7 @@ const RestaurantDetails = () => {
               ))}
             </Box>
           </Box>
+          */}
 
           {/* 彈跳視窗：評論 */}
           {showReviews && (
@@ -238,20 +255,55 @@ const RestaurantDetails = () => {
       </Card>
       </Box>
 
+      <Box
+        component="hr"
+        sx={{
+          border: "none", // Remove default border
+          height: "2px", // Thickness of the line
+          backgroundColor: "#f5f5f5", // Line color
+          width: "100%", // Full width or customize as needed
+          
+        }}
+      />
 
+
+      {/* 可用優惠 */}
+      <Box sx={{ mt: 2 , padding:"20px 5% 0 5%",}}>
+            <Typography variant="h5" gutterBottom fontWeight={"bold"}>
+              可使用的優惠：
+            </Typography>
+            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, }}>
+              {restaurant.promotions.map((promotion, index) => (
+                <Chip key={index} label={promotion} 
+                sx={{ 
+                  backgroundColor:"#FBF2F7", 
+                  fontWeight: "bold" , 
+                  height:"100px", 
+                  width:"250px",
+                  color:"#D70F64",
+                  fontSize:"1.1rem",
+                  "&:hover":{
+                    backgroundColor:"#F5DAE6", 
+                  } 
+                }} />
+              ))}
+            </Box>
+      </Box>
 
       {/* 類別總覽 Bar */}
       <Box
         sx={{
           position: "sticky",
-          top: 0,
+          marginTop:"20px",
+          top: "65px",
           zIndex: 1000,
           display: "flex",
           gap: 2,
           alignItems: "center",
           p: 2,
-          backgroundColor: "primary.light",
-          borderBottom: "2px solid",
+          backgroundColor: "#ffffff",
+          padding:"10px 0 10px 5%",
+          boxShadow:"0px 4px 6px rgba(0, 0, 0, 0.1)",
         }}
       >
         <TextField
@@ -259,7 +311,13 @@ const RestaurantDetails = () => {
           placeholder="搜尋菜單..."
           value={searchQuery}
           onChange={handleSearchChange}
-          sx={{ width: 300 }}
+          sx={{ 
+            width: 300 ,
+            "& .MuiOutlinedInput-root": {
+            height: "40px", // Match the button height
+            borderRadius:"30px",
+              },
+            }}
         />
         {restaurant.categories.map((category, index) => (
           <Button
@@ -267,6 +325,26 @@ const RestaurantDetails = () => {
             variant={activeCategory === index ? "contained" : "outlined"}
             color={activeCategory === index ? "secondary" : "default"}
             onClick={() => scrollToCategory(index)}
+            sx={{
+              border:"none",
+              backgroundColor: activeCategory === index ? "#ffffff" : "transparent",
+              color: activeCategory === index ? "black" : "none",
+              boxShadow: activeCategory === index ? "none" : "none",
+              position: "relative", // Required for positioning the underline
+                "&::after": {
+                  content: '""', // Empty content to create the underline
+                  position: "absolute",
+                  left: 0,
+                  bottom: -2, // Position slightly below the button
+                  width: "100%",
+                  height: "2px", // Thickness of the underline
+                  backgroundColor: activeCategory === index ? "black" : "transparent", // Active color
+                  transition: "background-color 0.3s ease", // Smooth transition for the underline
+                },
+              "&:hover":{
+                backgroundColor: activeCategory === index ? "#transparent" : "#f5f5f5",
+              }
+            }}
           >
             {category.displayName} ({category.items.length})
           </Button>
@@ -274,7 +352,7 @@ const RestaurantDetails = () => {
       </Box>
 
       {/* 菜單和購物車佈局 */}
-      <Grid container spacing={2}>
+      <Grid container spacing={2} sx={{padding:"30px 5% 0 5%"}}>
         {/* 菜單 */}
         <Grid item xs={12} md={8}>
           <Typography variant="h5" gutterBottom>
@@ -334,41 +412,73 @@ const RestaurantDetails = () => {
         </Grid>
 
         {/* 購物車 */}
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={4}  >
           <Box
             sx={{
               position: "sticky",
-              top: 80,
-              border: "2px solid",
-              borderRadius: 2,
-              p: 2,
-              height: "400px",
-              overflowY: "auto",
+              top: 165,
+              border: "1px solid",
+              borderColor:"#C4C4C4",
+              borderRadius: "20px",
+              padding:"8px 20px 8px 20px",
+              width:"350px",
+              height: "650px",
+              overflowY: "visible",
+              marginTop:"30px",
+              marginLeft:"50px",
+
             }}
           >
-            <Typography variant="h6" gutterBottom>
-              購物車
-            </Typography>
+        
             <Box
               sx={{
                 mt: 2,
                 display: "flex",
                 justifyContent: "center",
-                gap: 2,
+                backgroundColor:"#f5f5f5",
+                borderRadius:"10px",
+                height:"55px",
+                padding:"5px",
               }}
             >
               <Button
-                variant={deliveryType === "外帶" ? "contained" : "outlined"}
+                variant="contained"
                 onClick={() => setDeliveryType("外帶")}
+                sx={{
+                  width: "50%",
+                  backgroundColor: deliveryType === "外帶" ? "#f5f5f5" : "#ffffff",
+                  color: "black",
+                  border: deliveryType === "外帶" ? "1px solid grey" : "1px solid transparent",
+                  boxShadow: "none",
+                  "&:hover": {
+                    backgroundColor: "#f5f5f5",
+                    boxShadow: "none",
+                    border: "1px solid grey",
+                  },
+                }}
               >
                 外帶
               </Button>
+
               <Button
-                variant={deliveryType === "外送自取" ? "contained" : "outlined"}
+                variant="contained"
                 onClick={() => setDeliveryType("外送自取")}
+                sx={{
+                  width: "50%",
+                  backgroundColor: deliveryType === "外送自取" ? "#f5f5f5" : "#ffffff",
+                  color: "black",
+                  border: deliveryType === "外送自取" ? "1px solid grey" : "1px solid transparent",
+                  boxShadow: "none",
+                  "&:hover": {
+                    backgroundColor: "#f5f5f5",
+                    boxShadow: "none",
+                    border: "1px solid grey",
+                  },
+                }}
               >
                 外送自取
               </Button>
+
             </Box>
 
             {cart.length === 0 ? (
@@ -382,7 +492,11 @@ const RestaurantDetails = () => {
                   textAlign: "center",
                 }}
               >
-                <ShoppingCartIcon sx={{ fontSize: 80, color: "gray" }} />
+                <img 
+                  src={panda_cart} 
+                  alt="Panda Cart Icon" 
+                  style={{ width: "100px", height: "100px", marginTop:"-100px"}} // Adjust size as needed
+                /> {/* icon */}
                 <Typography variant="body1" color="textSecondary">
                   購物車目前是空的
                 </Typography>

@@ -27,6 +27,8 @@ import { PiGpsFixBold } from "react-icons/pi";
 //add img
 import foodpanda_logo from "./Pictures/foodpanda_logo.jpg";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { useNavigate } from "react-router-dom";
+
 
 const GOOGLE_MAPS_API_KEY = "";
 
@@ -35,6 +37,7 @@ const HeaderLocation = () => {
   const [locationAnchorEl, setLocationAnchorEl] = React.useState(null);
   const [location, setLocation] = React.useState("");
   const [loadingLocation, setLoadingLocation] = React.useState(false);
+  const navigate = useNavigate(); // Initialize navigate
 
   const handleMenuOpen = (event) => setMenuAnchorEl(event.currentTarget);
   const handleMenuClose = () => setMenuAnchorEl(null);
@@ -95,6 +98,7 @@ const HeaderLocation = () => {
           src={foodpanda_logo}
           alt="Foodpanda Logo"
           sx={{ height: 30}} // Optional styling
+          onClick={() => navigate("/")}
         />
 
         <Box sx={{ flexGrow: 1 }} />
