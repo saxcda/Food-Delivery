@@ -9,13 +9,17 @@ import {
 
 const RestaurantCard = ({ restaurant, onClick }) => {
   return (
-    <Card sx={{ maxWidth: 300 }}>
-      <CardActionArea onClick={onClick}>
+    <Card sx={{ 
+        maxWidth: 400, 
+        borderRadius:"20px",
+        
+      }}>
+      <CardActionArea onClick={() => onClick(restaurant.id)}>
         <CardMedia
           component="img"
-          height="140"
+          height="200"
           image={restaurant.image}
-          alt={restaurant.name}
+          //alt={restaurant.name}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
