@@ -5,28 +5,29 @@ import NavigationBreadcrumbs from "./NavigationBreadcrumbs";
 import Header from "./Header";
 import Footer from "./Footer";
 import { restaurantData } from "../data/restaurants"; // Assuming you have this data available
+import HeaderLocation from "./HeaderLocation";
 
 const RestaurantDetailsPage = () => {
   const { city, restaurantName } = useParams(); // Retrieve city and restaurantName from the URL
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
-// Find the restaurant by name and city
-const restaurant = restaurantData.find(
-  (r) => r.name === decodeURIComponent(restaurantName) && r.city === city
-);
+  // Find the restaurant by name and city
+  const restaurant = restaurantData.find(
+    (r) => r.name === decodeURIComponent(restaurantName) && r.city === city
+  );
 
-if (!restaurant) {
-  navigate(`/restaurants/${city}`); // Navigate back to the restaurant list if not found
-  return null;
-}
+  if (!restaurant) {
+    navigate(`/restaurants/${city}`); // Navigate back to the restaurant list if not found
+    return null;
+  }
 
-const handleBack = () => {
-  navigate(`/restaurants/${city}`); // Navigate back to the restaurant list page
-};
+  const handleBack = () => {
+    navigate(`/restaurants/${city}`); // Navigate back to the restaurant list page
+  };
 
   return (
     <div>
-      <Header />
+      <HeaderLocation />
       <NavigationBreadcrumbs
       selectedCity={restaurant.city}
       selectedRestaurant={restaurant}

@@ -8,7 +8,11 @@ const NavigationBreadcrumbs = ({
   onBackToRestaurants,
 }) => {
   return (
-    <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 2 }}>
+    <Breadcrumbs aria-label="breadcrumb" sx={{ 
+                                              marginLeft:"50px",
+                                              marginTop:"30px",
+                                              mb: 2 
+                                              }}>
       <Link
         underline="hover"
         color="inherit"

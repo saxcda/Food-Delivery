@@ -18,8 +18,6 @@ import Home from "./components/Home";
 import { useEffect } from "react";
 
 const App = () => {
-
-
   return (
     <Router>
       <Routes>

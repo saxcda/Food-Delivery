@@ -9,6 +9,7 @@ import Know_more from "./Know_more";
 import Note_foodpanda from "./Note_foodpanda";
 import { useRef , useEffect } from "react";
 
+
 const Home = () => {
   const [location, setLocation] = React.useState("");
   const [loadingLocation, setLoadingLocation] = React.useState(false);

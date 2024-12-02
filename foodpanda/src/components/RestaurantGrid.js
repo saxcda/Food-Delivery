@@ -15,14 +15,22 @@ const RestaurantGrid = () => {
   };
 
   return (
-    <Grid container spacing={3} justifyContent="center" minHeight={"500px"}>
+    <Grid 
+      container spacing={1} 
+      justifyContent="flex-start" 
+      minHeight={"450px"}
+      padding={"0 8% 0 8%"}
+      >
       {restaurants.length === 0 ? (
         <Typography variant="h6" color="textSecondary">
           沒有找到符合條件的餐廳。
         </Typography>
       ) : (
         restaurants.map((restaurant, index) => (
-          <Grid item key={index}>
+          <Grid 
+            item key={index} 
+            md={4}
+            >
             <RestaurantCard
               restaurant={restaurant}
               onClick={() => handleRestaurantClick(restaurant.name)} 
