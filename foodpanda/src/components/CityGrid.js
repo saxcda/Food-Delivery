@@ -1,5 +1,6 @@
 import React from "react";
 import { Grid, Card, CardActionArea, CardContent, Typography, Box } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 // Import images directly
 import taipei from "./Citypic/taipei.jpeg";
@@ -45,7 +46,13 @@ const cities = [
   { name: "雲林縣", image: yunlin },
 ];
 
-const CityGrid = ({ onCityClick }) => {
+const CityGrid = () => {
+  const navigate = useNavigate();
+
+  const handleCityClick = (cityName) => {
+    navigate(`/restaurants/${cityName}`);
+  };
+
   return (
     <Grid 
     container spacing={3} 
@@ -73,7 +80,7 @@ const CityGrid = ({ onCityClick }) => {
             display:"flex",
             backgroundColor: "transparent",
             }}>
-            <CardActionArea onClick={() => onCityClick(city.name)}>
+            <CardActionArea onClick={() => handleCityClick(city.name)}>
               <img
                 src={city.image}
                 //alt={city.name}

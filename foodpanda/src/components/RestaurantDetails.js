@@ -18,9 +18,17 @@ import {
 } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import "./RestaurantDetails.css";
+import { useNavigate, useParams } from "react-router-dom";
+import { restaurantData } from "../data/restaurants"; // Assuming you have this data available
 
 
-const RestaurantDetails = ({ restaurant }) => {
+
+const RestaurantDetails = () => {
+  const { restaurantName } = useParams();
+  const [restaurant, setRestaurant] = useState(null); // Replace prop with state  
+  const navigate = useNavigate();
+
+
   const [showReviews, setShowReviews] = useState(false);
   const [showMoreInfo, setShowMoreInfo] = useState(false);
 
@@ -51,6 +59,19 @@ const RestaurantDetails = ({ restaurant }) => {
 
   const openDialog = () => setIsDialogOpen(true);
   const closeDialog = () => setIsDialogOpen(false);
+
+  // Fetch restaurant data based on the restaurantId
+  useEffect(() => {
+    const selectedRestaurant = restaurantData.find(
+      (r) => r.name === decodeURIComponent(restaurantName)
+    );    
+    if (selectedRestaurant) {
+      setRestaurant(selectedRestaurant);
+    } else {
+      navigate("/"); // Redirect if restaurant not found
+    }
+  }, [restaurantName, navigate]);
+  
 
   useEffect(() => {
     const observerOptions = {

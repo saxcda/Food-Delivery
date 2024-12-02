@@ -10,7 +10,7 @@ import {
 const RestaurantCard = ({ restaurant, onClick }) => {
   return (
     <Card sx={{ maxWidth: 300 }}>
-      <CardActionArea onClick={onClick}>
+      <CardActionArea onClick={() => onClick(restaurant.id)}>
         <CardMedia
           component="img"
           height="140"
