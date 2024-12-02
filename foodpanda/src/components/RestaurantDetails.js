@@ -19,7 +19,7 @@ import {
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import "./RestaurantDetails.css";
 import { useNavigate, useParams } from "react-router-dom";
-import { restaurantData } from "../data/restaurants"; // Assuming you have this data available
+import restaurantData from "../data/restaurantData"; // Assuming you have this data available
 
 
 

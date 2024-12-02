@@ -4,7 +4,7 @@ import RestaurantDetails from "./RestaurantDetails";  // Restaurant details comp
 import NavigationBreadcrumbs from "./NavigationBreadcrumbs";
 import Header from "./Header";
 import Footer from "./Footer";
-import { restaurantData } from "../data/restaurants"; // Assuming you have this data available
+import restaurantData from "../data/restaurantData"; // Assuming you have this data available
 import HeaderLocation from "./HeaderLocation";
 
 const RestaurantDetailsPage = () => {

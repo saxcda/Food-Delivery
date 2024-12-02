@@ -5,7 +5,7 @@ import RestaurantGrid from "./RestaurantGrid";
 import Footer from "./Footer";
 import Header from "./Header";
 import { useParams } from "react-router-dom";
-import { restaurantData } from "../data/restaurants";
+import restaurantData from "../data/restaurantData";
 import panda_burger from "./Pictures/panda_burger.jpg";
 import { Box, Typography} from "@mui/material";
 import HeaderLocation from "./HeaderLocation";

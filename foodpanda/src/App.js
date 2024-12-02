@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { restaurantData } from "./data/restaurants";
+import restaurantData from "./data/restaurantData";
 import CityGrid from "./components/CityGrid";
 import RestaurantGrid from "./components/RestaurantGrid";
 import NavigationBreadcrumbs from "./components/NavigationBreadcrumbs";
@@ -12,9 +12,9 @@ import Know_more from "./components/Know_more";
 import Download from "./components/Download";
 import Note_foodpanda from "./components/Note_foodpanda"
 import FoodDeliveryPage from "./Pages/FoodDeliveryPage";
-import Note_foodpanda from "./components/Note_foodpanda";
 import RestaurantPage from "./components/RestaurantPage";
 import RestaurantDetailsPage from "./components/RestaurantDetailsPage";
+import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import Home from "./components/Home";
 import { useEffect } from "react";
 
