@@ -1,0 +1,153 @@
+/* 整體佈局 */
+.food-delivery-page {
+    display: flex;
+    margin: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+/* 側邊欄整體樣式 */
+.sidebar {
+    flex: 1;
+    max-width: 300px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-right: 1px solid #ddd;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* 側邊欄標題樣式 */
+  .sidebar h3 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ff5722;
+    padding-bottom: 5px;
+  }
+  
+  /* 篩選分組標題樣式 */
+  .sidebar h4 {
+    font-size: 1.4rem;
+    color: #555;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+  }
+  
+  /* 篩選分組區域 */
+  .sidebar .filter-group {
+    margin-bottom: 20px;
+  }
+  
+  .sidebar .filter-group label {
+    display: block;
+    margin: 10px 0;
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  .sidebar .filter-group input[type="checkbox"],
+  .sidebar .filter-group select {
+    margin-right: 10px;
+  }
+  
+  /* 搜尋區域樣式 */
+  .sidebar .search-section {
+    margin-top: 10px;
+  }
+  
+  .sidebar .search-section input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+  
+  .sidebar .search-section button {
+    margin-top: 10px;
+    width: 100%;
+    padding: 10px;
+    background-color: #ff5722;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .sidebar .search-section button:hover {
+    background-color: #e64a19;
+  }
+  
+  /* 價格篩選樣式 */
+  .sidebar .filter-group input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+  
+  /* 分隔線樣式 */
+  .sidebar .divider {
+    height: 1px;
+    background-color: #ddd;
+    margin: 20px 0;
+  }
+  
+  
+  /* 餐廳列表容器 */
+  .restaurantData-list {
+    flex: 3;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  /* 單個餐廳卡片 */
+  .restaurantData-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.2s;
+  }
+  
+  .restaurantData-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .restaurantData-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .restaurantData-card h2 {
+    font-size: 1.2rem;
+    margin: 10px 0;
+  }
+  
+  .restaurantData-card p {
+    color: #555;
+    margin: 5px 0;
+    font-size: 0.9rem;
+  }
+  
+  .restaurantData-card span {
+    display: block;
+    margin: 10px 0;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #ff5722;
+  }
+  

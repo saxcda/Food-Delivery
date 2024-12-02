@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { restaurantData } from "./data/restaurants";
+import restaurantData from "./data/restaurantData";
 import CityGrid from "./components/CityGrid";
 import RestaurantGrid from "./components/RestaurantGrid";
 import NavigationBreadcrumbs from "./components/NavigationBreadcrumbs";
@@ -10,7 +10,8 @@ import Location from "./components/Location"
 import Join_foodpanda from "./components/Join_foodpanda"
 import Know_more from "./components/Know_more";
 import Download from "./components/Download";
-import Note_foodpanda from "./components/Note_foodpanda";
+import Note_foodpanda from "./components/Note_foodpanda"
+import FoodDeliveryPage from "./Pages/FoodDeliveryPage";
 
 const App = () => {
   const [selectedCity, setSelectedCity] = useState(null);
@@ -34,8 +35,8 @@ const App = () => {
   };
 
   // 選擇餐廳
-  const handleRestaurantClick = (restaurant) => {
-    setSelectedRestaurant(restaurant);
+  const handleRestaurantClick = (restaurantData) => {
+    setSelectedRestaurant(restaurantData);
   };
 
   //location selector
@@ -52,21 +53,20 @@ const App = () => {
   };
 
   const filteredRestaurants = selectedCity
-    ? restaurantData.filter((restaurant) => restaurant.city === selectedCity)
+    ? restaurantData.filter((restaurantData) => restaurantData.city === selectedCity)
     : [];
 
   
 
   return (
     <div>
-      <Header />
-      
+      <FoodDeliveryPage />
+      {/*<Header />
       <Location
         location={location}
         loadingLocation={loadingLocation}
         handleFindMyLocation={handleFindMyLocation}
       />
-    
       <Join_foodpanda />
 
       <NavigationBreadcrumbs
@@ -90,7 +90,8 @@ const App = () => {
       <Download/>
       <Know_more/>
       <Note_foodpanda/>
-      <Footer />
+      <Footer />*/}
+
     </div>
   );
 };
