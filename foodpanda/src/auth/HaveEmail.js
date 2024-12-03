@@ -13,11 +13,13 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import icHide from "../assets/icons/ic-hide.svg";
 import icShow from "../assets/icons/ic-show.svg";
 import "./HaveEmail.css";
+import CheckEmail from "./CheckEmail.js";
 import axios from "axios";
 
 const HaveEmail = ({ email, onClose, onBack }) => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [checkEmail, setCheckEmail] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
@@ -26,10 +28,9 @@ const HaveEmail = ({ email, onClose, onBack }) => {
     setPassword(e.target.value); // 更新密碼狀態
   };
 
-  useEffect(() => {
-    console.log(`密碼顯示狀態：${showPassword ? "顯示" : "隱藏"}`);
-  }, [showPassword]);
-
+  const handleProceed = () => {
+    setCheckEmail(true);
+  };
   const checkpassword = async () => {
     if (!password) {
       alert("請輸入密碼!");
@@ -54,12 +55,27 @@ const HaveEmail = ({ email, onClose, onBack }) => {
         "檢查郵件時發生錯誤：",
         error.response?.data || error.message
       );
-      alert("檢查失敗，請稍後再試！");
+      alert("密碼錯誤，請確認後再試！");
     }
   };
   useEffect(() => {
-    console.log(password); // 當 step 改變時顯示新的狀態
-  }, [checkpassword]);
+    console.log(`密碼顯示狀態：${showPassword ? "顯示" : "隱藏"}`);
+  }, [showPassword]);
+
+  useEffect(() => {
+      console.log(password); // 當 step 改變時顯示新的狀態
+    }, [checkpassword]);
+
+  if (checkEmail) {
+    // 如果状态为 true，显示 EmailConfirm
+    return (
+      <CheckEmail
+        email={email}
+        onClose={onClose} // 更新父組件狀態
+        onBack={() => setCheckEmail(false)}
+      />
+    );
+  }
 
   return (
     <Box className="haveEmailContainer">
@@ -197,7 +213,11 @@ const HaveEmail = ({ email, onClose, onBack }) => {
             使用密碼登入
           </Button>
         </div>
-        <Button variant="outlined" className="emailLinkBtn">
+        <Button
+          variant="outlined"
+          className="emailLinkBtn"
+          onClick={handleProceed}
+        >
           將登入連結寄給我
         </Button>
       </Box>

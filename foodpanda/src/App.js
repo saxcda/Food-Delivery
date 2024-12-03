@@ -19,6 +19,9 @@ import Home from "./components/Home";
 import { useEffect } from "react";
 
 const App = () => {
+
+  const [loginState, setLoginState] = useState(false)
+
   return (
     <Router>
       <Routes>

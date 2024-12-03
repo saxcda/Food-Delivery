@@ -1,0 +1,72 @@
+.checkEmailWrapper {
+  width: 350px !important;
+  height: 300px !important;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+}
+
+.checkEmailHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.checkEmailBackButton,
+.checkEmailCloseButton {
+  color: #666;
+}
+
+.checkEmailIcon {
+  float: left !important;
+  width: 50px;
+  height: 50px;
+  margin-top: -35px !important;
+  margin-bottom: 15px !important;
+}
+
+.checkEmailModalTitle {
+  text-align: left;
+  font-size: 24px;
+  font-weight: bold !important;
+  margin-bottom: 10px;
+  color: #333333;
+}
+
+.checkEmailDescription {
+  font-size: 14px;
+  color: #666666;
+  margin-left: -1px !important;
+  margin-bottom: -5px !important;
+  margin-left: -135px !important;
+}
+
+.checkEmailAddress {
+  font-size: 14px;
+  font-weight: bold;
+  color: #666666 !important;
+  margin-bottom: 10px;
+  margin-left: -50px !important;
+  margin-bottom: 35px;
+}
+
+.checkEmailPrimaryButton {
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  height: 45px;
+  font-weight: bold;
+  background-color: #e21b70 !important;
+  color: #ffffff;
+  border-radius: 6px !important;
+  text-transform: none !important;
+  position: absolute;
+  bottom: -50px;
+  left: 20px;
+}
+
+.checkEmailPrimaryButton:hover {
+  background-color: #e21b70 !important;
+}

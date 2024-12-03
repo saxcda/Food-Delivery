@@ -84,14 +84,17 @@
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* 點擊時的效果 */
 }
 
+.inputBox {
+  margin-left: -9px !important ;
+}
+
 .input-box {
   position: relative;
-  width: 300px !important;
-  margin-left: -10px !important;
 }
 
 .input-box input {
-  width: 290px !important;
+  width: 285px !important; 
+  height: 30px !important;
   border: 1px solid #ccc;
   border-radius: 8px;
   background-color: #f9f9f9;
@@ -103,7 +106,7 @@
 
 .input-box input:focus {
   border-color: #E21B70; /* 聚焦時的邊框顏色 */
-  background-color: #fff;
+  background-color: transparent !important;
 }
 
 .input-box label {

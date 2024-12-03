@@ -1,0 +1,83 @@
+.verifyEmailWrapper {
+  width: 350px !important;
+  height: 300px !important;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+}
+
+.verifyEmailHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.verifyEmailBackButton,
+.verifyEmailCloseButton {
+  color: #666;
+}
+
+.verifyEmailIcon {
+  float: left !important;
+  width: 50px;
+  height: 50px;
+  margin-top: -35px !important;
+  margin-bottom: 15px !important;
+}
+
+.verifyEmailModalTitle {
+  text-align: left;
+  font-size: 20px;
+  font-weight: bold !important;
+  margin-top: 15px;
+  margin-bottom: 10px;
+  color: #333333;
+}
+
+.verifyEmailDescription {
+  font-size: 14px;
+  color: #666666;
+  margin-left: -1px !important;
+  margin-bottom: -5px !important;
+  margin-left: -170px !important;
+}
+
+.verifyEmailPrimaryButton {
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  height: 45px;
+  font-weight: bold;
+  background-color: #e21b70 !important;
+  color: #ffffff !important;
+  border-radius: 6px !important;
+  text-transform: none !important;
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+}
+
+.verifyEmailPrimaryButton.completed {
+  cursor: pointer !important;
+}
+
+/* 未完成的狀態，顯示禁用游標 */
+.verifyEmailPrimaryButton:not(.completed) {
+  cursor: not-allowed !important;
+  background-color: #66666644 !important;
+  font-weight: bold;
+}
+
+.verifyEmailPrimaryButton:hover {
+  background-color: #e21b70 !important;
+}
+
+/* 倒數結束後按鈕樣式 */
+.verifyEmailPrimaryButton.completed {
+  background-color: #00000000 !important;
+  border: 1.5px solid #666 !important;
+  color: #666 !important;
+}
+

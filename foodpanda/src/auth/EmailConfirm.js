@@ -181,6 +181,7 @@ const EmailConfirm = ({ open, onClose, onBack }) => {
               <Typography variant="body1" className="dialogSubtitle">
                 我們將確認你是否已擁有帳戶
               </Typography>
+              <div className="inputBox">
               <div className="input-box">
                 <input
                   type="email"
@@ -201,6 +202,7 @@ const EmailConfirm = ({ open, onClose, onBack }) => {
                   data-testid="text-field-input-label"
                   tabIndex="-1"
                 ></a>
+              </div>
               </div>
               <div
                 style={{
