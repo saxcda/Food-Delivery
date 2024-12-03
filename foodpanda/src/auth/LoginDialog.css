@@ -1,0 +1,165 @@
+.dialogTitleContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.titleBox {
+    display: flex;
+    flex-direction: column; /* 將標題和副標題分為上下排列 */
+    gap: 4px; /* 標題與副標題的間距 */
+}
+
+.dialogTitle {
+    font-size: 1.25rem;
+    font-weight: 700 !important;
+}
+
+.dialogSubtitle {
+    font-size: 1rem;
+    color: #666; /* 副標題顏色稍淡 */
+}
+
+/* 對話框標題容器 */
+.dialogTitleContainer {
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* 標題樣式 */
+.dialogTitle {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* 副標題樣式 */
+.dialogSubtitle {
+  margin-top: 8px;
+  font-size: 0.875rem;
+  color: #666;
+  text-align: center;
+}
+
+/* 整個內容區域的容器 */
+.dialogContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  gap: 16px;
+}
+
+/* 輸入框的樣式 */
+.emailInput .MuiOutlinedInput-root {
+  font-size: 1rem !important;
+  border-radius: 8px !important;
+  padding: 8px 12px !important;
+  background-color: #f9f9f9 !important;
+  transition: all 0.3s ease !important;
+  width: 100%;
+  max-width: 350px;
+}
+
+.emailInput .MuiOutlinedInput-root:hover {
+  background-color: #fff !important;
+  border-color: #ccc !important;
+}
+
+.emailInput .MuiOutlinedInput-root.Mui-focused {
+  background-color: #fff !important;
+  border-color: #E21B70 !important;
+}
+
+.emailInput input::placeholder {
+  color: #aaa;
+  font-size: 0.875rem;
+}
+
+.emailInput input:not(:placeholder-shown) {
+  font-weight: bold !important;
+  color: #333 !important;
+}
+
+/* 繼續按鈕 */
+.continueButton {
+  width: 350px;
+  height: 45px;
+  font-size: 1rem;
+  font-weight: bold !important;
+  padding: 12px 16px;
+  border-radius: 8px;
+  background-color: #E21B70 !important;
+  color: #fff;
+}
+
+.continueButton:hover {
+  background-color: #E21B70 !important;
+}
+
+/* 關閉按鈕樣式 */
+.closeButton {
+  width: 32px;
+  height: 32px;
+  color: #000000 !important;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* 增加陰影 */
+  transition: box-shadow 0.3s ease; /* 加入過渡效果 */
+  border: 1px solid #ccc !important; /* 灰色邊框 */
+  border-radius: 50%; /* 讓按鈕圓潤 */
+  padding: 0; /* 確保按鈕內部有足夠的間距 */
+}
+
+.closeButton:hover {
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2); /* 滑鼠懸停時加強陰影 */
+}
+
+.closeButton:active {
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* 點擊時的效果 */
+}
+
+/* 返回按鈕樣式 */
+.backButton {
+  color: #000000;
+  padding: 8px;
+}
+
+/* 標題文字居中樣式 */
+.dialogHeaderBox {
+  flex: 1;
+  text-align: center;
+  padding-right: 32px; /* 為了平衡右側的關閉按鈕 */
+}
+
+
+.loginButton {
+    border-radius: 10px !important;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: 1000 !important;
+    background-color: #E21B70 !important;
+    color: #fff !important;
+    margin-top: 10px;
+    width: 350px;
+    height: 45px;
+}
+
+.registerButton {
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: 1000 !important;
+    background-color: #fff;
+    color: #333 !important;
+    border: 1px solid #000000 !important;
+    width: 350px;
+    height: 45px;
+}
+
+.horizontalDivider {
+    color: #a1a1a1 !important;
+    width: 100%;
+    margin: 10px 0;
+}
+

@@ -1,0 +1,60 @@
+.iconSvg {
+  margin: 10px 7px !important;
+  float: left !important;
+}
+
+.not-have-email-container {
+    text-align: center;
+    padding: 5px;
+    width: 370px;
+    height: 365px;
+    margin: auto;
+}
+  
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.email-image {
+  width: 60px;
+  height: auto;
+  margin: 20px 0;
+}
+
+.verification-title {
+  font-size: 1.5rem;
+  font-weight: bold !important;
+  color: #333;
+  margin: 23px 8px !important;
+  text-align: left; 
+}
+
+.verification-description {
+  font-size: 0.75rem !important;
+  margin: -5px 8px !important;
+  color: #666;
+}
+
+.send-verification-btn {
+  background-color: #E21B70 !important;
+  color: #fff;
+  width: 340px !important;
+  height: 45px !important;
+  font-weight: bold !important;
+  margin-top: 100px !important;
+  margin-left: 15.5px !important;
+}
+
+.closeButton, .backButton {
+  color: #333;
+}
+
+.closeButton, .backButton:hover {
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2); /* 滑鼠懸停時加強陰影 */
+}
+
+.closeButton, .backButton:active {
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* 點擊時的效果 */
+}

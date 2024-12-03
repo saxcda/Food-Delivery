@@ -1,0 +1,126 @@
+.dialogTitleContainer {
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dialogTitle {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.dialogSubtitle {
+  margin-top: 8px;
+  font-size: 0.875rem;
+  color: #666;
+  text-align: center;
+}
+
+.emailInput .MuiOutlinedInput-root {
+  font-size: 1rem !important;
+  border-radius: 8px !important;
+  padding: 8px 12px !important;
+  background-color: #f9f9f9 !important;
+  transition: all 0.3s ease !important;
+}
+
+.emailInput .MuiOutlinedInput-root:hover {
+  background-color: #fff !important;
+  border-color: #ccc !important;
+}
+
+.emailInput .MuiOutlinedInput-root.Mui-focused {
+  background-color: #fff !important;
+  border-color: #E21B70 !important;
+}
+
+.emailInput input::placeholder {
+  color: #aaa;
+  font-size: 0.875rem;
+}
+
+.emailInput input:not(:placeholder-shown) {
+  font-weight: bold !important;
+  color: #333 !important;
+}
+
+.continueButton {
+  width: 320px; 
+  height: 45px;
+  font-size: 1rem;
+  font-weight: bold !important;
+  padding: 12px 16px;
+  border-radius: 8px;
+  background-color: #E21B70 !important;
+  color: #fff;
+}
+
+.continueButton:disabled {
+  background-color: #c7c5c5 !important; /* 禁用狀態背景色 */
+  color: #ffffff !important; /* 禁用狀態文字顏色 */
+}
+
+.continueButton:hover {
+  background-color: #E21B70 !important;
+}
+
+.closeButton {
+  width: 32px;
+  height: 32px;
+  color: #000000 !important;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* 增加陰影 */
+  transition: box-shadow 0.3s ease; /* 加入過渡效果 */
+  border: 1px solid #ccc !important; /* 灰色邊框 */
+  border-radius: 50%; /* 讓按鈕圓潤 */
+  padding: 0; /* 確保按鈕內部有足夠的間距 */
+}
+
+.closeButton:hover {
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2); /* 滑鼠懸停時加強陰影 */
+}
+
+.closeButton:active {
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* 點擊時的效果 */
+}
+
+.input-box {
+  position: relative;
+  width: 300px !important;
+  margin-left: -10px !important;
+}
+
+.input-box input {
+  width: 290px !important;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s ease;
+  text-align: left;
+}
+
+.input-box input:focus {
+  border-color: #E21B70; /* 聚焦時的邊框顏色 */
+  background-color: #fff;
+}
+
+.input-box label {
+  position: absolute;
+  top: 11px; /* 默認位置，對齊輸入框 */
+  left: 30px; /* 靠左對齊 */
+  color: #aaa;
+  font-size: 1rem;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.input-box input:focus + label,
+.input-box input:not(:placeholder-shown) + label {
+  top: -6px; /* 聚焦或有內容時，標籤移動到輸入框上方 */
+  font-size: 0.55rem; /* 標籤縮小 */
+  color: #E21B70; /* 標籤變色 */
+  background-color: #fff; /* 避免標籤與背景重疊 */
+  padding: 0 4px; /* 給標籤增加背景的間距 */
+}

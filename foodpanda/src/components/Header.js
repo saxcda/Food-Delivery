@@ -21,6 +21,7 @@ import LanguageIcon from "@mui/icons-material/Language";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import LoginDialog from "../auth/LoginDialog"
 
 //add img
 import foodpanda_logo from "./Pictures/foodpanda_logo.jpg";
@@ -32,12 +33,16 @@ const Header = () => {
   const [locationAnchorEl, setLocationAnchorEl] = React.useState(null);
   const [location, setLocation] = React.useState("");
   const [loadingLocation, setLoadingLocation] = React.useState(false);
+  const [openLoginDialog, setOpenLoginDialog] = React.useState(false);
 
   const handleMenuOpen = (event) => setMenuAnchorEl(event.currentTarget);
   const handleMenuClose = () => setMenuAnchorEl(null);
 
   const handleLocationOpen = (event) => setLocationAnchorEl(event.currentTarget);
   const handleLocationClose = () => setLocationAnchorEl(null);
+
+  const handleLoginDialogOpen = () => setOpenLoginDialog(true);
+  const handleLoginDialogClose = () => setOpenLoginDialog(false);
 
   const handleFindMyLocation = async () => {
     setLoadingLocation(true);
@@ -172,7 +177,7 @@ const Header = () => {
               height: "38px",              // Set height (adjust as needed)
               width:"70px",
             },
-          }}>登入</Button>
+          }} onClick={handleLoginDialogOpen}>登入</Button>
           
         </Box>
 
@@ -207,7 +212,7 @@ const Header = () => {
               width:"70px",
             },
           }}
-        >
+          onClick={handleLoginDialogOpen}>
           註冊
         </Button>
 
@@ -231,6 +236,7 @@ const Header = () => {
         </IconButton>
         {/*<Avatar sx={{ ml: 1 }}>F</Avatar>*/}
       </Toolbar>
+      <LoginDialog open={openLoginDialog} onClose={handleLoginDialogClose}/>
     </AppBar>
   );
 };
