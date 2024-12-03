@@ -14,6 +14,7 @@ import Note_foodpanda from "./components/Note_foodpanda"
 import FoodDeliveryPage from "./Pages/FoodDeliveryPage";
 import RestaurantPage from "./components/RestaurantPage";
 import RestaurantDetailsPage from "./components/RestaurantDetailsPage";
+import Profile from "./components/Profile";
 import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import Home from "./components/Home";
 import { useEffect } from "react";
@@ -23,6 +24,7 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/profile" element={<Profile />} /> {/* Add Profile route */}
         <Route path="/restaurants/:city" element={<RestaurantPage />} />
         <Route path="/restaurants/:city/:restaurantName" element={<RestaurantDetailsPage />} />
       </Routes>
