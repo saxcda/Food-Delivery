@@ -22,9 +22,14 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import LoginDialog from "../auth/LoginDialog"
+import { useNavigate } from "react-router-dom";
+import { BsPerson } from "react-icons/bs";
+import { TbReceipt } from "react-icons/tb";
+import { IoIosLogOut } from "react-icons/io";
 
 //add img
 import foodpanda_logo from "./Pictures/foodpanda_logo.jpg";
+
 
 const GOOGLE_MAPS_API_KEY = "";
 
@@ -43,6 +48,16 @@ const Header = () => {
 
   const handleLoginDialogOpen = () => setOpenLoginDialog(true);
   const handleLoginDialogClose = () => setOpenLoginDialog(false);
+
+  const [bsPersonMenuAnchorEl, setBsPersonMenuAnchorEl] = React.useState(null); // For BsPerson menu
+  const handleBsPersonMenuOpen = (event) => setBsPersonMenuAnchorEl(event.currentTarget); // Open BsPerson menu
+  const handleBsPersonMenuClose = () => setBsPersonMenuAnchorEl(null); // Close BsPerson menu
+  const navigateToProfile = () => {
+    handleBsPersonMenuClose(); // Close the menu first
+    navigate("/profile"); // Navigate to the Profile page
+  };
+  const navigate = useNavigate();
+
 
   const handleFindMyLocation = async () => {
     setLoadingLocation(true);
@@ -217,6 +232,19 @@ const Header = () => {
         </Button>
 
         </Box>
+        
+        <IconButton color="inherit" onClick={handleBsPersonMenuOpen} >
+          <BsPerson />
+        </IconButton>
+        <Menu
+          anchorEl={bsPersonMenuAnchorEl}
+          open={Boolean(bsPersonMenuAnchorEl)}
+          onClose={handleBsPersonMenuClose}
+        >
+          <MenuItem onClick={navigateToProfile}><BsPerson />個人檔案</MenuItem>
+          <MenuItem onClick={handleBsPersonMenuClose}><TbReceipt />歷史訂單</MenuItem>
+          <MenuItem onClick={handleBsPersonMenuClose}><IoIosLogOut />登出</MenuItem>
+        </Menu>
 
         <IconButton color="inherit" onClick={handleMenuOpen} >
           <LanguageIcon />
