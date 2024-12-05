@@ -15,6 +15,10 @@ import {
   List,
   ListItem,
   ListItemText,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import LanguageIcon from "@mui/icons-material/Language";
@@ -52,11 +56,13 @@ const Header = ({ setlogin, setlogout }) => {
   const [bsPersonMenuAnchorEl, setBsPersonMenuAnchorEl] = React.useState(null); // For BsPerson menu
   const handleBsPersonMenuOpen = (event) => setBsPersonMenuAnchorEl(event.currentTarget); // Open BsPerson menu
   const handleBsPersonMenuClose = () => setBsPersonMenuAnchorEl(null); // Close BsPerson menu
+  
   const navigateToProfile = () => {
     handleBsPersonMenuClose(); // Close the menu first
     navigate("/profile"); // Navigate to the Profile page
   };
   const navigate = useNavigate();
+
 
 
   const handleFindMyLocation = async () => {
@@ -112,6 +118,7 @@ const Header = ({ setlogin, setlogout }) => {
           src={foodpanda_logo}
           alt="Foodpanda Logo"
           sx={{ height: 30}} // Optional styling
+          onClick={() => navigate("/")}
         />
 
         <Box sx={{ flexGrow: 1 }} />
@@ -236,6 +243,7 @@ const Header = ({ setlogin, setlogout }) => {
         <IconButton color="inherit" onClick={handleBsPersonMenuOpen} >
           <BsPerson />
         </IconButton>
+        
         <Menu
           anchorEl={bsPersonMenuAnchorEl}
           open={Boolean(bsPersonMenuAnchorEl)}

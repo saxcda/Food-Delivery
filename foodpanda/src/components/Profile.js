@@ -4,6 +4,8 @@ import InfoIcon from "@mui/icons-material/Info";
 import { BsPerson } from "react-icons/bs";
 import Header from "./Header";
 import Footer from "./Footer";
+import axios from "axios"; // Axios for API requests
+import { useEffect } from "react";
 //import "./Join_foodpanda.css";
 
 const Profile = () => {
@@ -14,7 +16,53 @@ const Profile = () => {
     email:"",
     currentPassword:"",
     newPassword:"",
+    address:"",
   });
+
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get("http://127.0.0.1:5000/users/1")
+      .then((response) => {
+        setFormData({
+          firstName: response.data.firstName || "",
+          lastName: response.data.lastName || "",
+          phoneNumber: response.data.phone || "",
+          email: response.data.email || "",
+          address: response.data.address || "",
+          currentPassword: "", // Passwords are not fetched
+          newPassword: "",
+        });
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching user data:", error);
+        //setError("Failed to load user data.");
+        setFormData({
+          firstName: "Failed to load user data.",
+          lastName: "Failed to load user data.",
+          phoneNumber: "Failed to load user data.",
+          email: "Failed to load user data.",
+          address: "Failed to load user data.",
+          currentPassword: "", // Password fields remain empty
+          newPassword: "",
+        });
+        setLoading(false);
+      });
+  }, []);
+
+const [loading, setLoading] = useState(true); // Define loading state
+
+
+if (loading) {
+  return <Typography>Loading...</Typography>;
+}
+
+if (error) {
+  return <Typography color="error">{error}</Typography>;
+}
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,9 +70,19 @@ const Profile = () => {
   };
 
   const handleSave = () => {
-    console.log("Saved Data:", formData);
-    alert("Form data saved!");
+    // Save updated user data
+    axios
+      .put("http://127.0.0.1:5000/users/1", formData) // Replace with the actual user ID or API endpoint
+      .then((response) => {
+        console.log("Saved Data:", response.data);
+        alert("Profile updated successfully!");
+      })
+      .catch((error) => {
+        console.error("Error saving profile:", error);
+        alert("Failed to save profile.");
+      });
   };
+
 
 
   return (
@@ -46,7 +104,7 @@ const Profile = () => {
               alignItems: "center",
               width: "100%",
               marginBottom: 2,
-borderRadius: "15px",
+              borderRadius: "15px",
             }}
           >
             <Typography variant="h6" >
@@ -111,7 +169,7 @@ borderRadius: "15px",
               boxShadow:"none",
               fontWeight:"bold",
               "&:hover": {
-                backgroundColor: "#D6D6D6",
+                backgroundColor: "#D70F64",
                 boxShadow:"none",
               },
             }}
@@ -144,7 +202,7 @@ borderRadius: "15px",
 
           <TextField
             label="電子郵件"
-            name="電子郵件"
+            name="email"
             value={formData.email}
             onChange={handleChange}
             fullWidth
@@ -165,7 +223,7 @@ borderRadius: "15px",
               boxShadow:"none",
               fontWeight:"bold",
               "&:hover": {
-                backgroundColor: "#D6D6D6",
+                backgroundColor: "#D70F64",
                 boxShadow:"none",
               },
             }}
@@ -198,7 +256,7 @@ borderRadius: "15px",
             
           <TextField
             label="現在密碼"
-            name="現在密碼"
+            name="currentPassword"
             value={formData.currentPassword}
             onChange={handleChange}
             fullWidth
@@ -212,7 +270,7 @@ borderRadius: "15px",
 
           <TextField
             label="新密碼"
-            name="新密碼"
+            name="newPassword"
             value={formData.newPassword}
             onChange={handleChange}
             fullWidth
@@ -224,7 +282,7 @@ borderRadius: "15px",
             }}
           />
 
-<Button
+          <Button
             variant="contained"
             sx={{
               backgroundColor: "#E0E0E0",
@@ -234,7 +292,7 @@ borderRadius: "15px",
               boxShadow:"none",
               fontWeight:"bold",
               "&:hover": {
-                backgroundColor: "#D6D6D6",
+                backgroundColor: "#D70F64",
                 boxShadow:"none",
               },
             }}
@@ -261,10 +319,43 @@ borderRadius: "15px",
             }}
           >
             <Typography variant="h6" >
-             付款方式
+             地址
             </Typography>
           </Box>
-          
+
+          <TextField
+            label="地址"
+            name="地址"
+            value={formData.address}
+            onChange={handleChange}
+            fullWidth
+            variant="outlined"
+            sx={{ marginBottom: 2 ,
+              "& .MuiOutlinedInput-root": {
+            borderRadius: "16px", // Change border radius here
+          },
+            }}
+          />
+
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: "#E0E0E0",
+              color: "#ffffff",
+              borderRadius: 2,
+              paddingX: 5,
+              boxShadow:"none",
+              fontWeight:"bold",
+              "&:hover": {
+                backgroundColor: "#D70F64",
+                boxShadow:"none",
+              },
+            }}
+            onClick={handleSave}
+          >
+            儲存
+          </Button>
+
           <Box
             sx={{
               height: "1px",        // Thickness of the line
