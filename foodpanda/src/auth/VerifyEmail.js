@@ -12,7 +12,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CloseIcon from "@mui/icons-material/Close";
 import "./VerifyEmail.css";
 
-const VerifyEmail = ({ email, onBack, onClose }) => {
+const VerifyEmail = ({ email, onBack, onClose, setlogin, setlogout }) => {
   const [countdown, setCountdown] = useState(3); // 設定初始倒數秒數
   const [isCompleted, setIsCompleted] = useState(false); // 是否完成倒數
 

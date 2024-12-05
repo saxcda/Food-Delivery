@@ -10,7 +10,7 @@ import Note_foodpanda from "./Note_foodpanda";
 import { useRef , useEffect } from "react";
 
 
-const Home = () => {
+const Home = ({ setlogin, setlogout }) => {
   const [location, setLocation] = React.useState("");
   const [loadingLocation, setLoadingLocation] = React.useState(false);
 
@@ -24,7 +24,7 @@ const Home = () => {
 
   return (
     <>
-      <Header />
+      <Header setlogin={setlogin} setlogout={setlogout}/>
       <Location
         location={location}
         loadingLocation={loadingLocation}

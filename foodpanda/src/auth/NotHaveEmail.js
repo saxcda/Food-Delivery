@@ -6,7 +6,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import VerifyEmail from "./VerifyEmail";
 
-const NotHaveEmail = ({ email, onClose, onBack }) => {
+const NotHaveEmail = ({ email, onClose, onBack, setlogin, setlogout }) => {
   const [verifyEmail, setVerifyEmail] = useState(false);
   const sendEmail = async () => {
     if (!email) {
@@ -35,7 +35,7 @@ const NotHaveEmail = ({ email, onClose, onBack }) => {
     }
   };
   if (verifyEmail) {
-    return <VerifyEmail email={email} onClose={onClose} onBack={onBack} />; // 當 verifyEmail 為 true 時，顯示 VerifyEmail 頁面
+    return <VerifyEmail email={email} onClose={onClose} onBack={onBack} setlogin={setlogin} setlogout={setlogout}/>; // 當 verifyEmail 為 true 時，顯示 VerifyEmail 頁面
   }
 
   return (

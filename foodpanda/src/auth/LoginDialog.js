@@ -18,7 +18,9 @@ const Transition = React.forwardRef((props, ref) => (
   <Slide direction="down" ref={ref} {...props} />
 ));
 
-const LoginDialog = ({ open, onClose }) => {
+const LoginDialog = ( { open, onClose, setlogin, setlogout } ) => {
+  console.log("LoginDialog props:", { open, onClose, setlogin });
+
   const [showEmailConfirm, setShowEmailConfirm] = useState(false); // 狀態管理
 
   // 切換到 EmailConfirm
@@ -43,15 +45,16 @@ const LoginDialog = ({ open, onClose }) => {
         open={showEmailConfirm}
         onClose={handleClose} // 更新父組件狀態
         onBack={handleBack} // 返回到 LoginDialog
+        setlogin={setlogin}
+        setlogout={setlogout}
       />
     );
   }
-
   // 預設顯示 LoginDialog
   return (
     <Dialog
       open={open}
-      onClose={onClose} // 打叉直接關閉
+      onClose={onClose}
       TransitionComponent={Transition}
       PaperProps={{
         style: {

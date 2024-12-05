@@ -20,7 +20,7 @@ const Transition = React.forwardRef((props, ref) => (
   <Slide direction="down" ref={ref} {...props} />
 ));
 
-const EmailConfirm = ({ open, onClose, onBack }) => {
+const EmailConfirm = ({ open, onClose, onBack, setlogin, setlogout }) => {
   const [email, setEmail] = useState("");
   const [step, setStep] = useState("");
 
@@ -55,17 +55,16 @@ const EmailConfirm = ({ open, onClose, onBack }) => {
         "檢查郵件時發生錯誤：",
         error.response?.data || error.message
       );
-      alert("檢查失敗，請稍後再試！");
     }
   };
 
   const renderContent = () => {
     if (step === "haveEmail") {
-      return <HaveEmail email={email} onClose={onClose} onBack={handleBack} />;
+      return <HaveEmail email={email} onClose={onClose} onBack={handleBack} setlogin={setlogin} setlogout={setlogout }/>;
     }
     if (step === "notHaveEmail") {
       return (
-        <NotHaveEmail email={email} onClose={onClose} onBack={handleBack} />
+        <NotHaveEmail email={email} onClose={onClose} onBack={handleBack} setlogin={setlogin} setlogout={setlogout} />
       );
     }
     return null;

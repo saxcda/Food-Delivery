@@ -33,7 +33,7 @@ import foodpanda_logo from "./Pictures/foodpanda_logo.jpg";
 
 const GOOGLE_MAPS_API_KEY = "";
 
-const Header = () => {
+const Header = ({ setlogin, setlogout }) => {
   const [menuAnchorEl, setMenuAnchorEl] = React.useState(null);
   const [locationAnchorEl, setLocationAnchorEl] = React.useState(null);
   const [location, setLocation] = React.useState("");
@@ -264,7 +264,7 @@ const Header = () => {
         </IconButton>
         {/*<Avatar sx={{ ml: 1 }}>F</Avatar>*/}
       </Toolbar>
-      <LoginDialog open={openLoginDialog} onClose={handleLoginDialogClose}/>
+      <LoginDialog open={openLoginDialog} onClose={handleLoginDialogClose} setlogin={setlogin} setlogout={setlogout}/>
     </AppBar>
   );
 };

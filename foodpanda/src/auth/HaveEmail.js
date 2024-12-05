@@ -15,11 +15,13 @@ import icShow from "../assets/icons/ic-show.svg";
 import "./HaveEmail.css";
 import CheckEmail from "./CheckEmail.js";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const HaveEmail = ({ email, onClose, onBack }) => {
+const HaveEmail = ({ email, onClose, onBack, setlogin, setlogout }) => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [checkEmail, setCheckEmail] = useState(false);
+  const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
@@ -47,15 +49,19 @@ const HaveEmail = ({ email, onClose, onBack }) => {
       );
       if (response.status === 200) {
         alert("登入成功");
+        console.log(typeof(setlogin));
+        setlogin();
+        // navigate("/login"); 
       } else {
         alert("密碼錯誤");
       }
     } catch (error) {
       console.error(
         "檢查郵件時發生錯誤：",
-        error.response?.data || error.message
+        error.response?.data || error.message,
+        alert("檢查郵件時發生錯誤："),
+        console.log(error)
       );
-      alert("密碼錯誤，請確認後再試！");
     }
   };
   useEffect(() => {
@@ -73,6 +79,7 @@ const HaveEmail = ({ email, onClose, onBack }) => {
         email={email}
         onClose={onClose} // 更新父組件狀態
         onBack={() => setCheckEmail(false)}
+
       />
     );
   }
