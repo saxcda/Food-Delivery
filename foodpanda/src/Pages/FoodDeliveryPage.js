@@ -1,12 +1,82 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import "./FoodDeliveryPage.css";
 import restaurantData from "../data/restaurantData";
+import RestaurantCard from "../components/RestaurantCard";
+import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { Grid, Typography } from "@mui/material";
+
+const GOOGLE_MAPS_API_KEY = "AIzaSyAqqcudDyo4itlY1bqbDyByPh_L6GMy9cs";
+
+
+
+
 
 const FoodDeliveryPage = () => {
 
-console.log("Restaurant Data:", restaurantData);
+  const navigate = useNavigate();
+  const [city, setCity] = useState("未知城市");
+  const [loadingLocation, setLoadingLocation] = useState(false);
+
+
+  useEffect(() => {
+    const fetchCity = async (latitude, longitude) => {
+      try {
+        const response = await axios.get(
+          `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_MAPS_API_KEY}`
+        );
+        const address = response.data.results[0]?.formatted_address || "找不到地址";
+    
+        // 使用正則表達式提取完整的縣市名稱
+        const cityMatch = address.match(/台灣(.+?[市縣])/);
+        const cityName = cityMatch ? cityMatch[1] : "未知地區";
+    
+        setCity(cityName); // 設定縣市名稱
+        console.log(address, cityName)
+      } catch (error) {
+        console.error("Error fetching address:", error);
+        setCity("無法取得地址資訊，請稍後再試");
+      }
+    };
+  
+    const fetchLocation = () => {
+      setLoadingLocation(true);
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          async (position) => {
+            const { latitude, longitude } = position.coords;
+            await fetchCity(latitude, longitude);
+            setLoadingLocation(false);
+          },
+          (error) => {
+            console.error("無法取得地理位置", error);
+            setCity("無法取得地理位置資訊，請檢查權限或網路");
+            setLoadingLocation(false);
+          }
+        );
+      } else {
+        console.error("瀏覽器不支援地理位置功能");
+        setCity("瀏覽器不支援地理位置功能");
+        setLoadingLocation(false);
+      }
+    };
+  
+    fetchLocation();
+    console.log(city)
+  }, []);
+
+  useEffect(() => {
+    console.log(city)
+  }, [city]);
+  
+
   const [filters, setFilters] = useState({});
   const [sortKey, setSortKey] = useState("default");
+
+  const handleRestaurantClick = (restaurantName) => {
+    navigate(`/restaurants/${city}/${encodeURIComponent(restaurantName)}`);
+  };
 
   // 處理篩選條件改變
   const handleFilterChange = (key, value) => {
@@ -20,13 +90,15 @@ console.log("Restaurant Data:", restaurantData);
 
   // 篩選和排序邏輯
   const filteredAndSortedRestaurants = useMemo(() => {
-    console.log("Restaurant Data Type:", typeof restaurantData);
-    console.log("Is Array:", Array.isArray(restaurantData));
-    console.log("Restaurant Data Content:", restaurantData);
+    console.log(city)
 
     if (!Array.isArray(restaurantData)) return []; // 确保是数组
 
     let filtered = [...restaurantData];
+
+    if (city) {
+      filtered = filtered.filter((res) => res.city === city);
+    }
 
     // 篩選 - 有無優惠
     if (filters.promotions === "withPromotions") {
@@ -63,8 +135,9 @@ console.log("Restaurant Data:", restaurantData);
       filtered.sort((a, b) => b.rating - a.rating);
     }
 
+    console.log(filtered)
     return filtered;
-  }, [filters, sortKey]);
+  }, [filters, sortKey, city]);
 
   return (
     <div className="food-delivery-page">
@@ -179,7 +252,7 @@ console.log("Restaurant Data:", restaurantData);
 
 
       {/* 餐廳列表 */}
-      <div className="restaurantData-list">
+      {/* <div className="restaurantData-list">
         {filteredAndSortedRestaurants.map((restaurantData, index) => (
           <div key={index} className="restaurantData-card">
             <img src={restaurantData.image} alt={restaurantData.name} />
@@ -188,7 +261,32 @@ console.log("Restaurant Data:", restaurantData);
             <span>評分：{restaurantData.rating}</span>
           </div>
         ))}
-      </div>
+      </div> */}
+
+    <Grid 
+      container spacing={1} 
+      justifyContent="flex-start" 
+      minHeight={"450px"}
+      padding={"0 8% 0 8%"}
+      >
+      {filteredAndSortedRestaurants.length === 0 ? (
+        <Typography variant="h6" color="textSecondary">
+          沒有找到符合條件的餐廳。
+        </Typography>
+      ) : (
+        filteredAndSortedRestaurants.map((filteredAndSortedRestaurants, index) => (
+          <Grid 
+            item key={index} 
+            md={4}
+            >
+            <RestaurantCard
+              restaurant={filteredAndSortedRestaurants}
+              onClick={() => handleRestaurantClick(filteredAndSortedRestaurants.name)} 
+            />
+          </Grid>
+        ))
+      )}
+    </Grid>
     </div>
   );
 };
