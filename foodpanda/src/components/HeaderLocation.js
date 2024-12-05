@@ -22,28 +22,33 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import inputAdornment from "@mui/material";
-import {InputAdornment } from "@mui/material";
+import { InputAdornment } from "@mui/material";
 import { PiGpsFixBold } from "react-icons/pi";
 //add img
 import foodpanda_logo from "./Pictures/foodpanda_logo.jpg";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { useNavigate } from "react-router-dom";
-
+import LoginDialog from "../auth/LoginDialog";
 
 const GOOGLE_MAPS_API_KEY = "";
 
-const HeaderLocation = () => {
+const HeaderLocation = ({setlogin, setlogout}) => {
   const [menuAnchorEl, setMenuAnchorEl] = React.useState(null);
   const [locationAnchorEl, setLocationAnchorEl] = React.useState(null);
   const [location, setLocation] = React.useState("");
   const [loadingLocation, setLoadingLocation] = React.useState(false);
+  const [openLoginDialog, setOpenLoginDialog] = React.useState(false);
   const navigate = useNavigate(); // Initialize navigate
 
   const handleMenuOpen = (event) => setMenuAnchorEl(event.currentTarget);
   const handleMenuClose = () => setMenuAnchorEl(null);
 
-  const handleLocationOpen = (event) => setLocationAnchorEl(event.currentTarget);
+  const handleLocationOpen = (event) =>
+    setLocationAnchorEl(event.currentTarget);
   const handleLocationClose = () => setLocationAnchorEl(null);
+
+  const handleLoginDialogOpen = () => setOpenLoginDialog(true);
+  const handleLoginDialogClose = () => setOpenLoginDialog(false);
 
   const handleFindMyLocation = async () => {
     setLoadingLocation(true);
@@ -81,12 +86,12 @@ const HeaderLocation = () => {
       position="sticky"
       color="inherit"
       //adding shadow to the bar
-      sx={{ boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", 
-            borderBottom: "1px solid #e0e0e0",
-            padding: "0 60px", // Padding on left and right
+      sx={{
+        boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+        borderBottom: "1px solid #e0e0e0",
+        padding: "0 60px", // Padding on left and right
       }}
     >
-
       <Toolbar>
         {/*}
         <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
@@ -97,18 +102,17 @@ const HeaderLocation = () => {
           component="img"
           src={foodpanda_logo}
           alt="Foodpanda Logo"
-          sx={{ height: 30}} // Optional styling
+          sx={{ height: 30 }} // Optional styling
           onClick={() => navigate("/")}
         />
 
         <Box sx={{ flexGrow: 1 }} />
-         
-         
+
         <IconButton color="inherit" onClick={handleLocationOpen}>
-          <LocationOnIcon /> 
+          <LocationOnIcon />
           <Typography>位置</Typography>
         </IconButton>
-        
+
         <Popover
           open={Boolean(locationAnchorEl)}
           anchorEl={locationAnchorEl}
@@ -120,48 +124,41 @@ const HeaderLocation = () => {
               overflow: "hidden", // Ensures no overflow
               boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
               borderRadius: "20px", // Smooth edges
-              marginTop:"20px",
-              
+              marginTop: "20px",
             },
           }}
         >
           <Box
-            sx={(theme) => ({  
+            sx={(theme) => ({
               padding: "3px", // Adds padding to give the content some breathing room
-              borderRadius:"20px",
+              borderRadius: "20px",
               width: 600, // Sets a consistent width for the Popover
-              top:"100%",
-              backgroundColor: "#ffffff",   
-              boxShadow:"0px 4px 6px rgba(0, 0, 0, 0.1)",
-              display:"flex",
+              top: "100%",
+              backgroundColor: "#ffffff",
+              boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+              display: "flex",
               alignItems: "center", // Centers the button content vertically
               justifyContent: "center", // Centers the button horizontally
-              overflow:"hidden",
-              })}>
-            
+              overflow: "hidden",
+            })}
+          >
             <TextField
               fullWidth
               placeholder="輸入你欲送達的地址"
               variant="outlined"
               size="small"
-              
-              sx={{ my: 2, 
-                    width:"80%",
-              }}
+              sx={{ my: 2, width: "80%" }}
               value={location}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
                     <Button
-                      
-                      startIcon={<PiGpsFixBold 
-                                     style={{ color: "#D70F64" }}
-                                />}
+                      startIcon={<PiGpsFixBold style={{ color: "#D70F64" }} />}
                       onClick={handleFindMyLocation}
                       disabled={loadingLocation}
                       sx={{
                         textTransform: "none", // Prevents text from being uppercase
-                        color: "black",  // Change button text color to black
+                        color: "black", // Change button text color to black
                       }}
                     >
                       {loadingLocation ? "尋找中..." : "尋找我的位置"}
@@ -172,99 +169,103 @@ const HeaderLocation = () => {
             />
 
             <Button
-                variant="contained"
-                sx={{
-                  margin:"0 0 0 15px",
-                  backgroundColor: "#D70F64", // Foodpanda pink
-                  color: "#ffffff", // White text
-                  border: "2px solid #D70F64",
-                  boxShadow:"none",
-                  "&:hover": {
-                    backgroundColor: "#b10c52", // Darker pink on hover
-                  },
-                }}
-              >
-                <ArrowForwardIcon />
-              </Button>
+              variant="contained"
+              sx={{
+                margin: "0 0 0 15px",
+                backgroundColor: "#D70F64", // Foodpanda pink
+                color: "#ffffff", // White text
+                border: "2px solid #D70F64",
+                boxShadow: "none",
+                "&:hover": {
+                  backgroundColor: "#b10c52", // Darker pink on hover
+                },
+              }}
+            >
+              <ArrowForwardIcon />
+            </Button>
           </Box>
         </Popover>
-        
+
         <Box sx={{ flexGrow: 1 }} />
 
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center", // Center horizontally
-              alignItems: "center",    // Center vertically
-              width: "75px",         // Example container height
-              position: "relative",    // Optional for further positioning
-              margin: "0 5px", //add space right left (outside)
-            }}
-          >
-        <Button variant="contained" color="inherit" 
+        <Box
           sx={{
-            
-            backgroundColor: "transparent",
-            //color: "#ffffff", // White text
-            boxShadow:"none",
-            ml: 1,
-            border: "1px solid #4a4a4a", // Optional: matching border,
-            //margin: "0 15px", //add space right left (outside)
-            borderRadius: "8px",        // Rounded corners (increase for more roundness)
-            height: "33px",              // Set height (adjust as needed)
-            transition: "all 0.4s ease", // Smooth transition for hover effects
-            fontWeight: 'bold',
-            
-            "&:hover": {
-              boxShadow:"none",
-              backgroundColor: "#F5F5F5", // Darker on hover
+            display: "flex",
+            justifyContent: "center", // Center horizontally
+            alignItems: "center", // Center vertically
+            width: "75px", // Example container height
+            position: "relative", // Optional for further positioning
+            margin: "0 5px", //add space right left (outside)
+          }}
+        >
+          <Button
+            variant="contained"
+            color="inherit"
+            sx={{
+              backgroundColor: "transparent",
+              //color: "#ffffff", // White text
+              boxShadow: "none",
+              ml: 1,
               border: "1px solid #4a4a4a", // Optional: matching border,
-              borderRadius: "8px",        // Rounded corners (increase for more roundness)
-              height: "38px",              // Set height (adjust as needed)
-              width:"70px",
-            },
-          }}>登入</Button>
-          
+              //margin: "0 15px", //add space right left (outside)
+              borderRadius: "8px", // Rounded corners (increase for more roundness)
+              height: "33px", // Set height (adjust as needed)
+              transition: "all 0.4s ease", // Smooth transition for hover effects
+              fontWeight: "bold",
+
+              "&:hover": {
+                boxShadow: "none",
+                backgroundColor: "#F5F5F5", // Darker on hover
+                border: "1px solid #4a4a4a", // Optional: matching border,
+                borderRadius: "8px", // Rounded corners (increase for more roundness)
+                height: "38px", // Set height (adjust as needed)
+                width: "70px",
+              },
+            }}
+            onClick={handleLoginDialogOpen}
+          >
+            登入
+          </Button>
         </Box>
 
         <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center", // Center horizontally
-              alignItems: "center",    // Center vertically
-              width: "75px",         // Example container height
-              position: "relative",    // Optional for further positioning
-              margin: "0 5px", //add space right left (outside)
-            }}
-        >
-        <Button
-          variant="contained"
-          //sx override the css, able to custom the css here
           sx={{
-            backgroundColor: "#D70F64", // Food panda color pink
-            color: "#ffffff", // White text
-            boxShadow:"none",
-            ml: 1,
-            //margin: "0 15px", //add space right left (outside)
-            borderRadius: "8px",        // Rounded corners (increase for more roundness)
-            height: "33px",              // Set height (adjust as needed)
-            transition: "all 0.3s ease", // Smooth transition for hover effects
-            fontWeight: 'bold',
-            "&:hover": {
-              boxShadow:"none",
-              backgroundColor: "#b10c52", // Darker pink on hover
-              borderRadius: "8px",        // Rounded corners (increase for more roundness)
-              height: "38px",              // Set height (adjust as needed)
-              width:"70px",
-            },
+            display: "flex",
+            justifyContent: "center", // Center horizontally
+            alignItems: "center", // Center vertically
+            width: "75px", // Example container height
+            position: "relative", // Optional for further positioning
+            margin: "0 5px", //add space right left (outside)
           }}
         >
-          註冊
-        </Button>
-
+          <Button
+            variant="contained"
+            //sx override the css, able to custom the css here
+            sx={{
+              backgroundColor: "#D70F64", // Food panda color pink
+              color: "#ffffff", // White text
+              boxShadow: "none",
+              ml: 1,
+              //margin: "0 15px", //add space right left (outside)
+              borderRadius: "8px", // Rounded corners (increase for more roundness)
+              height: "33px", // Set height (adjust as needed)
+              transition: "all 0.3s ease", // Smooth transition for hover effects
+              fontWeight: "bold",
+              "&:hover": {
+                boxShadow: "none",
+                backgroundColor: "#b10c52", // Darker pink on hover
+                borderRadius: "8px", // Rounded corners (increase for more roundness)
+                height: "38px", // Set height (adjust as needed)
+                width: "70px",
+              },
+            }}
+            onClick={handleLoginDialogOpen}
+          >
+            註冊
+          </Button>
         </Box>
 
-        <IconButton color="inherit" onClick={handleMenuOpen} >
+        <IconButton color="inherit" onClick={handleMenuOpen}>
           <LanguageIcon />
         </IconButton>
         <Menu
@@ -275,13 +276,17 @@ const HeaderLocation = () => {
           <MenuItem onClick={handleMenuClose}>繁體中文</MenuItem>
           <MenuItem onClick={handleMenuClose}>English</MenuItem>
         </Menu>
-        <IconButton color="inherit" 
-        sx={{ 
-         }}>
+        <IconButton color="inherit" sx={{}}>
           <ShoppingBagIcon />
         </IconButton>
         {/*<Avatar sx={{ ml: 1 }}>F</Avatar>*/}
       </Toolbar>
+      <LoginDialog
+        open={openLoginDialog}
+        onClose={handleLoginDialogClose}
+        setlogin={setlogin}
+        setlogout={setlogout}
+      />
     </AppBar>
   );
 };

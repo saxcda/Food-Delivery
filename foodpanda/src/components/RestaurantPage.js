@@ -7,14 +7,16 @@ import Header from "./Header";
 import { useParams } from "react-router-dom";
 import restaurantData from "../data/restaurantData";
 import panda_burger from "./Pictures/panda_burger.jpg";
-import { Box, Typography} from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import HeaderLocation from "./HeaderLocation";
 
-const RestaurantPage = () => {
+const RestaurantPage = ({ setlogin, setlogout }) => {
   const navigate = useNavigate();
   const { city } = useParams();
 
-  const restaurants = restaurantData.filter((restaurant) => restaurant.city === city);
+  const restaurants = restaurantData.filter(
+    (restaurant) => restaurant.city === city
+  );
 
   const handleRestaurantClick = (restaurantName) => {
     navigate(`/restaurants/${city}/${encodeURIComponent(restaurantName)}`);
@@ -23,32 +25,29 @@ const RestaurantPage = () => {
   const handleBackToHome = () => {
     // Navigate to Home page
     navigate("/");
-    
   };
 
   return (
     <div>
-      <HeaderLocation />
+      <HeaderLocation setlogin={setlogin} setlogout={setlogout} />
 
       <Box
         sx={{
-          backgroundColor:"#f5f5f5",
-          display:"flex",
-          overflow:"hidden",
-          position:"relative",
-          height:"300px",
-          justifyItems:"center",
-          alignItems:"center",
+          backgroundColor: "#f5f5f5",
+          display: "flex",
+          overflow: "hidden",
+          position: "relative",
+          height: "300px",
+          justifyItems: "center",
+          alignItems: "center",
         }}
       >
         <Box
           sx={{
-            margin:"0 0 0 10%"
+            margin: "0 0 0 10%",
           }}
         >
-          <Typography
-            variant="h3" sx={{ fontWeight: "bold" }}
-          >
+          <Typography variant="h3" sx={{ fontWeight: "bold" }}>
             推薦美食，外送到家
           </Typography>
         </Box>
@@ -59,7 +58,7 @@ const RestaurantPage = () => {
           sx={(theme) => ({
             marginLeft: "auto",
             width: "700px", // Adjust width as needed
-            right:"0%",
+            right: "0%",
             objectPosition: "right", // Focus the image from the left side
             position: "absolute", // Make it overflow based on position
           })}
@@ -71,14 +70,12 @@ const RestaurantPage = () => {
         selectedRestaurant={null}
         onBackToHome={handleBackToHome}
         onBackToRestaurants={() => navigate(`/restaurants/${city}`)} // Use 'city' for the back navigation
-
       />
       <RestaurantGrid
         restaurants={restaurants}
         onRestaurantClick={handleRestaurantClick} // Pass handler to grid
       />
       <Footer />
-
     </div>
   );
 };

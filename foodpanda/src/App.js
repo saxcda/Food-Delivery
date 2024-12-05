@@ -61,7 +61,8 @@ const App = () => {
         /> */}
         <Route path="/login" element={<FoodDeliveryPage />}/>
         <Route path="/home" element={<Home />} />
-        <Route path="/restaurants/:city" element={<RestaurantPage />} />
+        <Route path="/restaurants/:city" element={<RestaurantPage setlogin={setlogin}
+                setlogout={setlogout}/>} />
         <Route
           path="/restaurants/:city/:restaurantName"
           element={<RestaurantDetailsPage />}
