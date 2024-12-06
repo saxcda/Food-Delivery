@@ -48,10 +48,7 @@ const App = () => {
             loginState ? (
               <Navigate to="/login" /> // 如果已登入，重定向到 /home
             ) : (
-              <Home
-                setlogin={setlogin}
-                setlogout={setlogout}
-              />
+              <Home setlogin={setlogin} setlogout={setlogout} />
             )
           }
         />
@@ -59,10 +56,17 @@ const App = () => {
           path="/login"
           element={<LoginDialog open={true} setLoginState={setlogin} onClose={handleClose}/>}
         /> */}
-        <Route path="/login" element={<FoodDeliveryPage />}/>
+        <Route
+          path="/login"
+          element={
+            <FoodDeliveryPage setlogin={setlogin} setlogout={setlogout} />
+          }
+        />
         <Route path="/home" element={<Home />} />
-        <Route path="/restaurants/:city" element={<RestaurantPage setlogin={setlogin}
-                setlogout={setlogout}/>} />
+        <Route
+          path="/restaurants/:city"
+          element={<RestaurantPage setlogin={setlogin} setlogout={setlogout} />}
+        />
         <Route
           path="/restaurants/:city/:restaurantName"
           element={<RestaurantDetailsPage />}
