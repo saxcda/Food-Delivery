@@ -1,5 +1,4 @@
 import React, { useState, useMemo, useEffect } from "react";
-import React, { useState, useMemo, useEffect } from "react";
 import "./FoodDeliveryPage.css";
 import restaurantData from "../data/restaurantData";
 import RestaurantCard from "../components/RestaurantCard";
@@ -7,17 +6,22 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Grid, Typography } from "@mui/material";
-
-const GOOGLE_MAPS_API_KEY = "";
-
 import HeaderLocation from "../components/HeaderLocation";
+const GOOGLE_MAPS_API_KEY = "AIzaSyAqqcudDyo4itlY1bqbDyByPh_L6GMy9cs";
 
-const FoodDeliveryPage = () => {
-
+const FoodDeliveryPage = ({ setlogin, setlogout }) => {
   const navigate = useNavigate();
   const [city, setCity] = useState("未知城市");
   const [loadingLocation, setLoadingLocation] = useState(false);
+  const [filters, setFilters] = useState({});
+  const [sortKey, setSortKey] = useState("default");
+  const [searchValue, setSearchValue] = useState(""); // 儲存搜尋框的輸入值
+  const [filteredSearch, setFilteredSearch] = useState(""); // 用來篩選的狀態
+  const [showAllCuisines, setShowAllCuisines] = useState(false);
 
+  const handleRestaurantClick = (restaurantName) => {
+    navigate(`/restaurants/${city}/${encodeURIComponent(restaurantName)}`);
+  };
 
   useEffect(() => {
     const fetchCity = async (latitude, longitude) => {
@@ -25,20 +29,21 @@ const FoodDeliveryPage = () => {
         const response = await axios.get(
           `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_MAPS_API_KEY}`
         );
-        const address = response.data.results[0]?.formatted_address || "找不到地址";
-    
+        const address =
+          response.data.results[0]?.formatted_address || "找不到地址";
+
         // 使用正則表達式提取完整的縣市名稱
         const cityMatch = address.match(/台灣(.+?[市縣])/);
         const cityName = cityMatch ? cityMatch[1] : "未知地區";
-    
+
         setCity(cityName); // 設定縣市名稱
-        console.log(address, cityName)
+        console.log(address, cityName);
       } catch (error) {
         console.error("Error fetching address:", error);
         setCity("無法取得地址資訊，請稍後再試");
       }
     };
-  
+
     const fetchLocation = () => {
       setLoadingLocation(true);
       if (navigator.geolocation) {
@@ -60,206 +65,195 @@ const FoodDeliveryPage = () => {
         setLoadingLocation(false);
       }
     };
-  
+
     fetchLocation();
-    console.log(city)
+    console.log(city);
   }, []);
 
   useEffect(() => {
-    console.log(city)
+    console.log(city);
   }, [city]);
-  
 
-const FoodDeliveryPage = ({ setlogin, setlogout }) => {
-  console.log("Restaurant Data:", restaurantData);
-  const [filters, setFilters] = useState({});
-  const [sortKey, setSortKey] = useState("default");
+    const visibleCuisines = showAllCuisines
+      ? [
+          "三明治 / 吐司",
+          "中式",
+          "丼飯/蓋飯",
+          "便當",
+          "健康餐",
+          "台式",
+          "咖哩",
+          "咖啡",
+          "壽司",
+          "小吃",
+          "披薩",
+          "拉麵",
+          "日式",
+          "早餐",
+          "東南亞",
+          "歐美",
+          "泰式",
+          "港式",
+          "湯品",
+          "滷味",
+          "漢堡",
+          "火鍋",
+          "炒飯",
+          "炸雞",
+          "燒烤",
+          "牛排",
+          "甜甜圈",
+          "甜點",
+          "異國",
+          "粥",
+          "素食",
+          "義大利麵",
+          "蛋糕",
+          "豆花",
+          "越式",
+          "鐵板燒",
+          "飲料",
+          "餃子",
+          "鹹酥雞/雞排",
+          "麵食",
+        ]
+      : [
+          "三明治 / 吐司",
+          "中式",
+          "丼飯/蓋飯",
+          "便當",
+          "健康餐",
+          "台式",
+          "咖哩",
+          "咖啡",
+          "壽司",
+        ]; // 只顯示前 9 個菜式
 
-  const handleRestaurantClick = (restaurantName) => {
-    navigate(`/restaurants/${city}/${encodeURIComponent(restaurantName)}`);
-  };
-  const [searchValue, setSearchValue] = useState(""); // 儲存搜尋框的輸入值
-  const [filteredSearch, setFilteredSearch] = useState(""); // 用來篩選的狀態
-  const [showAllCuisines, setShowAllCuisines] = useState(false);
+    useEffect(() => {
+      setFilteredSearch(searchValue.trim().toLowerCase());
+    }, [searchValue]);
 
-  const visibleCuisines = showAllCuisines
-    ? [
-        "三明治 / 吐司",
-        "中式",
-        "丼飯/蓋飯",
-        "便當",
-        "健康餐",
-        "台式",
-        "咖哩",
-        "咖啡",
-        "壽司",
-        "小吃",
-        "披薩",
-        "拉麵",
-        "日式",
-        "早餐",
-        "東南亞",
-        "歐美",
-        "泰式",
-        "港式",
-        "湯品",
-        "滷味",
-        "漢堡",
-        "火鍋",
-        "炒飯",
-        "炸雞",
-        "燒烤",
-        "牛排",
-        "甜甜圈",
-        "甜點",
-        "異國",
-        "粥",
-        "素食",
-        "義大利麵",
-        "蛋糕",
-        "豆花",
-        "越式",
-        "鐵板燒",
-        "飲料",
-        "餃子",
-        "鹹酥雞/雞排",
-        "麵食",
-      ]
-    : [
-        "三明治 / 吐司",
-        "中式",
-        "丼飯/蓋飯",
-        "便當",
-        "健康餐",
-        "台式",
-        "咖哩",
-        "咖啡",
-        "壽司",
-      ]; // 只顯示前 9 個菜式
+    // 處理篩選條件改變
+    const handleFilterChange = (key, value) => {
+      setFilters((prevFilters) => {
+        return {
+          ...prevFilters,
+          [key]: value, // 單選篩選條件直接更新
+        };
+      });
+    };
 
-  useEffect(() => {
-    setFilteredSearch(searchValue.trim().toLowerCase());
-  }, [searchValue]);
+    // 處理排序條件改變
+    const handleSortChange = (key) => {
+      setSortKey(key);
+    };
 
-  // 處理篩選條件改變
-  const handleFilterChange = (key, value) => {
-    setFilters((prevFilters) => {
-      return {
+    const handlePriceFilter = (price) => {
+      setFilters((prevFilters) => ({
         ...prevFilters,
-        [key]: value, // 單選篩選條件直接更新
-      };
-    });
-  };
+        price: prevFilters.price === price ? null : price,
+      }));
+    };
 
-  // 處理排序條件改變
-  const handleSortChange = (key) => {
-    setSortKey(key);
-  };
+    // 篩選和排序邏輯
+    const filteredAndSortedRestaurants = useMemo(() => {
+      console.log(city);
 
-  const handlePriceFilter = (price) => {
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      price: prevFilters.price === price ? null : price,
-    }));
-  };
+      if (!Array.isArray(restaurantData)) return []; // 确保是数组
 
-  // 篩選和排序邏輯
-  const filteredAndSortedRestaurants = useMemo(() => {
-    console.log(city)
+      let filtered = [...restaurantData];
 
-    if (!Array.isArray(restaurantData)) return []; // 确保是数组
+      if (city) {
+        filtered = filtered.filter((res) => res.city === city);
+      }
 
-    let filtered = [...restaurantData];
+      // 快速篩選 - 評分為4+
+      if (filters.rating4Plus) {
+        filtered = filtered.filter((res) => res.rating >= 4);
+      }
 
-    if (city) {
-      filtered = filtered.filter((res) => res.city === city);
-    }
+      // 快速篩選 - 模範餐廳
+      if (filters.superVendor) {
+        filtered = filtered.filter((res) => res.isSuperVendor === true);
+      }
 
-    // 快速篩選 - 評分為4+
-    if (filters.rating4Plus) {
-      filtered = filtered.filter((res) => res.rating >= 4);
-    }
+      // 篩選 - 有無優惠
+      if (filters.promotions === "withPromotions") {
+        filtered = filtered.filter(
+          (res) => res.promotions && res.promotions.length > 0
+        );
+      } else if (filters.promotions === "noPromotions") {
+        filtered = filtered.filter(
+          (res) => !res.promotions || res.promotions.length === 0
+        );
+      }
 
-    // 快速篩選 - 模範餐廳
-    if (filters.superVendor) {
-      filtered = filtered.filter((res) => res.isSuperVendor === true);
-    }
+      // 搜尋菜式
+      if (filteredSearch) {
+        filtered = filtered.filter((res) =>
+          res.name.toLowerCase().includes(filteredSearch)
+        );
+      }
 
-    // 篩選 - 有無優惠
-    if (filters.promotions === "withPromotions") {
-      filtered = filtered.filter(
-        (res) => res.promotions && res.promotions.length > 0
-      );
-    } else if (filters.promotions === "noPromotions") {
-      filtered = filtered.filter(
-        (res) => !res.promotions || res.promotions.length === 0
-      );
-    }
+      // 篩選 - 菜式
+      if (filters.type && filters.type !== "all") {
+        filtered = filtered.filter((res) => res.type === filters.type);
+      }
 
-    // 搜尋菜式
-    if (filteredSearch) {
-      filtered = filtered.filter((res) =>
-        res.name.toLowerCase().includes(filteredSearch)
-      );
-    }
+      // 篩選 - 價格
+      if (filters.price) {
+        // 計算所有商品價格的最小值和最大值
+        const allPrices = restaurantData
+          .flatMap((res) =>
+            res.categories.flatMap((cat) => cat.items.map((item) => item.price))
+          )
+          .filter((price) => typeof price === "number");
 
-    // 篩選 - 菜式
-    if (filters.type && filters.type !== "all") {
-      filtered = filtered.filter((res) => res.type === filters.type);
-    }
+        const minPrice = Math.min(...allPrices);
+        const maxPrice = Math.max(...allPrices);
+        const rangeSize = (maxPrice - minPrice) / 3;
 
-    // 篩選 - 價格
-    if (filters.price) {
-      // 計算所有商品價格的最小值和最大值
-      const allPrices = restaurantData
-        .flatMap((res) =>
-          res.categories.flatMap((cat) => cat.items.map((item) => item.price))
-        )
-        .filter((price) => typeof price === "number");
-    
-      const minPrice = Math.min(...allPrices);
-      const maxPrice = Math.max(...allPrices);
-      const rangeSize = (maxPrice - minPrice) / 3;
-    
-      // 分成三個價格區間
-      const priceMapping = {
-        $: (price) => price >= minPrice && price < minPrice + rangeSize,
-        $$: (price) =>
-          price >= minPrice + rangeSize && price < minPrice + 2 * rangeSize,
-        $$$: (price) => price >= minPrice + 2 * rangeSize && price <= maxPrice,
-      };
-    
-      // 篩選符合價格區間的餐廳
-      filtered = filtered.filter((res) =>
-        res.categories
-          .flatMap((cat) => cat.items)
-          .some((item) => priceMapping[filters.price](item.price))
-      );
-    }    
+        // 分成三個價格區間
+        const priceMapping = {
+          $: (price) => price >= minPrice && price < minPrice + rangeSize,
+          $$: (price) =>
+            price >= minPrice + rangeSize && price < minPrice + 2 * rangeSize,
+          $$$: (price) =>
+            price >= minPrice + 2 * rangeSize && price <= maxPrice,
+        };
 
-    // 排序
-    if (sortKey === "priceAsc") {
-      filtered.sort(
-        (a, b) =>
-          a.categories[0].items[0].price - b.categories[0].items[0].price
-      );
-    } else if (sortKey === "priceDesc") {
-      filtered.sort(
-        (a, b) =>
-          b.categories[0].items[0].price - a.categories[0].items[0].price
-      );
-    } else if (sortKey === "ratingDesc") {
-      filtered.sort((a, b) => b.rating - a.rating);
-    }
+        // 篩選符合價格區間的餐廳
+        filtered = filtered.filter((res) =>
+          res.categories
+            .flatMap((cat) => cat.items)
+            .some((item) => priceMapping[filters.price](item.price))
+        );
+      }
 
-    console.log(filtered)
-    return filtered;
-  }, [filters, sortKey, city, filteredSearch]);
+      // 排序
+      if (sortKey === "priceAsc") {
+        filtered.sort(
+          (a, b) =>
+            a.categories[0].items[0].price - b.categories[0].items[0].price
+        );
+      } else if (sortKey === "priceDesc") {
+        filtered.sort(
+          (a, b) =>
+            b.categories[0].items[0].price - a.categories[0].items[0].price
+        );
+      } else if (sortKey === "ratingDesc") {
+        filtered.sort((a, b) => b.rating - a.rating);
+      }
 
-  return (
+      console.log(filtered);
+      return filtered;
+    }, [filters, sortKey, city, filteredSearch]);
+
+    return (
     <div>
       <HeaderLocation setlogin={setlogin} setlogout={setlogout} />
       <div className="food-delivery-page">
+        
         {/* 篩選和排序的側邊欄 */}
         <div className="sidebar">
           <div className="box-flex ai-center jc-space-between fd-row">
@@ -681,9 +675,8 @@ const FoodDeliveryPage = ({ setlogin, setlogout }) => {
           </div>
         </div>
 
-
-      {/* 餐廳列表 */}
-      {/* <div className="restaurantData-list">
+        {/* 餐廳列表 */}
+        {/* <div className="restaurantData-list">
         {filteredAndSortedRestaurants.map((restaurantData, index) => (
           <div key={index} className="restaurantData-card">
             <img src={restaurantData.image} alt={restaurantData.name} />
@@ -693,33 +686,33 @@ const FoodDeliveryPage = ({ setlogin, setlogout }) => {
           </div>
         ))}
       </div> */}
-
-<Grid 
-      container spacing={1} 
-      justifyContent="flex-start" 
-      minHeight={"450px"}
-      padding={"0 8% 0 8%"}
-      >
-      {filteredAndSortedRestaurants.length === 0 ? (
-        <Typography variant="h6" color="textSecondary">
-          沒有找到符合條件的餐廳。
-        </Typography>
-      ) : (
-        filteredAndSortedRestaurants.map((filteredAndSortedRestaurants, index) => (
-          <Grid 
-            item key={index} 
-            md={4}
-            >
-            <RestaurantCard
-              restaurant={filteredAndSortedRestaurants}
-              onClick={() => handleRestaurantClick(filteredAndSortedRestaurants.name)} 
-            />
-          </Grid>
-        ))
-      )}
-    </Grid>
-    </div>
-  );
-};
-
+        <Grid
+          container
+          spacing={1}
+          justifyContent="flex-start"
+          minHeight={"450px"}
+          padding={"0 8% 0 8%"}
+        >
+          {filteredAndSortedRestaurants.length === 0 ? (
+            <Typography variant="h6" color="textSecondary">
+              沒有找到符合條件的餐廳。
+            </Typography>
+          ) : (
+            filteredAndSortedRestaurants.map(
+              (filteredAndSortedRestaurants, index) => (
+                <Grid item key={index} md={4}>
+                  <RestaurantCard
+                    restaurant={filteredAndSortedRestaurants}
+                    onClick={() =>
+                      handleRestaurantClick(filteredAndSortedRestaurants.name)
+                    }
+                  />
+                </Grid>
+              )
+            )
+          )}
+        </Grid>
+      </div></div>
+    );
+  };
 export default FoodDeliveryPage;
