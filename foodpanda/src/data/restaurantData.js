@@ -46,8 +46,8 @@ const restaurantData = [
     type: "台式",
     details: "阿春主打新鮮的台式海鮮與家常菜，是全家聚餐的好地方。",
     promotions: ["滿 $500 享 85 折", "迎新禮：贈送小菜"],
-    location: "台南市安平區",
-    city: "台南市",
+    location: "桃園市龜山區",
+    city: "桃園市",
     categories: [
       {
         name: "seafood",
