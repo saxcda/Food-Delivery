@@ -28,6 +28,22 @@ import HaveEmail from "./auth/HaveEmail";
 import NotHaveEmail from "./auth/NotHaveEmail";
 
 const App = () => {
+  const [restaurantData, setRestaurantData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/restaurants");
+        const data = await response.json();
+        setRestaurantData(data);
+      } catch (err) {
+        console.error("Error fetching restaurant data:", err.message);
+      }
+    };
+
+    fetchData();
+  }, []);
+  
   const [loginState, setLoginState] = useState(false);
   console.log(typeof setLoginState);
 
@@ -65,7 +81,7 @@ const App = () => {
                 setlogout={setlogout}/>} />
         <Route
           path="/restaurants/:city/:restaurantName"
-          element={<RestaurantDetailsPage />}
+          element={<RestaurantDetailsPage restaurantData={restaurantData} />}
         />
       </Routes>
     </Router>
