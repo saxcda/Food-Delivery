@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import restaurantData from "./data/restaurantData";
 import CityGrid from "./components/CityGrid";
 import RestaurantGrid from "./components/RestaurantGrid";
 import NavigationBreadcrumbs from "./components/NavigationBreadcrumbs";
@@ -26,7 +25,7 @@ import LoginDialog from "./auth/LoginDialog";
 import EmailConfirm from "./auth/EmailConfirm";
 import HaveEmail from "./auth/HaveEmail";
 import NotHaveEmail from "./auth/NotHaveEmail";
-
+import PaymentPage from "./Pages/PaymentPage";
 const App = () => {
   const [restaurantData, setRestaurantData] = useState([]);
 
@@ -43,7 +42,7 @@ const App = () => {
 
     fetchData();
   }, []);
-  
+
   const [loginState, setLoginState] = useState(false);
   console.log(typeof setLoginState);
 
@@ -75,7 +74,7 @@ const App = () => {
         <Route
           path="/login"
           element={
-            <FoodDeliveryPage setlogin={setlogin} setlogout={setlogout} />
+            <FoodDeliveryPage setlogin={setlogin} setlogout={setlogout} restaurantData={restaurantData}/>
           }
         />
         <Route path="/home" element={<Home />} />
@@ -87,7 +86,13 @@ const App = () => {
           path="/restaurants/:city/:restaurantName"
           element={<RestaurantDetailsPage restaurantData={restaurantData} />}
         />
+        {/* 其他路由 */}
+        <Route 
+          path="/payment" 
+          element={<PaymentPage />} 
+        />
       </Routes>
+
     </Router>
   );
 };

@@ -412,33 +412,29 @@ const RestaurantDetails = () => {
         </Grid>
 
         {/* 購物車 */}
-        <Grid item xs={12} md={4}  >
+        <Grid item xs={12} md={4}>
           <Box
             sx={{
               position: "sticky",
               top: 165,
-              border: "1px solid",
-              borderColor:"#C4C4C4",
-              borderRadius: "20px",
-              padding:"8px 20px 8px 20px",
-              width:"350px",
-              height: "650px",
-              overflowY: "visible",
-              marginTop:"30px",
-              marginLeft:"50px",
-
+              border: "1px solid #E0E0E0",
+              borderRadius: "10px",
+              padding: "16px",
+              width: "350px",
+              height: "auto",
+              backgroundColor: "#FFFFFF",
+              boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
             }}
           >
-        
+            {/* 標題和切換按鈕 */}
             <Box
               sx={{
-                mt: 2,
                 display: "flex",
                 justifyContent: "center",
-                backgroundColor:"#f5f5f5",
-                borderRadius:"10px",
-                height:"55px",
-                padding:"5px",
+                backgroundColor: "#F5F5F5",
+                borderRadius: "8px",
+                padding: "8px",
+                mb: 2,
               }}
             >
               <Button
@@ -446,57 +442,49 @@ const RestaurantDetails = () => {
                 onClick={() => setDeliveryType("外帶")}
                 sx={{
                   width: "50%",
-                  backgroundColor: deliveryType === "外帶" ? "#f5f5f5" : "#ffffff",
-                  color: "black",
-                  border: deliveryType === "外帶" ? "1px solid grey" : "1px solid transparent",
-                  boxShadow: "none",
-                  "&:hover": {
-                    backgroundColor: "#f5f5f5",
-                    boxShadow: "none",
-                    border: "1px solid grey",
-                  },
+                  backgroundColor: deliveryType === "外帶" ? "#FFFFFF" : "transparent",
+                  color: deliveryType === "外帶" ? "#000000" : "#757575",
+                  borderRadius: "8px 0 0 8px",
+                  boxShadow: deliveryType === "外帶" ? "none" : "none",
+                  fontSize: "0.9rem",
                 }}
               >
-                外帶
+                外送
               </Button>
-
               <Button
                 variant="contained"
                 onClick={() => setDeliveryType("外送自取")}
                 sx={{
                   width: "50%",
-                  backgroundColor: deliveryType === "外送自取" ? "#f5f5f5" : "#ffffff",
-                  color: "black",
-                  border: deliveryType === "外送自取" ? "1px solid grey" : "1px solid transparent",
-                  boxShadow: "none",
-                  "&:hover": {
-                    backgroundColor: "#f5f5f5",
-                    boxShadow: "none",
-                    border: "1px solid grey",
-                  },
+                  backgroundColor:
+                    deliveryType === "外送自取" ? "#FFFFFF" : "transparent",
+                  color: deliveryType === "外送自取" ? "#000000" : "#757575",
+                  borderRadius: "0 8px 8px 0",
+                  boxShadow: deliveryType === "外送自取" ? "none" : "none",
+                  fontSize: "0.9rem",
                 }}
               >
-                外送自取
+                外帶自取
               </Button>
-
             </Box>
 
+            {/* 購物車內容 */}
             {cart.length === 0 ? (
               <Box
                 sx={{
                   display: "flex",
                   flexDirection: "column",
-                  justifyContent: "center",
                   alignItems: "center",
-                  height: "100%",
+                  justifyContent: "center",
                   textAlign: "center",
+                  height: "300px",
                 }}
               >
-                <img 
-                  src={panda_cart} 
-                  alt="Panda Cart Icon" 
-                  style={{ width: "100px", height: "100px", marginTop:"-100px"}} // Adjust size as needed
-                /> {/* icon */}
+                <img
+                  src={panda_cart}
+                  alt="Panda Cart Icon"
+                  style={{ width: "80px", height: "80px", marginBottom: "16px" }}
+                />
                 <Typography variant="body1" color="textSecondary">
                   購物車目前是空的
                 </Typography>
@@ -510,31 +498,82 @@ const RestaurantDetails = () => {
                       display: "flex",
                       justifyContent: "space-between",
                       alignItems: "center",
-                      mb: 2,
-                      borderBottom: "1px solid gray",
+                      padding: "8px 0",
+                      borderBottom: "1px solid #E0E0E0",
                     }}
                   >
-                    <Typography variant="body2">{item.name}</Typography>
-                    <Button
-                      size="small"
-                      variant="text"
-                      color="error"
-                      onClick={() => removeFromCart(index)}
-                    >
-                      移除
-                    </Button>
+                    <Box>
+                      <Typography variant="body2">{item.name}</Typography>
+                      <Typography
+                        variant="caption"
+                        color="textSecondary"
+                        sx={{ fontSize: "0.85rem" }}
+                      >
+                        ${item.price}
+                      </Typography>
+                    </Box>
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                      <Button
+                        size="small"
+                        variant="text"
+                        sx={{ minWidth: "30px", fontSize: "1rem" }}
+                        onClick={() => {
+                          // 減少數量的邏輯
+                        }}
+                      >
+                        -
+                      </Button>
+                      <Typography variant="body2" sx={{ width: "24px", textAlign: "center" }}>
+                        1
+                      </Typography>
+                      <Button
+                        size="small"
+                        variant="text"
+                        sx={{ minWidth: "30px", fontSize: "1rem" }}
+                        onClick={() => {
+                          // 增加數量的邏輯
+                        }}
+                      >
+                        +
+                      </Button>
+                    </Box>
                   </Box>
                 ))}
-                <Typography variant="h6" sx={{ mt: 2 }}>
-                  總計: ${totalPrice}
-                </Typography>
-                <Button variant="contained" color="primary" onClick={openDialog}>
-                  查看明細
+                {/* 總計金額 */}
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    paddingTop: "16px",
+                  }}
+                >
+                  <Typography variant="h6" fontWeight="bold">
+                    總計
+                  </Typography>
+                  <Typography variant="h6" fontWeight="bold" color="primary">
+                    ${totalPrice}
+                  </Typography>
+                </Box>
+                {/* 按鈕 */}
+                <Button
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  sx={{
+                    marginTop: "16px",
+                    backgroundColor: "#D70F64",
+                    "&:hover": { backgroundColor: "#C00E58" },
+                  }}
+                  onClick={() => navigate("/payment", { state: { cart, deliveryType } })} // 傳遞購物車內容
+                >
+                  查看付款方式及地址
                 </Button>
               </Box>
             )}
           </Box>
         </Grid>
+
       </Grid>
 
       {/* 明細對話框 */}

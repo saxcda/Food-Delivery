@@ -2,7 +2,6 @@ import React, {useEffect, useState} from "react";
 import { Grid, Typography } from "@mui/material";
 import RestaurantCard from "./RestaurantCard";
 import { useNavigate, useParams } from "react-router-dom";
-import restaurantData from "../data/restaurantData";
 
 const RestaurantGrid = () => {
   const { city } = useParams();
