@@ -27,6 +27,8 @@ import HaveEmail from "./auth/HaveEmail";
 import NotHaveEmail from "./auth/NotHaveEmail";
 // import PaymentPage from "./Pages/PaymentPage1";
 import PaymentPage from "./Pages/PaymentPage";
+import DeliveryPage from "./Pages/DeliveryPage";
+
 const App = () => {
   const [restaurantData, setRestaurantData] = useState([]);
 
@@ -72,10 +74,6 @@ const App = () => {
           path="/login"
           element={<LoginDialog open={true} setLoginState={setlogin} onClose={handleClose}/>}
         /> */}
-        {/* <Route
-          path="/pay"
-          element={<PaymentPage setlogin={setlogin} setlogout={setlogout}/>}
-        /> */}
         <Route
           path="/login"
           element={
@@ -96,6 +94,7 @@ const App = () => {
           path="/payment" 
           element={<PaymentPage setlogin={setlogin} setlogout={setlogout}/>} 
         />
+        <Route path="delivery" element={<DeliveryPage setlogin={setlogin} setlogout={setlogout}/>}/>
       </Routes>
       
     </Router>
