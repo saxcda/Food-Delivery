@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./PaymentPage1.css";
+import "./PaymentPage.css";
 import HeaderLocation from "../components/HeaderLocation";
 
 const PaymentPage = ({ setlogin, setlogout }) => {
