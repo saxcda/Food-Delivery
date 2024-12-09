@@ -21,7 +21,7 @@ CREATE TABLE users (
 -- );
 -- 商家表
 CREATE TABLE merchants (
-    merchant_id INT PRIMARY KEY ,
+    merchant_id INT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     image VARCHAR(255),
     rating DECIMAL(2,1) NOT NULL,
@@ -49,6 +49,7 @@ CREATE TABLE menu_items (
     price DECIMAL(10,2) NOT NULL,
     original_price DECIMAL(10,2),
     image VARCHAR(255),
+    isPri BOOLEAN(1),
     FOREIGN KEY (category_id) REFERENCES categories(category_id) ON DELETE CASCADE
 );
 
@@ -117,8 +118,9 @@ INSERT INTO users (user_id, username, password, email, phone, address, user_type
 (1, 'hans', '123', 'n930827@gmail.com', '0908027950', '印尼', '會員', '');
 
 -- 插入商家資料
-INSERT INTO merchants (name, image, rating, type, details, promotions, location, city)
+INSERT INTO merchants (merchant_id, name, image, rating, type, details, promotions, location, city)
 VALUES (
+    1,
     '阿春台菜海鮮',
     'path/to/image6.png',
     4.9,
@@ -127,17 +129,32 @@ VALUES (
     '[\"滿 $500 享 85 折\", \"迎新禮：贈送小菜\"]',
     '桃園市龜山區',
     '桃園市'
+),(
+    2,
+    '小偉咖哩',
+    'path/to/image6.png',
+    4.9,
+    '日是',
+    '阿春主打新鮮的台式海鮮與家常菜，是全家聚餐的好地方。',
+    '[\"滿 $500 享 85 折\", \"迎新禮：贈送小菜\"]',
+    '桃園市龜山區',
+    '桃園市'
 );
 
 -- 插入分類資料
-INSERT INTO categories (merchant_id, name, display_name)
+INSERT INTO categories (category_id, merchant_id, name, display_name)
 VALUES
-    (1, 'seafood', '海鮮 🦐');
+    (1, 1, 'seafood', '海鮮 🦐'),
+    (2, 2, 'curry', '咖哩');
+
 
 -- 插入菜單項目資料
-INSERT INTO menu_items (category_id, name, price, original_price, image)
+INSERT INTO menu_items (item_id, category_id, name, price, original_price, image, isPri)
 VALUES
-    (1, '炒花枝', 320, 340, 'path/to/menu12.png'),
-    (1, '蒜香蝦仁', 280, 300, 'path/to/menu13.png');
+    (1, 1, '炒花枝', 320, 340, 'path/to/menu12.png', 0),
+    (2, 1, '蒜香蝦仁', 280, 300, 'path/to/menu13.png', 0),
+    (3, 2, '小及咖哩', 280, 300, 'path/to/menu14.png', 0),
+    (4, 2, '小小咖哩', 280, 300, 'path/to/menu15.png', 0);
+
 
 

@@ -1,11 +1,16 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from flask_sqlalchemy import SQLAlchemy
 import sqlite3
 
 from sendemail import sendEmail
 from SQL import email_confirm, password_confirm
 
 app = Flask(__name__)
+# Configuration for SQLite database
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/YPLab/AppData/Local/anaconda3/envs/foodpanda/Code/Food-Delivery/foodpanda/backend/db/foodpanda.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
 CORS(app)
 
 # API: 發送電子郵件
@@ -64,38 +69,34 @@ def check_password_api():
 @app.route('/restaurants', methods=['GET'])
 def get_restaurants():
     try:
-        # 從請求中獲取查詢參數 city
         city = request.args.get('city')
 
-        # 連接 SQLite 資料庫
         conn = sqlite3.connect('./db/foodpanda.db')
         cursor = conn.cursor()
 
         if city == 'all':
-            # 返回所有城市名稱
             cities_query = "SELECT DISTINCT city FROM merchants"
             cursor.execute(cities_query)
             cities = cursor.fetchall()
-            result = [city[0] for city in cities]  # 提取城市名稱列表
+            result = [city[0] for city in cities]
             conn.close()
             return jsonify(result), 200
 
-        # 查詢商家資料，根據 city 過濾
         merchants_query = "SELECT * FROM merchants WHERE city = ?" if city else "SELECT * FROM merchants"
         cursor.execute(merchants_query, (city,) if city else ())
         merchants = cursor.fetchall()
 
-        # 查詢分類資料
         categories_query = "SELECT * FROM categories"
         cursor.execute(categories_query)
         categories = cursor.fetchall()
 
-        # 查詢菜單項目資料
-        menu_items_query = "SELECT * FROM menu_items"
+        menu_items_query = """
+            SELECT item_id, category_id, name, price, original_price, image
+            FROM menu_items
+        """
         cursor.execute(menu_items_query)
         menu_items = cursor.fetchall()
 
-        # 整理數據
         result = []
         for merchant in merchants:
             merchant_id, name, image, rating, m_type, details, promotions, location, city_name = merchant
@@ -112,18 +113,17 @@ def get_restaurants():
                 "categories": []
             }
 
-            # 添加分類
             for category in categories:
                 category_id, cat_merchant_id, cat_name, display_name = category
                 if cat_merchant_id == merchant_id:
                     category_data = {
                         "category_id": category_id,
+                        "merchant_id": merchant_id,
                         "name": cat_name,
                         "display_name": display_name,
                         "items": []
                     }
 
-                    # 添加菜單項目
                     for item in menu_items:
                         item_id, item_category_id, item_name, price, original_price, item_image = item
                         if item_category_id == category_id:
@@ -143,6 +143,49 @@ def get_restaurants():
     except Exception as e:
         print(e)
         return jsonify({'error': str(e)}), 500
+
+
+
+class User(db.Model):
+    __tablename__ = 'users'
+    user_id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(50), nullable=False)
+    password = db.Column(db.String(255), nullable=False)
+    email = db.Column(db.String(100))
+    phone = db.Column(db.String(15))
+    address = db.Column(db.String(255))
+    user_type = db.Column(db.Text, nullable=False)
+    membership_status = db.Column(db.Text)
+
+# Route to fetch user data by ID
+@app.route('/users/<int:user_id>', methods=['GET'])
+def get_user(user_id):
+    user = User.query.get(user_id)
+    if user:
+        return jsonify({
+            "firstName": user.username.split(" ")[0] if " " in user.username else user.username,
+            "lastName": user.username.split(" ")[1] if " " in user.username else "",
+            "phone": user.phone,
+            "email": user.email,
+            "address": user.address,
+        })
+    return jsonify({"error": "User not found"}), 404
+
+# Route to update user data by ID
+@app.route('/users/<int:user_id>', methods=['PUT'])
+def update_user(user_id):
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+
+    data = request.json
+    user.username = f"{data.get('firstName')} {data.get('lastName')}".strip()
+    user.phone = data.get("phoneNumber", user.phone)
+    user.email = data.get("email", user.email)
+    user.address = data.get("address", user.address)
+    db.session.commit()
+    return jsonify({"message": "User updated successfully"})
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
