@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import restaurantData from "./data/restaurantData";
 import CityGrid from "./components/CityGrid";
 import RestaurantGrid from "./components/RestaurantGrid";
 import NavigationBreadcrumbs from "./components/NavigationBreadcrumbs";
@@ -26,9 +25,29 @@ import LoginDialog from "./auth/LoginDialog";
 import EmailConfirm from "./auth/EmailConfirm";
 import HaveEmail from "./auth/HaveEmail";
 import NotHaveEmail from "./auth/NotHaveEmail";
+<<<<<<< HEAD
 import PaymentPage from "./Pages/PaymentPage1";
 
+=======
+import PaymentPage from "./Pages/PaymentPage";
+>>>>>>> 95e51c264112da316c44b96e4589a3f06035f98d
 const App = () => {
+  const [restaurantData, setRestaurantData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/restaurants");
+        const data = await response.json();
+        setRestaurantData(data);
+      } catch (err) {
+        console.error("Error fetching restaurant data:", err.message);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const [loginState, setLoginState] = useState(false);
   console.log(typeof setLoginState);
 
@@ -64,7 +83,7 @@ const App = () => {
         <Route
           path="/login"
           element={
-            <FoodDeliveryPage setlogin={setlogin} setlogout={setlogout} />
+            <FoodDeliveryPage setlogin={setlogin} setlogout={setlogout} restaurantData={restaurantData}/>
           }
         />
         <Route path="/home" element={<Home />} />
@@ -74,10 +93,19 @@ const App = () => {
         />
         <Route
           path="/restaurants/:city/:restaurantName"
-          element={<RestaurantDetailsPage />}
+          element={<RestaurantDetailsPage restaurantData={restaurantData} />}
+        />
+        {/* 其他路由 */}
+        <Route 
+          path="/payment" 
+          element={<PaymentPage />} 
         />
       </Routes>
+<<<<<<< HEAD
       
+=======
+
+>>>>>>> 95e51c264112da316c44b96e4589a3f06035f98d
     </Router>
   );
 };

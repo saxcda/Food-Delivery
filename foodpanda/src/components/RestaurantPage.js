@@ -1,11 +1,10 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import NavigationBreadcrumbs from "./NavigationBreadcrumbs";
 import RestaurantGrid from "./RestaurantGrid";
 import Footer from "./Footer";
 import Header from "./Header";
 import { useParams } from "react-router-dom";
-import restaurantData from "../data/restaurantData";
 import panda_burger from "./Pictures/panda_burger.jpg";
 import { Box, Typography } from "@mui/material";
 import HeaderLocation from "./HeaderLocation";
@@ -14,9 +13,26 @@ const RestaurantPage = ({ setlogin, setlogout }) => {
   const navigate = useNavigate();
   const { city } = useParams();
 
-  const restaurants = restaurantData.filter(
-    (restaurant) => restaurant.city === city
-  );
+  const [restaurants, setRestaurantData] = useState([]);
+
+  useEffect(() => {
+      const fetchData = async () => {
+          try {
+              console.log(city)
+              const response = await fetch(`http://localhost:5000/restaurants?city=${city}`);
+              const data = await response.json();
+
+              setRestaurantData(data);
+              console.log(data)
+          } catch (err) {
+              console.error('Error fetching restaurant data:', err.message);
+          }
+      };
+
+      fetchData();
+  }, []);
+
+  
 
   const handleRestaurantClick = (restaurantName) => {
     navigate(`/restaurants/${city}/${encodeURIComponent(restaurantName)}`);

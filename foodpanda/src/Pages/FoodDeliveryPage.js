@@ -1,6 +1,5 @@
 import React, { useState, useMemo, useEffect } from "react";
 import "./FoodDeliveryPage.css";
-import restaurantData from "../data/restaurantData";
 import RestaurantCard from "../components/RestaurantCard";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
@@ -9,7 +8,7 @@ import { Grid, Typography } from "@mui/material";
 import HeaderLocation from "../components/HeaderLocation";
 const GOOGLE_MAPS_API_KEY = "AIzaSyAqqcudDyo4itlY1bqbDyByPh_L6GMy9cs";
 
-const FoodDeliveryPage = ({ setlogin, setlogout }) => {
+const FoodDeliveryPage = ({ setlogin, setlogout, restaurantData}) => {
   const navigate = useNavigate();
   const [city, setCity] = useState("未知城市");
   const [loadingLocation, setLoadingLocation] = useState(false);
@@ -247,7 +246,7 @@ const FoodDeliveryPage = ({ setlogin, setlogout }) => {
 
       console.log(filtered);
       return filtered;
-    }, [filters, sortKey, city, filteredSearch]);
+    }, [filters, sortKey, city, filteredSearch, restaurantData]);
 
     return (
     <div>

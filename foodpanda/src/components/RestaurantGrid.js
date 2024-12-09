@@ -1,14 +1,30 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { Grid, Typography } from "@mui/material";
 import RestaurantCard from "./RestaurantCard";
 import { useNavigate, useParams } from "react-router-dom";
-import restaurantData from "../data/restaurantData";
 
 const RestaurantGrid = () => {
   const { city } = useParams();
   const navigate = useNavigate();
 
-  const restaurants = restaurantData.filter((restaurant) => restaurant.city === city);
+  const [restaurants, setRestaurantData] = useState([]);
+
+  useEffect(() => {
+      const fetchData = async () => {
+          try {
+              console.log(city)
+              const response = await fetch(`http://localhost:5000/restaurants?city=${city}`);
+              const data = await response.json();
+
+              setRestaurantData(data);
+              console.log(data)
+          } catch (err) {
+              console.error('Error fetching restaurant data:', err.message);
+          }
+      };
+
+      fetchData();
+  }, []);
 
   const handleRestaurantClick = (restaurantName) => {
     navigate(`/restaurants/${city}/${encodeURIComponent(restaurantName)}`);
