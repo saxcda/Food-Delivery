@@ -26,6 +26,7 @@ import LoginDialog from "./auth/LoginDialog";
 import EmailConfirm from "./auth/EmailConfirm";
 import HaveEmail from "./auth/HaveEmail";
 import NotHaveEmail from "./auth/NotHaveEmail";
+import PaymentPage from "./Pages/PaymentPage1";
 
 const App = () => {
   const [loginState, setLoginState] = useState(false);
@@ -57,6 +58,10 @@ const App = () => {
           element={<LoginDialog open={true} setLoginState={setlogin} onClose={handleClose}/>}
         /> */}
         <Route
+          path="/pay"
+          element={<PaymentPage setlogin={setlogin} setlogout={setlogout}/>}
+        />
+        <Route
           path="/login"
           element={
             <FoodDeliveryPage setlogin={setlogin} setlogout={setlogout} />
@@ -72,6 +77,7 @@ const App = () => {
           element={<RestaurantDetailsPage />}
         />
       </Routes>
+      
     </Router>
   );
 };
