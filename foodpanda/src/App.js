@@ -25,12 +25,8 @@ import LoginDialog from "./auth/LoginDialog";
 import EmailConfirm from "./auth/EmailConfirm";
 import HaveEmail from "./auth/HaveEmail";
 import NotHaveEmail from "./auth/NotHaveEmail";
-<<<<<<< HEAD
-import PaymentPage from "./Pages/PaymentPage1";
-
-=======
+// import PaymentPage from "./Pages/PaymentPage1";
 import PaymentPage from "./Pages/PaymentPage";
->>>>>>> 95e51c264112da316c44b96e4589a3f06035f98d
 const App = () => {
   const [restaurantData, setRestaurantData] = useState([]);
 
@@ -76,10 +72,10 @@ const App = () => {
           path="/login"
           element={<LoginDialog open={true} setLoginState={setlogin} onClose={handleClose}/>}
         /> */}
-        <Route
+        {/* <Route
           path="/pay"
           element={<PaymentPage setlogin={setlogin} setlogout={setlogout}/>}
-        />
+        /> */}
         <Route
           path="/login"
           element={
@@ -98,14 +94,10 @@ const App = () => {
         {/* 其他路由 */}
         <Route 
           path="/payment" 
-          element={<PaymentPage />} 
+          element={<PaymentPage setlogin={setlogin} setlogout={setlogout}/>} 
         />
       </Routes>
-<<<<<<< HEAD
       
-=======
-
->>>>>>> 95e51c264112da316c44b96e4589a3f06035f98d
     </Router>
   );
 };
