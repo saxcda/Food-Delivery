@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Grid, Typography } from "@mui/material";
 import HeaderLocation from "../components/HeaderLocation";
-const GOOGLE_MAPS_API_KEY = "AIzaSyAqqcudDyo4itlY1bqbDyByPh_L6GMy9cs";
+const GOOGLE_MAPS_API_KEY = "";
 
 const FoodDeliveryPage = ({ setlogin, setlogout, restaurantData}) => {
   const navigate = useNavigate();
