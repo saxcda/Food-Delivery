@@ -69,6 +69,8 @@ const RestaurantDetails = () => {
       try {
         const response = await fetch("http://localhost:5000/restaurants");
         const data = await response.json();
+
+        console.log(data)
   
         // 解析 promotions 字段
         const transformedData = data.map((restaurant) => {
@@ -104,6 +106,7 @@ const RestaurantDetails = () => {
       const selectedRestaurant = restaurantData.find(
         (r) => r.name === decodeURIComponent(restaurantName)
       );
+      console.log(selectedRestaurant)
       if (selectedRestaurant) {
         setRestaurant(selectedRestaurant);
       } else {

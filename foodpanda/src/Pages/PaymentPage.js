@@ -307,112 +307,6 @@ const PaymentPage = ({ setlogin, setlogout }) => {
               )}
             </div>
 
-<<<<<<< HEAD
-        {/* 使用優惠券 */}
-        <Box
-            sx={{
-            display: "flex",
-            alignItems: "center",
-            gap: "10px",
-            marginTop: "20px",
-            }}
-        >
-            <img
-            src="https://via.placeholder.com/24"
-            alt="優惠券圖示"
-            style={{ width: "24px", height: "24px" }}
-            />
-            <Typography variant="body2" sx={{ color: "blue" }}>
-            使用優惠券
-            </Typography>
-        </Box>
-
-          </Box>
-        </Box>
-
-        {/* 右側訂單摘要 */}
-        <Box
-          sx={{
-            flex: 1,
-            backgroundColor: "#FFFFFF",
-            borderRadius: "10px",
-            padding: "20px",
-            boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-          }}
-        >
-          <Typography variant="h6" fontWeight="bold" gutterBottom>
-            您的訂單
-          </Typography>
-          {cart.map((item, index) => (
-            <Box key={index} sx={{ marginBottom: "10px" }}>
-              <Typography variant="body1">{item.name}</Typography>
-            </Box>
-          ))}
-          <Divider sx={{ marginY: "10px" }} />
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <Typography variant="body2" color="text.secondary">
-              小計
-            </Typography>
-            <Typography variant="body2" fontWeight="bold">
-              ${totalPrice}
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              marginTop: "10px",
-            }}
-          >
-            <Typography variant="h6" fontWeight="bold">
-              總計
-            </Typography>
-            <Typography variant="h6" fontWeight="bold" sx={{ color: "#D70F64" }}>
-              ${totalPrice + 2 /* 平台費 */}
-            </Typography>
-          </Box>
-        </Box>
-      </Box>
-
-      <Box
-  sx={{
-    backgroundColor: "#FFFFFF",
-    borderRadius: "10px",
-    padding: "20px",
-    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-    marginBottom: "20px",
-  }}
->
-  
-
-        
-    </Box>
-
-
-      {/* 確認按鈕 */}
-      <Box textAlign="center" sx={{ marginTop: "30px" }}>
-        <Button
-          variant="contained"
-          sx={{
-            backgroundColor: "#D70F64",
-            "&:hover": { backgroundColor: "#C00E58" },               
-            padding: "10px 20px",
-            borderRadius: "8px",
-            fontSize: "1rem",
-          }}
-        >
-          確認下單
-        </Button>
-      </Box>
-    </Box>
-=======
             <div className="payment-confirmation">
               <button
                 className="confirm-button"
@@ -459,7 +353,6 @@ const PaymentPage = ({ setlogin, setlogout }) => {
         defaultAddress={currentAddress}
       />
     </div>
->>>>>>> 0ed3272a6a25a84b95d6a70369e99a05fa8d6c1a
   );
 };
 

@@ -69,38 +69,34 @@ def check_password_api():
 @app.route('/restaurants', methods=['GET'])
 def get_restaurants():
     try:
-        # 從請求中獲取查詢參數 city
         city = request.args.get('city')
 
-        # 連接 SQLite 資料庫
         conn = sqlite3.connect('./db/foodpanda.db')
         cursor = conn.cursor()
 
         if city == 'all':
-            # 返回所有城市名稱
             cities_query = "SELECT DISTINCT city FROM merchants"
             cursor.execute(cities_query)
             cities = cursor.fetchall()
-            result = [city[0] for city in cities]  # 提取城市名稱列表
+            result = [city[0] for city in cities]
             conn.close()
             return jsonify(result), 200
 
-        # 查詢商家資料，根據 city 過濾
         merchants_query = "SELECT * FROM merchants WHERE city = ?" if city else "SELECT * FROM merchants"
         cursor.execute(merchants_query, (city,) if city else ())
         merchants = cursor.fetchall()
 
-        # 查詢分類資料
         categories_query = "SELECT * FROM categories"
         cursor.execute(categories_query)
         categories = cursor.fetchall()
 
-        # 查詢菜單項目資料
-        menu_items_query = "SELECT * FROM menu_items"
+        menu_items_query = """
+            SELECT item_id, category_id, name, price, original_price, image
+            FROM menu_items
+        """
         cursor.execute(menu_items_query)
         menu_items = cursor.fetchall()
 
-        # 整理數據
         result = []
         for merchant in merchants:
             merchant_id, name, image, rating, m_type, details, promotions, location, city_name = merchant
@@ -117,18 +113,17 @@ def get_restaurants():
                 "categories": []
             }
 
-            # 添加分類
             for category in categories:
                 category_id, cat_merchant_id, cat_name, display_name = category
                 if cat_merchant_id == merchant_id:
                     category_data = {
                         "category_id": category_id,
+                        "merchant_id": merchant_id,
                         "name": cat_name,
                         "display_name": display_name,
                         "items": []
                     }
 
-                    # 添加菜單項目
                     for item in menu_items:
                         item_id, item_category_id, item_name, price, original_price, item_image = item
                         if item_category_id == category_id:
@@ -148,6 +143,7 @@ def get_restaurants():
     except Exception as e:
         print(e)
         return jsonify({'error': str(e)}), 500
+
 
 
 class User(db.Model):
