@@ -26,6 +26,7 @@ import EmailConfirm from "./auth/EmailConfirm";
 import HaveEmail from "./auth/HaveEmail";
 import NotHaveEmail from "./auth/NotHaveEmail";
 import PaymentPage from "./Pages/PaymentPage";
+import { PiReadCvLogoFill } from "react-icons/pi";
 const App = () => {
   const [restaurantData, setRestaurantData] = useState([]);
 
@@ -78,6 +79,7 @@ const App = () => {
           }
         />
         <Route path="/home" element={<Home />} />
+        <Route path="/profile" element={<Profile />} />
         <Route
           path="/restaurants/:city"
           element={<RestaurantPage setlogin={setlogin} setlogout={setlogout} />}

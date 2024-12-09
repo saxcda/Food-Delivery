@@ -19,7 +19,6 @@ import {
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import "./RestaurantDetails.css";
 import { useNavigate, useParams } from "react-router-dom";
-import restaurantData from "../data/restaurantData"; // Assuming you have this data available
 import { PiHeart } from "react-icons/pi";
 import panda_cart from "./Pictures/panda_cart.jpg";
 
@@ -61,18 +60,57 @@ const RestaurantDetails = () => {
 
   const openDialog = () => setIsDialogOpen(true);
   const closeDialog = () => setIsDialogOpen(false);
+  const [restaurantData, setRestaurantData] = useState([]);
+
 
   // Fetch restaurant data based on the restaurantId
   useEffect(() => {
-    const selectedRestaurant = restaurantData.find(
-      (r) => r.name === decodeURIComponent(restaurantName)
-    );    
-    if (selectedRestaurant) {
-      setRestaurant(selectedRestaurant);
-    } else {
-      navigate("/"); // Redirect if restaurant not found
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/restaurants");
+        const data = await response.json();
+  
+        // 解析 promotions 字段
+        const transformedData = data.map((restaurant) => {
+          let promotionsArray = [];
+          if (restaurant.promotions) {
+            // 去掉不需要的符号，并用逗号分割
+            const cleanedPromotions = restaurant.promotions
+              .replace(/[\[\]\(\)"]/g, "") // 去掉 [ ] ( ) 和引号
+              .split(","); // 按逗号分割
+  
+            promotionsArray = cleanedPromotions.map((promotion) =>
+              promotion.trim() // 去除空格
+            );
+          }
+          return { ...restaurant, promotions: promotionsArray };
+        });
+  
+        console.log(transformedData); // 检查转换后的数据
+        setRestaurantData(transformedData);
+      } catch (err) {
+        console.error("Error fetching restaurant data:", err.message);
+      }
+    };
+  
+    fetchData();
+  }, []);
+  
+  
+  
+  
+  useEffect(() => {
+    if (restaurantData.length > 0) {
+      const selectedRestaurant = restaurantData.find(
+        (r) => r.name === decodeURIComponent(restaurantName)
+      );
+      if (selectedRestaurant) {
+        setRestaurant(selectedRestaurant);
+      } else {
+        navigate("/"); // 重定向
+      }
     }
-  }, [restaurantName, navigate]);
+  }, [restaurantName, navigate, restaurantData]); // 依赖 restaurantData 和 restaurantName
   
 
   useEffect(() => {

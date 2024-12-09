@@ -49,6 +49,7 @@ CREATE TABLE menu_items (
     price DECIMAL(10,2) NOT NULL,
     original_price DECIMAL(10,2),
     image VARCHAR(255),
+    isPri BOOLEAN(1),
     FOREIGN KEY (category_id) REFERENCES categories(category_id) ON DELETE CASCADE
 );
 
@@ -127,17 +128,31 @@ VALUES (
     '[\"滿 $500 享 85 折\", \"迎新禮：贈送小菜\"]',
     '桃園市龜山區',
     '桃園市'
+),(
+    '小偉咖哩',
+    'path/to/image6.png',
+    4.9,
+    '日是',
+    '阿春主打新鮮的台式海鮮與家常菜，是全家聚餐的好地方。',
+    '[\"滿 $500 享 85 折\", \"迎新禮：贈送小菜\"]',
+    '桃園市龜山區',
+    '桃園市'
 );
 
 -- 插入分類資料
 INSERT INTO categories (merchant_id, name, display_name)
 VALUES
-    (1, 'seafood', '海鮮 🦐');
+    (1, 'seafood', '海鮮 🦐'),
+    (2, 'curry', '咖哩');
+
 
 -- 插入菜單項目資料
-INSERT INTO menu_items (category_id, name, price, original_price, image)
+INSERT INTO menu_items (category_id, name, price, original_price, image, isPri)
 VALUES
-    (1, '炒花枝', 320, 340, 'path/to/menu12.png'),
-    (1, '蒜香蝦仁', 280, 300, 'path/to/menu13.png');
+    (1, '炒花枝', 320, 340, 'path/to/menu12.png', 0),
+    (1, '蒜香蝦仁', 280, 300, 'path/to/menu13.png', 0),
+    (2, '小及咖哩', 280, 300, 'path/to/menu14.png', 0),
+    (2, '小小咖哩', 280, 300, 'path/to/menu15.png', 0);
+
 
 

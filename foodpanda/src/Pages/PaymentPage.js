@@ -483,7 +483,7 @@ const PaymentPage = () => {
           variant="contained"
           sx={{
             backgroundColor: "#D70F64",
-            "&:hover": { backgroundColor: "#C00E58" },
+            "&:hover": { backgroundColor: "#C00E58" },               
             padding: "10px 20px",
             borderRadius: "8px",
             fontSize: "1rem",

@@ -40,7 +40,7 @@ const restaurantData = [
     ],
   },
   {
-    name: "阿春台菜海鮮",
+    name: "春台菜海鮮",
     image: "path/to/image6.png",
     rating: 4.9,
     type: "台式",
