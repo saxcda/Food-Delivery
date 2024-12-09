@@ -156,7 +156,8 @@ VALUES (
 INSERT INTO categories (category_id, merchant_id, name, display_name)
 VALUES
     (1, 1, 'seafood', '海鮮 🦐'),
-    (2, 2, 'curry', '咖哩');
+    (2, 2, 'curry', '咖哩'),
+    (3, 3, 'breakfast,taiwanese', '早餐，台式');
 
 
 -- 插入菜單項目資料
@@ -165,7 +166,9 @@ VALUES
     (1, 1, '炒花枝', 320, 340, 'path/to/menu12.png', 0),
     (2, 1, '蒜香蝦仁', 280, 300, 'path/to/menu13.png', 0),
     (3, 2, '小及咖哩', 280, 300, 'path/to/menu14.png', 0),
-    (4, 2, '小小咖哩', 280, 300, 'path/to/menu15.png', 0);
-
+    (4, 2, '小小咖哩', 280, 300, 'path/to/menu15.png', 0),
+    (5, 3, '脆皮卡啦雞腿堡蛋', 105, 105, 'path/to/menu15.png', 0),
+    (6, 3, '玉米濃湯', 65, 65, 'path/to/menu15.png', 0),
+    (7, 3, '燻雞蛋可頌', 105, 105, 'path/to/menu15.png', 0);
 
 
