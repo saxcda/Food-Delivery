@@ -496,6 +496,7 @@ body {
 
 /* 完成付款 */
 .payment-confirmation {
+  width: 100%;
   margin-top: 20px;
   padding: 20px 0;
   display: flex;
@@ -508,7 +509,6 @@ body {
 }
 
 .confirm-button {
-  width: 600px;
   background-color: #e21b70;
   color: #fff;
   font-size: 16px;

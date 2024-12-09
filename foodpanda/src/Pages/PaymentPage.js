@@ -1,15 +1,23 @@
 import React, { useState } from "react";
 import "./PaymentPage.css";
 import HeaderLocation from "../components/HeaderLocation";
+import AddressDialog from "../components/AddressDialog";
 
 const PaymentPage = ({ setlogin, setlogout }) => {
   const [deliveryOption, setDeliveryOption] = useState("standard");
-  const [contactless, setContactless] = useState(true);
+  const [contactless, setContactless] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("cash");
   const [selectedTip, setSelectedTip] = useState(null);
   const [saveTip, setSaveTip] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [inputValue, setInputValue] = useState("");
+  const [addressDialogOpen, setAddressDialogOpen] = useState(false); // 控制地址彈窗顯示
+  const [currentAddress, setCurrentAddress] = useState("");
+
+  // 餐點價格及費用
+  const [mealPrice, setMealPrice] = useState(65); // 預設餐點價格
+  const deliveryFee = 35; // 外送服務費
+  const platformFee = 60; // 平台費用
 
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
@@ -27,14 +35,17 @@ const PaymentPage = ({ setlogin, setlogout }) => {
     alert("完成並付款");
   };
 
+  const handleAddressChange = (newAddress) => {
+    setCurrentAddress(newAddress);
+    setAddressDialogOpen(false);
+  };
+
   return (
     <div>
       <HeaderLocation setlogin={setlogin} setlogout={setlogout} />
       <div className="payment-page">
         <div className="main">
           {/* Left Section */}
-
-          {/* 送餐地址 */}
           <div className="left-section">
             {/* Delivery Address Section */}
             <section
@@ -49,6 +60,7 @@ const PaymentPage = ({ setlogin, setlogout }) => {
                 <button
                   class="btn-change-address"
                   data-testid="checkout-button-link"
+                  onClick={() => setAddressDialogOpen(true)}
                 >
                   更改
                 </button>
@@ -69,8 +81,7 @@ const PaymentPage = ({ setlogin, setlogout }) => {
                     d="M12.3224 2C16.9186 2 20.6446 5.72596 20.6446 10.3222C20.6446 11.8203 20.2487 13.226 19.5559 14.4404L18.4715 15.8911C17.8726 16.5162 16.6838 17.706 14.9052 19.4602L13.0213 21.313C12.6322 21.6947 12.0092 21.6946 11.6203 21.3128L7.91833 17.6571L6.59648 16.3282C6.2846 16.0104 5.78156 15.3801 5.08734 14.4375C4.3955 13.2238 4.00024 11.8192 4.00024 10.3222C4.00024 5.72596 7.72621 2 12.3224 2ZM12.3224 3.5C8.55463 3.5 5.50024 6.55439 5.50024 10.3222C5.50024 11.4141 5.75604 12.466 6.23886 13.4136L6.37241 13.66L6.96356 14.5436L7.18196 14.7804L7.77128 15.385C8.23371 15.8535 8.88147 16.5011 9.70239 17.3151C10.6866 18.2861 11.4247 19.0143 11.9168 19.4998C11.9577 19.5401 11.9986 19.5805 12.0395 19.6209C12.1953 19.7745 12.4456 19.7745 12.6013 19.6209L12.6754 19.5478L15.3017 16.9571L17.2047 15.0461C17.3404 14.9068 17.4503 14.7925 17.5337 14.7039L17.6874 14.534L18.2724 13.659L18.4049 13.4158C18.84 12.5624 19.0911 11.6245 19.1369 10.6487L19.1446 10.3222C19.1446 6.55439 16.0902 3.5 12.3224 3.5ZM12.3224 6.75C14.3935 6.75 16.0724 8.42893 16.0724 10.5C16.0724 12.5711 14.3935 14.25 12.3224 14.25C10.2513 14.25 8.57241 12.5711 8.57241 10.5C8.57241 8.42893 10.2513 6.75 12.3224 6.75ZM12.3224 8.25C11.0798 8.25 10.0724 9.25736 10.0724 10.5C10.0724 11.7426 11.0798 12.75 12.3224 12.75C13.5651 12.75 14.5724 11.7426 14.5724 10.5C14.5724 9.25736 13.5651 8.25 12.3224 8.25Z"
                   ></path>
                 </svg>
-                <p>333 桃園市</p>
-                <p>文化一路 259</p>
+                <p>{currentAddress}</p>
               </div>
               <textarea
                 className="remarks-input"
@@ -224,7 +235,7 @@ const PaymentPage = ({ setlogin, setlogout }) => {
                 設為常用小費金額
               </label>
             </section>
-
+            {/* 統一編號 */}
             <div className="unified-number-section">
               <label className="checkbox-label">
                 <input
@@ -278,20 +289,15 @@ const PaymentPage = ({ setlogin, setlogout }) => {
                 </div>
               )}
             </div>
+
             <div className="payment-confirmation">
-              <div className="place-order-button-desktop">
-                <div className="box-flex">
-                  <div className="place-order-button">
-                    <button
-                      className="confirm-button"
-                      onClick={handlePayment}
-                      data-testid="pay-button"
-                    >
-                      完成並付款
-                    </button>
-                  </div>
-                </div>
-              </div>
+              <button
+                className="confirm-button"
+                onClick={handlePayment}
+                data-testid="pay-button"
+              >
+                完成並付款
+              </button>
               <div className="terms-and-conditions">
                 <div className="terms">
                   你下訂單的同時，即自動同意
@@ -323,6 +329,12 @@ const PaymentPage = ({ setlogin, setlogout }) => {
           </div>
         </div>
       </div>
+      <AddressDialog
+        open={addressDialogOpen}
+        onClose={() => setAddressDialogOpen(false)}
+        onSubmit={handleAddressChange}
+        defaultAddress={currentAddress}
+      />
     </div>
   );
 };
