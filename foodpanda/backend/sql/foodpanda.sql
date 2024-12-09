@@ -142,7 +142,7 @@ VALUES (
 ),(
     3,
     '紅橘子精緻早午餐 (台北光復店)',
-    'path/to/image6.png',
+    'https://images.deliveryhero.io/image/fd-tw/tw-logos/cf8rg-logo.jpg',
     4.6,
     '早餐，台式',
     '食品業者登錄字號：A-153933543-00002-5，產品責任險碼：1722512SC200233',
@@ -152,7 +152,7 @@ VALUES (
 ),(
     4,
     '靴子義大利餐廳',
-    'path/to/image6.png',
+    'https://images.deliveryhero.io/image/fd-tw/LH/z0bf-listing.jpg?width=120&height=120',
     4.7,
     '歐美',
     '食品業者登錄字號：F-187483496-00000-2
@@ -180,11 +180,11 @@ VALUES
     (2, 1, '蒜香蝦仁', 280, 300, 'path/to/menu13.png', 0),
     (3, 2, '小及咖哩', 280, 300, 'path/to/menu14.png', 0),
     (4, 2, '小小咖哩', 280, 300, 'path/to/menu15.png', 0),
-    (5, 3, '脆皮卡啦雞腿堡蛋', 105, 105, 'path/to/menu15.png', 0),
-    (6, 3, '玉米濃湯', 65, 65, 'path/to/menu15.png', 0),
-    (7, 3, '燻雞蛋可頌', 105, 105, 'path/to/menu15.png', 0),
-    (8, 4, '蒜辣白酒蛤蠣', 158, 158, 'path/to/menu15.png', 0),
-    (9, 4, '檸檬燻鮭', 183, 183, 'path/to/menu15.png', 0),
-    (10, 4, '奶油芝士燻雞', 138, 138, 'path/to/menu15.png', 0);
+    (5, 3, '脆皮卡啦雞腿堡蛋', 105, 105, 'https://images.deliveryhero.io/image/fd-tw/Products/22335114.jpg?width=%25s', 0),
+    (6, 3, '玉米濃湯', 65, 65, 'https://images.deliveryhero.io/image/fd-tw/Products/22335702.jpg?width=%25s', 0),
+    (7, 3, '燻雞蛋可頌', 105, 105, 'https://images.deliveryhero.io/image/fd-tw/Products/3040635.jpg?width=%25s', 0),
+    (8, 4, '蒜辣白酒蛤蠣', 158, 158, 'https://images.deliveryhero.io/image/fd-tw/Products/83070990.jpg?width=300&height=300', 0),
+    (9, 4, '檸檬燻鮭', 183, 183, 'https://images.deliveryhero.io/image/fd-tw/Products/83071001.jpg?width=300&height=300', 0),
+    (10, 4, '奶油芝士燻雞', 138, 138, 'https://images.deliveryhero.io/image/fd-tw/Products/83070941.jpg?width=300&height=300', 0);
 
 
