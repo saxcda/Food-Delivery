@@ -1,0 +1,626 @@
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background-color: #f9f9f9;
+}
+
+.payment-page {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 16px;
+}
+
+.main {
+  display: flex;
+  gap: 16px;
+}
+
+/* Left Section */
+.left-section {
+  flex: 2;
+}
+
+/* Right Section */
+.right-section {
+  flex: 1;
+  position: sticky;
+  top: 20px;
+}
+
+/* Card Styles */
+.card {
+  background: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+  margin-bottom: 16px;
+}
+
+/* Delivery Address */
+.delivery-address .address-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.delivery-address .delivery-title {
+  font-weight: bold;
+}
+
+.delivery-address .btn-change-address {
+  background: none;
+  border: none;
+  color: #000;
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 8px 12px;
+}
+.btn-change-address {
+  border-radius: 8px;
+}
+.delivery-address .btn-change-address:hover {
+  text-decoration: none;
+  background-color: rgba(180, 180, 180, 0.315);
+  transition: background-color 0.3s ease-in-out;
+}
+
+.delivery-address .address-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.delivery-address .address-info p {
+  margin: 0;
+  font-size: 1rem;
+  color: #333;
+}
+
+.delivery-address .remarks-input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 12px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: none;
+  height: 60px;
+}
+
+.delivery-address .toggle-option {
+  display: flex;
+  align-items: center;
+  margin-top: 16px;
+  font-size: 0.9rem;
+  color: #333;
+  border-top: 1px solid #ddd;
+  padding-top: 16px;
+}
+
+.delivery-address .toggle-option input {
+  margin-right: 8px;
+}
+
+/* 送達訊息選項 */
+.toggle-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: #333;
+}
+
+.toggle-option input {
+  display: none;
+}
+
+.toggle-switch {
+  padding: 2px;
+  width: 55px;
+  height: 28px;
+  background-color: grey;
+  border-radius: 10px;
+  position: relative;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.toggle-switch.checked {
+  background-color: black;
+}
+
+.toggle-button {
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  border-radius: 4px;
+  position: absolute;
+  top: 5.5px;
+  left: 6px;
+  transition: transform 0.3s ease-in-out, left 0.3s ease-in-out;
+}
+
+.toggle-switch.checked .toggle-button {
+  left: 35px;
+  transform: rotate(90deg);
+}
+
+.toggle-switch:not(.checked) .toggle-button {
+  transform: rotate(0deg);
+}
+
+/* Delivery Options */
+.delivery-options {
+  margin: 20px 0;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  transition: border-color 0.3s;
+}
+
+.option label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  width: 100%;
+}
+
+.option input[type="radio"] {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #e0e0e0;
+  border-radius: 50%;
+  margin-right: 10px;
+  position: relative;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.option input[type="radio"]:checked {
+  border-color: black;
+  background-color: black;
+}
+
+.option input[type="radio"]:checked::after {
+  content: "";
+  display: block;
+  width: 10px;
+  height: 10px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.option.selected {
+  border: 2px solid black;
+}
+
+.option.selected input[type="radio"] {
+  border-color: black;
+}
+
+.delivery-price {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  padding: 2px 8px;
+  font-size: 14px;
+  color: #333;
+  margin-left: auto;
+}
+
+/* Personal Info */
+.personal-info h2 {
+  font-weight: bold;
+}
+
+.personal-info .email-input {
+  width: 100%;
+  padding: 8px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f6f6f6;
+  color: #666;
+  cursor: not-allowed;
+}
+
+/* Payment Method */
+.payment-method .payment-title {
+  font-weight: bold;
+}
+
+.payment-method .payment-option {
+  margin-bottom: 16px;
+}
+
+.payment-method .payment-option-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.payment-method .payment-option img {
+  border-radius: 4px;
+}
+
+.payment-method .payment-note {
+  font-size: 0.85rem;
+  color: #555;
+  margin-top: 8px;
+}
+
+.payment-method .cobranded-banner-clickable-img {
+  width: 100%;
+  height: auto;
+  max-width: 500px; /* 限制圖片高度 */
+  object-fit: contain; /* 確保圖片縮放時保持比例 */
+  border-radius: 8px; /* 可選，為圖片添加圓角 */
+}
+
+/* 小費選項 */
+.rider-tip {
+  margin-top: 20px;
+  padding: 20px;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+}
+
+.rider-tip h3 {
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.rider-tip p {
+  margin-bottom: 15px;
+  font-size: 14px;
+  color: #666;
+}
+
+.tip-options {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.tip-option {
+  border: 1px solid #e0e0e0; /* 灰框 */
+  padding: 10px 20px;
+  border-radius: 20px;
+  background: #fff; /* 白底 */
+  font-size: 14px;
+  font-weight: normal; /* 普通字體 */
+  color: #000; /* 黑字 */
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.3s ease; /* 添加過渡效果 */
+}
+
+.tip-option.selected {
+  background: #000; /* 黑底 */
+  border-color: #000; /* 黑框 */
+  color: #fff; /* 白字 */
+  font-weight: bold; /* 粗體字 */
+}
+.tip-option:hover {
+  border-width: 2px; /* 更粗的灰框 */
+  border-color: #888888; /* 深灰框 */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 添加陰影 */
+  transition: all 0.3s ease; /* 過渡效果 */
+}
+
+/* 外部容器 */
+.save-tip {
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  gap: 8px;
+}
+
+/* 隱藏默認的 checkbox */
+.save-tip input {
+  display: none;
+}
+
+/* 自定義方框樣式 */
+.save-tip .checkbox-icon {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #999; /* 未選中時灰框 */
+  border-radius: 4px; /* 方框圓角 */
+  background: #fff; /* 白底 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease; /* 過渡效果 */
+}
+
+/* 當選中時 */
+.save-tip input:checked + .checkbox-icon {
+  background: #000; /* 黑底 */
+  border-color: #000; /* 黑框 */
+}
+
+.save-tip input:checked + .checkbox-icon::before {
+  color: #fff; /* 白色勾勾 */
+  font-size: 14px;
+}
+
+/* 標籤文字 */
+.save-tip span + label {
+  margin-left: 8px;
+}
+
+/* 統一編號 */
+.unified-number-section {
+  padding: 20px;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  gap: 8px;
+}
+
+.checkbox-label input {
+  display: none;
+}
+
+.checkbox-icon {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #999;
+  border-radius: 4px;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.checkbox-label input:checked + .checkbox-icon {
+  background: #000;
+  border-color: #000;
+}
+
+.checkbox-label input:checked + .checkbox-icon::before {
+  color: #fff;
+  font-size: 14px;
+}
+
+/* 容器樣式 */
+.input-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 20px;
+  max-width: 500px;
+}
+
+/* 輸入框容器樣式 */
+.input-wrapper {
+  position: relative;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 浮動標籤樣式 */
+.input-label {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: #999;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+/* 輸入框樣式 */
+.unified-number-input {
+  padding: 16px 12px 8px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+/* 輸入框聚焦樣式 */
+.unified-number-input:focus {
+  border-color: #000;
+  outline: none;
+  top: -8px;
+  font-size: 12px;
+  color: #000;
+}
+
+/* 標籤激活（上移）樣式 */
+.unified-number-input:focus + .input-label,
+.input-wrapper.has-value .input-label {
+  top: -8px;
+  font-size: 12px;
+  color: #000;
+}
+
+/* 按鈕樣式 */
+.apply-button {
+  padding: 10px 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background: #f9f9f9;
+  margin-left: 50px;
+  font-size: 14px;
+  color: #aaa;
+  cursor: not-allowed;
+  transition: all 0.3s ease;
+}
+
+/* 按鈕激活樣式 */
+.apply-button.active {
+  background: #f9f9f9;
+  color: #000;
+  border-color: #000;
+  cursor: pointer;
+}
+
+/* 按鈕 hover 效果 */
+.apply-button.active:hover {
+  border: 2px solid #888888;
+}
+
+/* 完成付款 */
+.payment-confirmation {
+  width: 100%;
+  margin-top: 20px;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.place-order-button-desktop {
+  width: 100%;
+  display: flex;
+}
+
+.confirm-button {
+  background-color: #e21b70;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.confirm-button:hover {
+  background-color: #c2185b;
+}
+
+.terms-and-conditions {
+  margin-top: 16px;
+}
+
+.terms,
+.note {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.terms a {
+  color: #e21b70;
+  text-decoration: none;
+  text-align: left;
+}
+
+.terms a:hover {
+  text-decoration: underline;
+}
+
+/* Order Summary */
+/* 訂單摘要卡片 */
+.order-summary {
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 20px;
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.order-summary p1 {
+  font-size: 14px;
+  font-weight: bold;
+  color: #555;
+  margin: 5px 0;
+}
+
+.order-summary ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 10px 0;
+}
+
+.order-summary ul li {
+  font-size: 14px;
+  color: #555;
+  margin: 5px 0;
+  line-height: 1.5;
+}
+
+.order-costs {
+  border-top: 1px solid #e0e0e0;
+  padding-top: 10px;
+  margin-top: 10px;
+}
+
+.order-costs p {
+  font-size: 14px;
+  color: #555;
+  margin: 5px 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.order-total {
+  font-size: 24px;
+  font-weight: bold;
+  color: #d70f64;
+  margin-top: 10px;
+  text-align: right;
+}
+
+.order-total::before {
+  content: "總計";
+  float: left;
+  color: #333;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* 強調的總計金額 */
+.order-total span {
+  color: #d70f64;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* 舊價格（刪除線） */
+.order-total del {
+  font-size: 14px;
+  color: #999;
+  margin-left: 10px;
+  text-decoration: line-through;
+}

@@ -25,6 +25,7 @@ import LoginDialog from "./auth/LoginDialog";
 import EmailConfirm from "./auth/EmailConfirm";
 import HaveEmail from "./auth/HaveEmail";
 import NotHaveEmail from "./auth/NotHaveEmail";
+// import PaymentPage from "./Pages/PaymentPage1";
 import PaymentPage from "./Pages/PaymentPage";
 import { PiReadCvLogoFill } from "react-icons/pi";
 const App = () => {
@@ -72,6 +73,10 @@ const App = () => {
           path="/login"
           element={<LoginDialog open={true} setLoginState={setlogin} onClose={handleClose}/>}
         /> */}
+        {/* <Route
+          path="/pay"
+          element={<PaymentPage setlogin={setlogin} setlogout={setlogout}/>}
+        /> */}
         <Route
           path="/login"
           element={
@@ -91,10 +96,10 @@ const App = () => {
         {/* 其他路由 */}
         <Route 
           path="/payment" 
-          element={<PaymentPage />} 
+          element={<PaymentPage setlogin={setlogin} setlogout={setlogout}/>} 
         />
       </Routes>
-
+      
     </Router>
   );
 };

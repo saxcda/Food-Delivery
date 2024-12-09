@@ -30,7 +30,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { useNavigate } from "react-router-dom";
 import LoginDialog from "../auth/LoginDialog";
 
-const GOOGLE_MAPS_API_KEY = "";
+const GOOGLE_MAPS_API_KEY = "AIzaSyAqqcudDyo4itlY1bqbDyByPh_L6GMy9cs";
 
 const HeaderLocation = ({setlogin, setlogout}) => {
   const [menuAnchorEl, setMenuAnchorEl] = React.useState(null);
