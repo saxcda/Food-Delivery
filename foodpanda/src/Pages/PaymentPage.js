@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./PaymentPage.css";
 import HeaderLocation from "../components/HeaderLocation";
 import AddressDialog from "../components/AddressDialog";
 
 const PaymentPage = ({ setlogin, setlogout }) => {
   const [deliveryOption, setDeliveryOption] = useState("standard");
+  const [deliveryFee, setDeliveryFee] = useState(35);
   const [contactless, setContactless] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("cash");
-  const [selectedTip, setSelectedTip] = useState(null);
+  const [selectedTip, setSelectedTip] = useState(0);
   const [saveTip, setSaveTip] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [inputValue, setInputValue] = useState("");
@@ -16,8 +17,25 @@ const PaymentPage = ({ setlogin, setlogout }) => {
 
   // 餐點價格及費用
   const [mealPrice, setMealPrice] = useState(65); // 預設餐點價格
-  const deliveryFee = 35; // 外送服務費
   const platformFee = 60; // 平台費用
+
+  // 外送選項處理邏輯
+  useEffect(() => {
+    if (deliveryOption === "priority") {
+      setDeliveryFee(35 + 29); // 優先專送
+    } else {
+      setDeliveryFee(35); // 標準方案
+    }
+  }, [deliveryOption]);
+
+  // 計算總費用
+  const calculateTotal = () => {
+    const subtotal = mealPrice; // 小計為餐點價格
+    const total = subtotal + deliveryFee + platformFee + selectedTip; // 總計
+    return { subtotal, total };
+  };
+
+  const { subtotal, total } = calculateTotal(); // 計算價格
 
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
@@ -208,7 +226,6 @@ const PaymentPage = ({ setlogin, setlogout }) => {
                     onClick={() => setSelectedTip(amount)}
                   >
                     ${amount}
-                    {amount === 30 && <span className="popular-option"></span>}
                   </button>
                 ))}
               </div>
@@ -301,7 +318,7 @@ const PaymentPage = ({ setlogin, setlogout }) => {
               <div className="terms-and-conditions">
                 <div className="terms">
                   你下訂單的同時，即自動同意
-                  <a href="/contents/terms-and-conditions.htm">本條款規則</a>
+                  <a>本條款規則</a>
                 </div>
                 <div className="note">
                   我同意並要求在取消訂單期限未滿前進行送餐，注意：完成此選項後將無法取消。
@@ -314,17 +331,17 @@ const PaymentPage = ({ setlogin, setlogout }) => {
             {/* 訂單摘要 */}
             <section className="card order-summary">
               <h2>您的訂單</h2>
-              <p>老王炸烤 (桃園龜山店)</p>
+              <p1>老王炸烤 (桃園龜山店)</p1>
               <ul className="order-items">
-                <li>1 x 牛五花 (捲) + 抹約包 - $43</li>
+                <li>1 x 餐點: ${mealPrice}</li>
               </ul>
               <div className="order-costs">
-                <p>小計: $43</p>
-                <p>標準方案 外送服務費: $9</p>
-                <p>小額訂單費用: $56</p>
-                <p>平台費: $1</p>
+                <p>小計: ${subtotal}</p>
+                <p>外送服務費: ${deliveryFee}</p>
+                <p>平台費: ${platformFee}</p>
+                <p>外送夥伴小費: ${selectedTip}</p>
               </div>
-              <h3 className="order-total">總計: $109</h3>
+              <h3 className="order-total">${total}</h3>
             </section>
           </div>
         </div>

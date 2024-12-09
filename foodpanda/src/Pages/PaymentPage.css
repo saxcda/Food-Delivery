@@ -53,15 +53,18 @@ body {
 .delivery-address .btn-change-address {
   background: none;
   border: none;
-  color: #ff3366;
+  color: #000;
   font-size: 0.9rem;
   cursor: pointer;
   padding: 8px 12px;
-  text-decoration: underline;
 }
-
+.btn-change-address {
+  border-radius: 8px;
+}
 .delivery-address .btn-change-address:hover {
   text-decoration: none;
+  background-color: rgba(180, 180, 180, 0.315);
+  transition: background-color 0.3s ease-in-out;
 }
 
 .delivery-address .address-info {
@@ -493,7 +496,6 @@ body {
   border: 2px solid #888888;
 }
 
-
 /* 完成付款 */
 .payment-confirmation {
   width: 100%;
@@ -546,35 +548,79 @@ body {
 }
 
 /* Order Summary */
-.order-summary h2 {
+/* 訂單摘要卡片 */
+.order-summary {
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 20px;
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.order-summary p1 {
+  font-size: 14px;
   font-weight: bold;
-}
-
-.order-summary .order-items {
-  list-style: none;
-  padding: 0;
-  margin-bottom: 16px;
-}
-
-.order-summary .order-items li {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 8px;
-}
-
-.order-summary .order-costs p {
-  display: flex;
-  justify-content: space-between;
-  margin: 8px 0;
-  font-size: 0.95rem;
   color: #555;
+  margin: 5px 0;
 }
 
-.order-summary .order-total {
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #333;
+.order-summary ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 10px 0;
+}
+
+.order-summary ul li {
+  font-size: 14px;
+  color: #555;
+  margin: 5px 0;
+  line-height: 1.5;
+}
+
+.order-costs {
+  border-top: 1px solid #e0e0e0;
+  padding-top: 10px;
+  margin-top: 10px;
+}
+
+.order-costs p {
+  font-size: 14px;
+  color: #555;
+  margin: 5px 0;
   display: flex;
   justify-content: space-between;
-  margin-top: 16px;
+}
+
+.order-total {
+  font-size: 24px;
+  font-weight: bold;
+  color: #d70f64;
+  margin-top: 10px;
+  text-align: right;
+}
+
+.order-total::before {
+  content: "總計";
+  float: left;
+  color: #333;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* 強調的總計金額 */
+.order-total span {
+  color: #d70f64;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* 舊價格（刪除線） */
+.order-total del {
+  font-size: 14px;
+  color: #999;
+  margin-left: 10px;
+  text-decoration: line-through;
 }
