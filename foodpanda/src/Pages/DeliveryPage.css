@@ -1,0 +1,328 @@
+/* 整体布局 */
+.delivery-page {
+  display: grid;
+  grid-template-columns: 3fr 1.5fr; /* 左侧占3份，右侧占1.5份 */
+  gap: 80px; /* 调整左右间距 */
+  padding: 40px 160px; /* 两侧留白更大 */
+  background-color: #f7f7f7;
+}
+
+/* 左侧主要内容 */
+.left-section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* 預估外送時間區塊 */
+.order-status-container {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 0px 60px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.order-status-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.left-content {
+  flex: 2;
+}
+
+.order-status-title {
+  color: #888;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.order-status-image {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-self: flex-end;
+  margin-left: 100px;
+}
+
+.order-estimate-time {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  color: #333;
+}
+
+/* 預估外送時間樣式 */
+.estimated-time {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 10px 0;
+  color: #333;
+}
+
+.time-highlight {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+/* 進度條容器 */
+.progress-bar-container {
+  width: 100%;
+  height: 12px;
+  background-color: #f0f0f0;
+  border-radius: 6px;
+  overflow: hidden;
+  margin: 15px 0;
+  position: relative;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* 進度條 */
+.progress-bar {
+  height: 100%;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #e21b70 0%, #e21b70 50%, #e21b70 100%);
+  background-size: 200% 100%;
+  animation: progress-bar-glow 1.5s infinite linear,
+    progress-bar-fill 30s linear;
+  position: relative;
+}
+
+/* 為進度條添加動態光暈效果 */
+.progress-bar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+    circle,
+    rgba(255, 51, 102, 0.4) 0%,
+    rgba(255, 102, 153, 0.1) 80%
+  );
+  opacity: 0.7;
+  animation: glow-pulse 1.5s infinite;
+  border-radius: 6px;
+}
+
+/* 漸變動畫效果 */
+@keyframes progress-bar-glow {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 200% 0%;
+  }
+}
+
+/* 進度條填充動畫 */
+@keyframes progress-bar-fill {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+/* 光暈脈衝動畫 */
+@keyframes glow-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+}
+
+/* 訂單詳情 */
+.order-details-container {
+  background-color: #fff;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 24px;
+  position: relative;
+}
+
+.order-cart-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #f0f0f0;
+  padding-top: 16px;
+  margin-top: 16px;
+}
+
+.order-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.order-info {
+  flex: 1;
+  margin-left: 16px;
+}
+
+.order-name {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.order-id {
+  font-size: 14px;
+  color: #666;
+  margin-top: 4px;
+}
+
+.order-price {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  margin-right: 30px;
+}
+
+/* 查看細節按鈕容器 */
+.details-button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+/* 查看細節按鈕 */
+.toggle-cuisines-button {
+  background-color: #fff;
+  color: #000;
+  font-size: 14px;
+  padding: 8px 16px;
+  border: 1px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.toggle-cuisines-button:hover {
+  border: 1px solid #000;
+}
+
+.bds-c-btn__idle-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bds-c-btn__idle-content__label {
+  font-size: 14px;
+}
+
+.bds-c-btn__idle-content__suffix {
+  display: flex;
+  align-items: center;
+}
+
+.deliveryAddress {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.reMark {
+  font-size: 15px;
+  margin-bottom: 30px;
+  color: #888;
+}
+
+.customer-support {
+  display: flex;
+  flex-direction: row;
+}
+
+/* 客服内容容器 */
+.customer-support-content {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+.customer-support-logo-container {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 8px; /* 图像与文字的间距 */
+}
+
+/* 客服图标 */
+.customer-support-logo {
+  width: 70px; /* 图标更显眼 */
+  height: 70px;
+  display: flex;
+  justify-content: center;
+}
+
+/* 客服标题 */
+.customer-support-title {
+  font-size: 18px; /* 更大的字体 */
+  font-weight: bold;
+  color: #333;
+}
+
+/* 聊天按钮 */
+.chat-button {
+  background-color: #fff;
+  color: #000;
+  font-size: 12px;
+  font-weight: bolder;
+  padding: 5px 10px;
+  border: 1px solid #000;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.chat-button:hover {
+  background-color: #ffffffc4;
+  box-shadow: 0 4px 8px rgba(128, 128, 128, 0.4);
+}
+
+/* 按钮内容布局 */
+.chat-button__content {
+  display: flex;
+  align-items: left;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.right-section2 {
+  background-color: #fff;
+  padding: 10px 10px; /* 内边距 */
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row; /* 垂直排列内容 */
+  align-items: center;
+  height: 150px; /* 高度根据内容调整 */
+}
+
+.hello {
+  display: flex;
+  justify-content: flex-start;
+  align-items: left;
+}

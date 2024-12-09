@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./PaymentPage.css";
 import HeaderLocation from "../components/HeaderLocation";
 import AddressDialog from "../components/AddressDialog";
@@ -14,10 +15,25 @@ const PaymentPage = ({ setlogin, setlogout }) => {
   const [inputValue, setInputValue] = useState("");
   const [addressDialogOpen, setAddressDialogOpen] = useState(false); // 控制地址彈窗顯示
   const [currentAddress, setCurrentAddress] = useState("");
+  const [remarks, setRemarks] = useState("");
+  const [restaurantName, setRestaurantName] = useState("");
+  const navigate = useNavigate();
+  const location = useLocation();
 
+  const handleRemarksChange = (e) => {
+    setRemarks(e.target.value); // 更新输入框内容
+  };
   // 餐點價格及費用
   const [mealPrice, setMealPrice] = useState(65); // 預設餐點價格
   const platformFee = 60; // 平台費用
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const restaurant = queryParams.get("restaurant");
+    if (restaurant) {
+      setRestaurantName(restaurant);
+    }
+  }, [location]);
 
   // 外送選項處理邏輯
   useEffect(() => {
@@ -50,7 +66,15 @@ const PaymentPage = ({ setlogin, setlogout }) => {
   };
 
   const handlePayment = () => {
-    alert("完成並付款");
+    // 将多个参数组合成一个查询字符串
+    const query = new URLSearchParams({
+      address: currentAddress,
+      remarks: remarks,
+      restaurant: restaurantName,
+    }).toString();
+
+    // 跳转到目标页面并附加查询字符串
+    navigate(`/delivery?${query}`);
   };
 
   const handleAddressChange = (newAddress) => {
@@ -107,6 +131,8 @@ const PaymentPage = ({ setlogin, setlogout }) => {
                 name="delivery_instructions"
                 placeholder="外送備註：請放置社區管理室謝謝"
                 maxLength={300}
+                value={remarks} // 绑定输入框内容到 state
+                onChange={handleRemarksChange} // 更新输入框内容
               ></textarea>
               <label className="toggle-option">
                 <span>送達時優先傳訊息：如未回覆外送夥伴將致電</span>
@@ -331,7 +357,7 @@ const PaymentPage = ({ setlogin, setlogout }) => {
             {/* 訂單摘要 */}
             <section className="card order-summary">
               <h2>您的訂單</h2>
-              <p1>老王炸烤 (桃園龜山店)</p1>
+              <p1>{restaurantName}</p1>
               <ul className="order-items">
                 <li>1 x 餐點: ${mealPrice}</li>
               </ul>
