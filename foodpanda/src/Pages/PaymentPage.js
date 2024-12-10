@@ -71,6 +71,7 @@ const PaymentPage = ({ setlogin, setlogout }) => {
       address: currentAddress,
       remarks: remarks,
       restaurant: restaurantName,
+      totalprice: total
     }).toString();
 
     // 跳转到目标页面并附加查询字符串

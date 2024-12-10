@@ -1,0 +1,470 @@
+.takeaway-page {
+  display: grid;
+  grid-template-columns: 3fr 1.5fr;
+  gap: 80px;
+  padding: 40px 160px;
+  background-color: #f7f7f7;
+}
+
+.main-section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.status-container {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 0 60px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.status-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.status-left {
+  flex: 2;
+}
+
+.status-title {
+  color: #979797;
+}
+
+.pickup-date {
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.pickup-time {
+  font-weight: bold;
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+
+.status-image {
+  width: 200px;
+  height: 200px;
+  margin-left: 100px;
+}
+
+.pickup-code {
+  margin-bottom: 16px;
+}
+
+.pickup-code-label {
+  font-weight: bold;
+  color: #888;
+}
+
+.pickup-code-value {
+  font-weight: bold;
+  color: #333;
+}
+
+/* 主文字样式 */
+.status-primary {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 15px; /* 与点之间的间距 */
+  animation: dot-wave 0.8s infinite;
+}
+
+.wave {
+  display: flex;
+  align-items: center;
+  gap: 6px; /* 每个字符的间距 */
+}
+
+.waveText {
+  font-size: 18px; /* 字体大小 */
+  color: #000; /* 文字颜色 */
+  display: inline-block;
+  animation: wave-bounce 1.5s infinite ease-in-out; /* 添加缓动效果 */
+}
+
+/* 为每个字符添加不同的动画延迟 */
+.waveText:nth-child(1) {
+  animation-delay: 0s;
+}
+.waveText:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.waveText:nth-child(3) {
+  animation-delay: 0.2s;
+}
+.waveText:nth-child(4) {
+  animation-delay: 0.3s;
+}
+.waveText:nth-child(5) {
+  animation-delay: 0.4s;
+}
+.waveText:nth-child(6) {
+  animation-delay: 0.5s;
+}
+.waveText:nth-child(7) {
+  animation-delay: 0.6s;
+}
+.waveText:nth-child(8) {
+  animation-delay: 0.7s;
+}
+.waveText:nth-child(9) {
+  animation-delay: 0.8s;
+}
+.waveText:nth-child(10) {
+  animation-delay: 0.9s;
+}
+
+/* 波浪跳动效果 */
+@keyframes wave-bounce {
+  0%,
+  100% {
+    transform: translateY(0); /* 默认位置 */
+  }
+  50% {
+    transform: translateY(-10px); /* 向上跳跃 */
+  }
+}
+
+.status-secondary {
+  font-size: 14px;
+  color: #888;
+  line-height: 1.5;
+}
+
+.details-container {
+  background-color: #fff;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.details-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.details-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.details-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 4px;
+}
+
+.details-info {
+  flex: 1;
+  margin-left: 16px;
+}
+
+.details-restaurant {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.details-id,
+.details-address,
+.details-remarks {
+  font-size: 14px;
+  margin-top: 4px;
+  color: #666;
+}
+
+.details-price {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+.support-section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.support-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.support-logo {
+  width: 70px;
+  height: 70px;
+}
+
+.support-content {
+  margin-left: 16px;
+}
+
+.support-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.support-button {
+  background-color: #fff;
+  color: #000;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 8px 16px;
+  border: 1px solid #000;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.support-button:hover {
+  background-color: #f0f0f0;
+}
+
+.chat-box {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 300px;
+  max-height: 800px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  font-family: Arial, sans-serif;
+}
+
+.chat-header {
+  background-color: #e21b70;
+  color: white;
+  padding: 10px;
+  border-radius: 8px 8px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-header span {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.chat-content {
+  padding: 20px;
+}
+
+.order-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.order-status {
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: #666;
+}
+
+.delivery-info p {
+  font-size: 14px;
+  color: #333;
+}
+
+.chat-actions {
+  display: flex;
+  justify-content: center;
+}
+.cancel-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.cancel-button,
+.confirm-cancel,
+.back-button {
+  background-color: #e21b70;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.confirm-cancel:hover,
+.back-button:hover {
+  background-color: #ff687c;
+}
+
+.cancel-order .cancel-title {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.reason-options label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #666;
+}
+
+.cancel-reason-container {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cancel-reason-option {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.cancel-reason-option:last-child {
+  border-bottom: none;
+}
+
+input[type="radio"] {
+  accent-color: #e21b70; /* 修改選中狀態顏色 */
+  margin-right: 12px;
+  width: 16px;
+  height: 16px;
+}
+
+label {
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+}
+
+.message-area {
+  flex-grow: 1;
+  max-height: 350px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+  border: 1px solid #f0f0f0;
+  padding: 10px;
+  border-radius: 4px;
+  background-color: #fafafa;
+}
+
+.message {
+  margin-bottom: 10px;
+}
+
+.user-message {
+  text-align: right;
+  color: #333;
+}
+
+.delivery-message {
+  text-align: left;
+  color: #e21b70;
+}
+
+.message-input {
+  display: flex;
+  gap: 10px;
+}
+
+.message-input input {
+  flex-grow: 1;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.message-input button {
+  padding: 8px 12px;
+  background-color: #e21b70;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.message-input button:hover {
+  background-color: #e02155;
+}
+
+.waveorder {
+  display: flex;
+  align-items: center;
+  gap: 6px; /* 每个字符的间距 */
+}
+
+.waveorderText {
+  font-size: 12px; /* 字体大小 */
+  color: #888; /* 文字颜色 */
+  display: inline-block;
+  animation: wave-bounce 1.5s infinite ease-in-out; /* 添加缓动效果 */
+}
+
+/* 为每个字符添加不同的动画延迟 */
+.waveorderText:nth-child(1) {
+  animation-delay: 0s;
+}
+.waveorderText:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.waveorderText:nth-child(3) {
+  animation-delay: 0.2s;
+}
+.waveorderText:nth-child(4) {
+  animation-delay: 0.3s;
+}
+.waveorderText:nth-child(5) {
+  animation-delay: 0.4s;
+}
+.waveorderText:nth-child(6) {
+  animation-delay: 0.5s;
+}
+.waveorderText:nth-child(7) {
+  animation-delay: 0.6s;
+}
+.waveorderText:nth-child(8) {
+  animation-delay: 0.7s;
+}
+.waveorderText:nth-child(9) {
+  animation-delay: 0.8s;
+}
+.waveorderText:nth-child(10) {
+  animation-delay: 0.9s;
+}
+
+/* 波浪跳动效果 */
+@keyframes wave-bounce {
+  0%,
+  100% {
+    transform: translateY(0); /* 默认位置 */
+  }
+  50% {
+    transform: translateY(-10px); /* 向上跳跃 */
+  }
+}
