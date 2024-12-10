@@ -399,6 +399,36 @@ VALUES (
     '["滿 $200 享 85 折", "滿 $200 享 9 折"]',
     '(△) 雲林縣斗六市內環路508號',
     '雲林縣'
+),(
+    22,
+    '涮嘴麻辣串串香',
+    'https://images.deliveryhero.io/image/fd-tw/LH/amnb-listing.jpg',
+    4.8,
+    '中式',
+    '',
+    '["滿 $200 享 85 折", "滿 $200 享 9 折"]',
+    '(△)桃園市桃園區信光路28號',
+    '桃園市'
+),(
+    23,
+    '冬瓜粉圓豆花.鮮奶',
+    'https://images.deliveryhero.io/image/fd-tw/LH/z8eu-listing.jpg',
+    4.8,
+    '甜點',
+    '本店每筆訂單酌收餐點包裝費3元　因應環保署公告，店家不得免費提供購物⽤環保袋，為確保送餐品質，餐點皆由塑膠袋包裝',
+    '["滿 $200 享 85 折", "滿 $200 享 9 折"]',
+    '(△)桃園市桃園區北埔路31號',
+    '桃園市'
+),(
+    24,
+    '炸綺來 (桃園中正店)',
+    'https://images.deliveryhero.io/image/fd-tw/LH/goui-listing.jpg',
+    4.5,
+    '小吃，鹹酥雞/雞排',
+    '',
+    '["滿 $200 享 85 折", "滿 $200 享 9 折"]',
+    '(O)桃園市桃園區中正路599號',
+    '桃園市'
 );
 
 
@@ -425,7 +455,13 @@ VALUES
     (18, 18, 'Chinese', '中式'),
     (19, 19, 'Chinese', '中式'),
     (20, 20, 'Pizza', '披薩'),
-    (21, 21, 'Snack', '小吃');
+    (21, 21, 'Snack', '小吃'),
+    (22, 22, 'Popular', '人氣精選✨'),
+    (23, 22, 'Set', '套餐'),
+    (24, 23, 'Popular', '人氣精選✨'),
+    (25, 23, 'Winter Melon', '冬瓜系列'),
+    (26, 24, 'Popular', '人氣精選✨'),
+    (27, 24, 'Skewer', '串物');
 
 
 -- 插入菜單項目資料
@@ -492,7 +528,17 @@ VALUES
     (59, 20, '嫩牛鮮蝦奢華獨饗套餐盒', 269, 269, 'https://images.deliveryhero.io/image/fd-tw/Products/134334693.jpg??width=800', 0),
     (60, 21, '排骨酥湯', 59, 65, 'https://images.deliveryhero.io/image/fd-tw/Products/26014616.JPG??width=800', 0),
     (61, 21, '乾粿仔條', 59, 65, 'https://images.deliveryhero.io/image/fd-tw/Products/26014561.JPG??width=800', 0),
-    (62, 21, '乾麵', 59, 65, 'https://images.deliveryhero.io/image/fd-tw/Products/26014560.jpg??width=800', 0);
+    (62, 21, '乾麵', 59, 65, 'https://images.deliveryhero.io/image/fd-tw/Products/26014560.jpg??width=800', 0),
+    (63, 23, '個人豪華套餐', 201, 223, 'https://images.deliveryhero.io/image/fd-tw/Products/131569200.jpg??width=800', 0),
+    (64, 23, '2至3人套餐', 302, 335, 'https://images.deliveryhero.io/image/fd-tw/Products/131569194.jpg??width=800', 0),
+    (65, 22, '牛肉套餐', 161, 179, 'https://images.deliveryhero.io/image/fd-tw/Products/131569196.jpg??width=800', 0),
+    (66, 24, '冰黑糖鮮奶粉圓豆花', 60, 75, 'https://images.deliveryhero.io/image/fd-tw/Products/5154455.jpg??width=800', 0),
+    (67, 24, '冬瓜粉圓花生豆花', 56, 70, 'https://images.deliveryhero.io/image/fd-tw/Products/5154257.jpg??width=800', 0),
+    (68, 25, '冬瓜愛玉', 52, 65, 'https://images.deliveryhero.io/image/fd-tw/Products/1469275.jpg??width=800', 0),
+    (69, 26, '酥皮香雞排', 130, 130, 'https://images.deliveryhero.io/image/menu-import-gateway-prd/regions/AS/chains/everywarechain/dc24288219e3cc57a878b4bc2fb53d80.png??width=800', 0),
+    (70, 26, '脆薯', 45, 45, 'https://images.deliveryhero.io/image/menu-import-gateway-prd/regions/AS/chains/everywarechain/9f6c8877f816159f2c6490f087a53532.png??width=800', 0),
+    (71, 27, '雞心', 40, 40, 'https://images.deliveryhero.io/image/menu-import-gateway-prd/regions/AS/chains/everywarechain/f406bdf39bfd331406d6c8a6078997dd.png??width=800', 0);
+    
 
 -- Insert Orders
 INSERT INTO orders (order_id, user_id, merchant_id, delivery_id, order_status, total_price, order_time, delivery_address)

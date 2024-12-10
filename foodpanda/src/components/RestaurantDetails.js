@@ -591,12 +591,14 @@ const RestaurantDetails = () => {
                         sx={{ minWidth: "30px", fontSize: "1rem" }}
                         onClick={() => {
                           // 減少數量的邏輯
+                          
+                          
                         }}
                       >
                         -
                       </Button>
                       <Typography variant="body2" sx={{ width: "24px", textAlign: "center" }}>
-                        1
+                      1
                       </Typography>
                       <Button
                         size="small"
@@ -604,6 +606,7 @@ const RestaurantDetails = () => {
                         sx={{ minWidth: "30px", fontSize: "1rem" }}
                         onClick={() => {
                           // 增加數量的邏輯
+                        
                         }}
                       >
                         +
