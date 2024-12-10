@@ -281,7 +281,7 @@ const Header = ({ setlogin, setlogout, loginState }) => {
               <BsPerson />
               個人檔案
             </MenuItem>
-            <MenuItem onClick={handleBsPersonMenuClose}>
+            <MenuItem onClick={navigateToHistoryPage}>
               <TbReceipt />
               歷史訂單
             </MenuItem>
