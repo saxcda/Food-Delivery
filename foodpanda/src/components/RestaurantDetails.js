@@ -376,7 +376,7 @@ const RestaurantDetails = () => {
               boxShadow: activeCategory === index ? "none" : "none",
               position: "relative", // Required for positioning the underline
                 "&::after": {
-                  content: '""', // Empty content to create the underline
+                  content: '""', // Empty content to create the underlinedisplay_name
                   position: "absolute",
                   left: 0,
                   bottom: -2, // Position slightly below the button
@@ -390,7 +390,7 @@ const RestaurantDetails = () => {
               }
             }}
           >
-            {category.displayName} ({category.items.length})
+            {category.display_name} ({category.items.length})
           </Button>
         ))}
       </Box>
@@ -409,7 +409,7 @@ const RestaurantDetails = () => {
               sx={{ mb: 4 }}
             >
               <Typography variant="h6" gutterBottom>
-                {category.displayName}
+                {category.display_name}
               </Typography>
               <Grid container spacing={2}>
                 {category.items
