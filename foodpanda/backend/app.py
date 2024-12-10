@@ -206,6 +206,121 @@ def get_groceries_items():
 
     finally:
         conn.close()
+        
+@app.route('/order-history', methods=['GET'])
+def get_order_history():
+    try:
+        user_id = request.args.get('user_id', type=int)
+        order_status = '已完成'
+
+        if not user_id:
+            return jsonify({'error': 'User ID is required'}), 400
+
+        conn = sqlite3.connect('./db/foodpanda.db')
+        cursor = conn.cursor()
+
+        # Fetch completed orders for the given user
+        orders_query = """
+            SELECT o.order_id, m.name, m.image, o.order_time, o.total_price
+            FROM orders o
+            JOIN merchants m ON o.merchant_id = m.merchant_id
+            WHERE o.user_id = ? AND o.order_status = ?
+            ORDER BY o.order_time DESC
+        """
+        cursor.execute(orders_query, (user_id, order_status))
+        orders = cursor.fetchall()
+
+        # Fetch menu items (limit to 3 per order)
+        menu_items_query = """
+            SELECT mi.item_id, mi.name, mi.price, oi.quantity
+            FROM order_items oi
+            JOIN menu_items mi ON oi.product_id = mi.item_id
+            WHERE oi.order_id = ?
+            LIMIT 3
+        """
+
+        result = []
+        for order in orders:
+            order_id, merchant_name, restaurant_image, order_time, total_price = order
+            cursor.execute(menu_items_query, (order_id,))
+            items = cursor.fetchall()
+
+            result.append({
+                "order_id": order_id,
+                "restaurant_name": merchant_name,
+                "restaurant_image": restaurant_image,
+                "order_time": order_time,
+                "total_price": total_price,
+                "items": [
+                    {"item_id": item[0], "name": item[1], "price": item[2], "quantity": item[3]}
+                    for item in items
+                ]
+            })
+
+        conn.close()
+        return jsonify(result), 200
+
+    except Exception as e:
+        print(e)
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/order-history-ongoing', methods=['GET'])
+def get_order_history_ongoing():
+    try:
+        user_id = request.args.get('user_id', type=int)
+        order_status = '配送中'
+
+        if not user_id:
+            return jsonify({'error': 'User ID is required'}), 400
+
+        conn = sqlite3.connect('./db/foodpanda.db')
+        cursor = conn.cursor()
+
+        # Fetch completed orders for the given user
+        orders_query = """
+            SELECT o.order_id, m.name, m.image, o.order_time, o.total_price
+            FROM orders o
+            JOIN merchants m ON o.merchant_id = m.merchant_id
+            WHERE o.user_id = ? AND o.order_status = ?
+            ORDER BY o.order_time DESC
+        """
+        cursor.execute(orders_query, (user_id, order_status))
+        orders = cursor.fetchall()
+
+        # Fetch menu items (limit to 3 per order)
+        menu_items_query = """
+            SELECT mi.item_id, mi.name, mi.price, oi.quantity
+            FROM order_items oi
+            JOIN menu_items mi ON oi.product_id = mi.item_id
+            WHERE oi.order_id = ?
+            LIMIT 3
+        """
+
+        result = []
+        for order in orders:
+            order_id, merchant_name, restaurant_image, order_time, total_price = order
+            cursor.execute(menu_items_query, (order_id,))
+            items = cursor.fetchall()
+
+            result.append({
+                "order_id": order_id,
+                "restaurant_name": merchant_name,
+                "restaurant_image": restaurant_image,
+                "order_time": order_time,
+                "total_price": total_price,
+                "items": [
+                    {"item_id": item[0], "name": item[1], "price": item[2], "quantity": item[3]}
+                    for item in items
+                ]
+            })
+
+        conn.close()
+        return jsonify(result), 200
+
+    except Exception as e:
+        print(e)
+        return jsonify({'error': str(e)}), 500
+
 
 class User(db.Model):
     __tablename__ = 'users'

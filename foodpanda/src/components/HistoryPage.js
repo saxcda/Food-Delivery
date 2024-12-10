@@ -9,6 +9,44 @@ import { useEffect } from "react";
 //import "./Join_foodpanda.css";
 
 const HistoryPage = () => {
+  const [completedOrders, setCompletedOrders] = useState([]);
+  const [OngoingOrders, setOngoingOrders] = useState([]);
+
+  useEffect(() => {
+    const fetchCompletedOrders = async () => {
+      try {
+        const response = await fetch(`http://127.0.0.1:5000/order-history?user_id=1`);
+        if (response.ok) {
+          const data = await response.json();
+          setCompletedOrders(data);
+        } else {
+          console.error("Failed to fetch completed orders:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error fetching completed orders:", error);
+      }
+    };
+
+    fetchCompletedOrders();
+  }, []);
+
+  useEffect(() => {
+    const fetchOngoingOrders = async () => {
+      try {
+        const response = await fetch(`http://127.0.0.1:5000/order-history-ongoing?user_id=1`);
+        if (response.ok) {
+          const data = await response.json();
+          setOngoingOrders(data);
+        } else {
+          console.error("Failed to fetch completed orders:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error fetching completed orders:", error);
+      }
+    };
+
+    fetchOngoingOrders();
+  }, []);
 
   return (
     <div>
@@ -37,7 +75,16 @@ const HistoryPage = () => {
             </Typography>
           </Box>
 
-          {/*This is the map for ongoing order*/}
+            {/*This is the map for ongoing order*/}
+
+          {/* If no ongoing orders, show message */}
+          {OngoingOrders.length === 0 ? (
+          <Typography variant="body1" color="textSecondary" marginBottom={2}>
+            您目前沒有正在處理的訂單
+          </Typography>
+          ) : ( 
+          OngoingOrders.map((order) => (
+
           <Box
           sx={{
             backgroundColor:"#ffffff",
@@ -46,6 +93,8 @@ const HistoryPage = () => {
             padding:"20px",
             display:"flex",
             flexDirection: "row",  
+            marginBottom:"30px",
+            borderRadius:"15px"
           }}
           >
             <Box
@@ -56,23 +105,28 @@ const HistoryPage = () => {
                 width:"100px",
                 marginRight:"20px",
                 objectFit:"cover",
+                borderRadius:"10px"
               }}
             />
 
             <Box sx={{ flexGrow: 1 }}>
-              order restaurant name<br/>
-              order time<br/>
-              order id<br/>
-              {/* map of list of product connected to order id , fetch 3 only */}
-              quantity x order_products_name<br/>
-              {/* ends here */}
+              <Typography variant="body1">{order.restaurant_name}</Typography>
+              <Typography variant="body1">{order.order_time}</Typography>
+              <Typography variant="body1">Order ID: {order.order_id}</Typography>
+              {order.items.map((item) => (
+                <Typography key={item.item_id} variant="body2">
+                  {item.quantity} x {item.name} (${item.price.toFixed(2)})
+                </Typography>
+              ))}
+              <Typography variant="body1"> ...</Typography>
             </Box>
 
             <Box>
-              order_price
+              <Typography variant="body1">${order.total_price.toFixed(2)}</Typography>
             </Box>
         
           </Box>
+          )))}
             {/* ongoing order ends here */}
 
           <Box
@@ -90,6 +144,14 @@ const HistoryPage = () => {
           </Box>
 
           {/*This is the map for completed order*/}
+
+          {/* If no completed orders, show message */}
+        {completedOrders.length === 0 ? (
+          <Typography variant="body1" color="textSecondary" marginBottom={2}>
+            您目前沒有過往訂單
+          </Typography>
+        ) : (
+          completedOrders.map((order) => (
           <Box
           sx={{
             backgroundColor:"#ffffff",
@@ -98,26 +160,33 @@ const HistoryPage = () => {
             padding:"20px",
             display:"flex",
             flexDirection: "row",  
+            marginBottom:"30px",
+            borderRadius:"15px",
           }}
           >
             <Box
               component="img"
               alt={"Image"}
+              src={order.restaurant_image}
               sx={{
                 height:"100px",
                 width:"100px",
                 marginRight:"20px",
                 objectFit:"cover",
+                borderRadius:"10px"
               }}
             />
 
             <Box sx={{ flexGrow: 1 }}>
-              order restaurant name<br/>
-              order time<br/>
-              order id<br/>
-              {/* map of list of product connected to order id , fetch 3 only */}
-              quantity x order_products_name<br/>
-              {/* ends here */}
+              <Typography variant="body1">{order.restaurant_name}</Typography>
+              <Typography variant="body1">{order.order_time}</Typography>
+              <Typography variant="body1">Order ID: {order.order_id}</Typography>
+              {order.items.map((item) => (
+                <Typography key={item.item_id} variant="body2">
+                  {item.quantity} x {item.name} (${item.price.toFixed(2)})
+                </Typography>
+              ))}
+              <Typography variant="body1"> ...</Typography>
             </Box>
 
             <Box
@@ -126,11 +195,12 @@ const HistoryPage = () => {
                 justifyContent: 'flex-end', // Align content at the end of the container
               }}
             >
-              order_price
+              <Typography variant="body1">${order.total_price.toFixed(2)}</Typography>
             </Box>
         
           </Box>
-          {/* complete order ends here */}
+          )))}
+          {/* completed order ends here */}
           
           
         </Box>

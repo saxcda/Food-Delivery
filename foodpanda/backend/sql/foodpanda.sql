@@ -493,3 +493,18 @@ VALUES
     (60, 21, '排骨酥湯', 59, 65, 'https://images.deliveryhero.io/image/fd-tw/Products/26014616.JPG??width=800', 0),
     (61, 21, '乾粿仔條', 59, 65, 'https://images.deliveryhero.io/image/fd-tw/Products/26014561.JPG??width=800', 0),
     (62, 21, '乾麵', 59, 65, 'https://images.deliveryhero.io/image/fd-tw/Products/26014560.jpg??width=800', 0);
+
+-- Insert Orders
+INSERT INTO orders (order_id, user_id, merchant_id, delivery_id, order_status, total_price, order_time, delivery_address)
+VALUES
+    (1, 1, 20, NULL, '已完成', 427, '2024-12-10 10:00:00', '123 Test Address'), -- Order for Pizza Hut
+    (2, 1, 21, NULL, '已完成', 177, '2024-12-10 12:00:00', '123 Test Address'); -- Order for 斗南米糕
+
+-- Insert Order Items
+INSERT INTO order_items (order_item_id, order_id, product_id, quantity, price)
+VALUES
+    (1, 1, 57, 1, 129), -- 夏威夷個人比薩買一送一
+    (2, 1, 58, 1, 299), -- 夏威夷大比薩
+    (3, 1, 59, 1, 269), -- 嫩牛鮮蝦奢華獨饗套餐盒
+    (4, 2, 60, 1, 59),  -- 排骨酥湯
+    (5, 2, 61, 2, 118); -- 乾粿仔條
