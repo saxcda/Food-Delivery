@@ -144,7 +144,68 @@ def get_restaurants():
         print(e)
         return jsonify({'error': str(e)}), 500
 
+@app.route('/groceries_promotions', methods=['GET'])
+def groceries_promotions():
+    conn = sqlite3.connect('./db/foodpanda.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM groceries_promotions")
+    promotions = [{"id": row[0], "title": row[1], "description": row[2]} for row in cursor.fetchall()]
+    conn.close()
+    return jsonify(promotions)
 
+# 获取餐厅信息
+@app.route('/groceries_restaurants', methods=['GET'])
+def groceries_restaurants():
+    conn = sqlite3.connect('./db/foodpanda.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM groceries_restaurants")
+    restaurants = [{"id": row[0], "name": row[1], "delivery_time": row[2], "price_range": row[3], "offer": row[4]} for row in cursor.fetchall()]
+    conn.close()
+    return jsonify(restaurants)
+
+@app.route('/groceries_items', methods=['GET'])
+def get_groceries_items():
+    # 获取请求参数中的商家名称
+    store_name = request.args.get('store_name')
+    
+    if not store_name:
+        return jsonify({"error": "store_name is required"}), 400
+
+    # 数据库连接
+    conn = sqlite3.connect('./db/foodpanda.db')
+    cursor = conn.cursor()
+
+    try:
+        # 查询商家的商品信息
+        cursor.execute("""
+            SELECT groceries_items.id, groceries_items.category, groceries_items.name, groceries_items.price, groceries_items.original_price, groceries_items.image
+            FROM groceries_items
+            JOIN groceries_restaurants ON groceries_items.restaurant_id = groceries_restaurants.id
+            WHERE groceries_restaurants.name = ?
+        """, (store_name,))
+        
+        items = [
+            {
+                "id": row[0],
+                "category": row[1],
+                "name": row[2],
+                "price": row[3],
+                "original_price": row[4],
+                "image": row[5]
+            }
+            for row in cursor.fetchall()
+        ]
+        
+        if not items:
+            return jsonify({"message": f"No items found for store: {store_name}"}), 404
+
+        return jsonify(items), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+    finally:
+        conn.close()
 
 class User(db.Model):
     __tablename__ = 'users'
