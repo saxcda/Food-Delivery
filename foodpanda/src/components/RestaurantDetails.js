@@ -15,12 +15,15 @@ import {
   DialogActions,
   DialogContentText,
   Button,
+  IconButton,
 } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import "./RestaurantDetails.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { PiHeart } from "react-icons/pi";
 import panda_cart from "./Pictures/panda_cart.jpg";
+import { BsPlusCircle } from "react-icons/bs";
+import { HiPlus } from "react-icons/hi2";
 
 
 
@@ -415,19 +418,38 @@ const RestaurantDetails = () => {
                   )
                   .map((menuItem, index) => (
                     <Grid item xs={12}  md={6} key={index}>
-                      <Card>
-                        <CardMedia
+                      <Box
+                        sx={{
+                          position:"relative",
+                          width:"400px",
+                          height:"130px",
+                          border:"2px solid #DCDCDC",
+                          padding:"10px",
+                          borderRadius:"15px",
+                          "&:hover": {
+                            transform: "scale(1.03)", // Scale the Box to 105% of its size on hover
+                            backgroundColor:"#F5DAE6",
+                          },
+                        }}
+                      >
+                        <Box
                           component="img"
                           alt={menuItem.name}
-                          image={menuItem.image}
-                          sx={{ height: 150 }}
+                          src={menuItem.image}
+                          sx={{ height: 130, 
+                                width: 130,
+                                position:"absolute",
+                                objectFit: "cover",
+                                right:"10px",
+                                borderRadius:"10px"
+                          }}
                         />
-                        <CardContent>
-                          <Typography variant="h6" gutterBottom>
+                        
+                          <Typography variant="h5" gutterBottom>
                             {menuItem.name}
                           </Typography>
                           <Typography
-                            variant="body2"
+                            variant="h7"
                             color="textSecondary"
                             gutterBottom
                           >
@@ -436,15 +458,24 @@ const RestaurantDetails = () => {
                               <del>${menuItem.originalPrice}</del>
                             )}
                           </Typography>
-                          <Button
-                            variant="outlined"
-                            size="small"
+                          <IconButton
                             onClick={() => addToCart(menuItem)}
+                            sx={{
+                              position:"absolute",
+                              bottom:"20px",
+                              right:"20px",
+                              backgroundColor:"#ffffff",
+                              border:"1px solid",
+                                "&:hover":{
+                                  backgroundColor:"#f5f5f5",
+                                  border:"1px solid",
+                                }
+                            }}
                           >
-                            加入購物車
-                          </Button>
-                        </CardContent>
-                      </Card>
+                            <HiPlus />
+                          </IconButton>
+                        
+                      </Box>
                     </Grid>
                   ))}
               </Grid>
