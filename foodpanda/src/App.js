@@ -68,12 +68,12 @@ const App = () => {
             loginState ? (
               <Navigate to="/login" /> // 如果已登入，重定向到 /home
             ) : (
-              <Home setlogin={setlogin} setlogout={setlogout} />
+              <Navigate to="/home" />
             )
           }
         />
-        <Route path="/login" element={<Home />} />
-        <Route path="/home" element={<Home />} />
+        <Route path="/login" element={<Home  setlogin={setlogin} setlogout={setlogout} loginState={true}/>} />
+        <Route path="/home" element={<Home  setlogin={setlogin} setlogout={setlogout} loginState={false}/>} />
         <Route path="/profile" element={<Profile />} />
         <Route
           path="/restaurants/:city"

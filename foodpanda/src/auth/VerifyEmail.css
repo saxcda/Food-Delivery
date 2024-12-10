@@ -44,7 +44,7 @@
   margin-left: -170px !important;
 }
 
-.verifyEmailPrimaryButton {
+.verifyEmailButton {
   width: 90%;
   display: flex;
   justify-content: center;
@@ -55,29 +55,32 @@
   border-radius: 6px !important;
   text-transform: none !important;
   position: absolute;
-  bottom: 20px;
-  left: 20px;
 }
 
-.verifyEmailPrimaryButton.completed {
+.verifyEmailButton.completed {
   cursor: pointer !important;
 }
 
 /* 未完成的狀態，顯示禁用游標 */
-.verifyEmailPrimaryButton:not(.completed) {
+.verifyEmailButton:not(.completed) {
   cursor: not-allowed !important;
   background-color: #66666644 !important;
   font-weight: bold;
 }
 
-.verifyEmailPrimaryButton:hover {
+.verifyEmailButton:hover {
   background-color: #e21b70 !important;
 }
 
 /* 倒數結束後按鈕樣式 */
-.verifyEmailPrimaryButton.completed {
+.verifyEmailButton.completed {
   background-color: #00000000 !important;
   border: 1.5px solid #666 !important;
   color: #666 !important;
 }
 
+.verifyEmailPrimaryButton {
+  display: flex;
+  justify-content: center;
+  margin-top: 35px;
+}

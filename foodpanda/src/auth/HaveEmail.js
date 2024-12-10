@@ -16,11 +16,13 @@ import "./HaveEmail.css";
 import CheckEmail from "./CheckEmail.js";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import ForgetPassword from "./ForgetPassword.js";
 
 const HaveEmail = ({ email, onClose, onBack, setlogin, setlogout }) => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [checkEmail, setCheckEmail] = useState(false);
+  const [forgetPassword, setForgerPassword] = useState(false);
   const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
@@ -33,6 +35,11 @@ const HaveEmail = ({ email, onClose, onBack, setlogin, setlogout }) => {
   const handleProceed = () => {
     setCheckEmail(true);
   };
+
+  const handleforgetpassword = () => {
+    setForgerPassword(true);
+  };
+
   const checkpassword = async () => {
     if (!password) {
       alert("請輸入密碼!");
@@ -49,11 +56,13 @@ const HaveEmail = ({ email, onClose, onBack, setlogin, setlogout }) => {
       );
       if (response.status === 200) {
         alert("登入成功");
-        console.log(typeof(setlogin));
+        console.log(typeof setlogin);
         setlogin();
-        // navigate("/login"); 
+        
+        navigate("/");
       } else {
         alert("密碼錯誤");
+        setlogout();
       }
     } catch (error) {
       console.error(
@@ -62,6 +71,7 @@ const HaveEmail = ({ email, onClose, onBack, setlogin, setlogout }) => {
         alert("檢查郵件時發生錯誤："),
         console.log(error)
       );
+      setlogout();
     }
   };
   useEffect(() => {
@@ -69,8 +79,8 @@ const HaveEmail = ({ email, onClose, onBack, setlogin, setlogout }) => {
   }, [showPassword]);
 
   useEffect(() => {
-      console.log(password); // 當 step 改變時顯示新的狀態
-    }, [checkpassword]);
+    console.log(password); // 當 step 改變時顯示新的狀態
+  }, [checkpassword]);
 
   if (checkEmail) {
     // 如果状态为 true，显示 EmailConfirm
@@ -79,7 +89,14 @@ const HaveEmail = ({ email, onClose, onBack, setlogin, setlogout }) => {
         email={email}
         onClose={onClose} // 更新父組件狀態
         onBack={() => setCheckEmail(false)}
-
+      />
+    );
+  } else if (forgetPassword) {
+    // 如果状态为 true，显示 EmailConfirm
+    return (
+      <ForgetPassword
+        onClose={onClose} // 更新父組件狀態
+        onBack={() => setForgerPassword(false)}
       />
     );
   }
@@ -203,9 +220,9 @@ const HaveEmail = ({ email, onClose, onBack, setlogin, setlogout }) => {
             />
           </a>
         </div>
-        <Typography variant="body2" className="forgotPassword">
+        <Button className="forgotPassword" onClick={handleforgetpassword}>
           忘記密碼？
-        </Typography>
+        </Button>
         <div
           style={{
             cursor: password.trim() ? "pointer" : "not-allowed",

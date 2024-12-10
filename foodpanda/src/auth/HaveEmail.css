@@ -117,10 +117,14 @@
 
 .forgotPassword {
   color: #444343 !important;
-  margin: 5px 0;
-  margin-top: 15px !important;
-  margin-bottom: 30px !important;
-  margin-left: 15px !important;
+  margin-left: 10px !important;
+  margin-bottom: 15px !important;
+  font-weight: bold !important;
+}
+
+.forgotPassword:hover {
+  border-radius: 8px;
+  background-color: #bebebe60 !important;
   font-weight: bold !important;
 }
 
