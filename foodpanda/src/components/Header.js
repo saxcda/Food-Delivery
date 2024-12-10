@@ -75,6 +75,10 @@ const Header = ({ setlogin, setlogout, loginState }) => {
     handleBsPersonMenuClose(); // Close the menu first
     navigate("/profile"); // Navigate to the Profile page
   };
+  const navigateToHistoryPage = () => {
+    handleBsPersonMenuClose(); // Close the menu first
+    navigate("/historyPage"); // Navigate to the history
+  };
   const navigate = useNavigate();
 
   const handleLogout = () => {

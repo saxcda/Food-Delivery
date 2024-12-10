@@ -1,0 +1,27 @@
+.tab3-container {
+    padding: 20px;
+    background-color: #f7f7f7;
+  }
+  
+  .promotion-section {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .promo-card {
+    flex: 1;
+    min-width: 200px;
+    padding: 15px;
+    background-color: #ffe4e1;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  .today-offers {
+    margin-top: 20px;
+  }
+  
+  .today-offers .MuiGrid-item {
+    padding: 10px;
+  }
+  

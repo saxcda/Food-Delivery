@@ -169,6 +169,182 @@ def get_restaurants():
         print(e)
         return jsonify({'error': str(e)}), 500
 
+@app.route('/groceries_promotions', methods=['GET'])
+def groceries_promotions():
+    conn = sqlite3.connect('./db/foodpanda.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM groceries_promotions")
+    promotions = [{"id": row[0], "title": row[1], "description": row[2]} for row in cursor.fetchall()]
+    conn.close()
+    return jsonify(promotions)
+
+# 获取餐厅信息
+@app.route('/groceries_restaurants', methods=['GET'])
+def groceries_restaurants():
+    conn = sqlite3.connect('./db/foodpanda.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM groceries_restaurants")
+    restaurants = [{"id": row[0], "name": row[1], "delivery_time": row[2], "price_range": row[3], "offer": row[4]} for row in cursor.fetchall()]
+    conn.close()
+    return jsonify(restaurants)
+
+@app.route('/groceries_items', methods=['GET'])
+def get_groceries_items():
+    # 获取请求参数中的商家名称
+    store_name = request.args.get('store_name')
+    
+    if not store_name:
+        return jsonify({"error": "store_name is required"}), 400
+
+    # 数据库连接
+    conn = sqlite3.connect('./db/foodpanda.db')
+    cursor = conn.cursor()
+
+    try:
+        # 查询商家的商品信息
+        cursor.execute("""
+            SELECT groceries_items.id, groceries_items.category, groceries_items.name, groceries_items.price, groceries_items.original_price, groceries_items.image
+            FROM groceries_items
+            JOIN groceries_restaurants ON groceries_items.restaurant_id = groceries_restaurants.id
+            WHERE groceries_restaurants.name = ?
+        """, (store_name,))
+        
+        items = [
+            {
+                "id": row[0],
+                "category": row[1],
+                "name": row[2],
+                "price": row[3],
+                "original_price": row[4],
+                "image": row[5]
+            }
+            for row in cursor.fetchall()
+        ]
+        
+        if not items:
+            return jsonify({"message": f"No items found for store: {store_name}"}), 404
+
+        return jsonify(items), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+    finally:
+        conn.close()
+        
+@app.route('/order-history', methods=['GET'])
+def get_order_history():
+    try:
+        user_id = request.args.get('user_id', type=int)
+        order_status = '已完成'
+
+        if not user_id:
+            return jsonify({'error': 'User ID is required'}), 400
+
+        conn = sqlite3.connect('./db/foodpanda.db')
+        cursor = conn.cursor()
+
+        # Fetch completed orders for the given user
+        orders_query = """
+            SELECT o.order_id, m.name, m.image, o.order_time, o.total_price
+            FROM orders o
+            JOIN merchants m ON o.merchant_id = m.merchant_id
+            WHERE o.user_id = ? AND o.order_status = ?
+            ORDER BY o.order_time DESC
+        """
+        cursor.execute(orders_query, (user_id, order_status))
+        orders = cursor.fetchall()
+
+        # Fetch menu items (limit to 3 per order)
+        menu_items_query = """
+            SELECT mi.item_id, mi.name, mi.price, oi.quantity
+            FROM order_items oi
+            JOIN menu_items mi ON oi.product_id = mi.item_id
+            WHERE oi.order_id = ?
+            LIMIT 3
+        """
+
+        result = []
+        for order in orders:
+            order_id, merchant_name, restaurant_image, order_time, total_price = order
+            cursor.execute(menu_items_query, (order_id,))
+            items = cursor.fetchall()
+
+            result.append({
+                "order_id": order_id,
+                "restaurant_name": merchant_name,
+                "restaurant_image": restaurant_image,
+                "order_time": order_time,
+                "total_price": total_price,
+                "items": [
+                    {"item_id": item[0], "name": item[1], "price": item[2], "quantity": item[3]}
+                    for item in items
+                ]
+            })
+
+        conn.close()
+        return jsonify(result), 200
+
+    except Exception as e:
+        print(e)
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/order-history-ongoing', methods=['GET'])
+def get_order_history_ongoing():
+    try:
+        user_id = request.args.get('user_id', type=int)
+        order_status = '配送中'
+
+        if not user_id:
+            return jsonify({'error': 'User ID is required'}), 400
+
+        conn = sqlite3.connect('./db/foodpanda.db')
+        cursor = conn.cursor()
+
+        # Fetch completed orders for the given user
+        orders_query = """
+            SELECT o.order_id, m.name, m.image, o.order_time, o.total_price
+            FROM orders o
+            JOIN merchants m ON o.merchant_id = m.merchant_id
+            WHERE o.user_id = ? AND o.order_status = ?
+            ORDER BY o.order_time DESC
+        """
+        cursor.execute(orders_query, (user_id, order_status))
+        orders = cursor.fetchall()
+
+        # Fetch menu items (limit to 3 per order)
+        menu_items_query = """
+            SELECT mi.item_id, mi.name, mi.price, oi.quantity
+            FROM order_items oi
+            JOIN menu_items mi ON oi.product_id = mi.item_id
+            WHERE oi.order_id = ?
+            LIMIT 3
+        """
+
+        result = []
+        for order in orders:
+            order_id, merchant_name, restaurant_image, order_time, total_price = order
+            cursor.execute(menu_items_query, (order_id,))
+            items = cursor.fetchall()
+
+            result.append({
+                "order_id": order_id,
+                "restaurant_name": merchant_name,
+                "restaurant_image": restaurant_image,
+                "order_time": order_time,
+                "total_price": total_price,
+                "items": [
+                    {"item_id": item[0], "name": item[1], "price": item[2], "quantity": item[3]}
+                    for item in items
+                ]
+            })
+
+        conn.close()
+        return jsonify(result), 200
+
+    except Exception as e:
+        print(e)
+        return jsonify({'error': str(e)}), 500
 
 
 class User(db.Model):

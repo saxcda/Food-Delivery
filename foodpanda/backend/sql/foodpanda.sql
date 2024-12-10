@@ -19,6 +19,72 @@ CREATE TABLE users (
 --     end_business_hours DATETIME NOT NULL,
 --     FOREIGN KEY (user_id) REFERENCES users(user_id)
 -- );
+
+-- 餐厅表
+CREATE TABLE groceries_restaurants (
+    id INTEGER PRIMARY KEY, -- 确保唯一自增 ID
+    name TEXT NOT NULL,
+    delivery_time TEXT NOT NULL,
+    price_range TEXT NOT NULL,
+    offer TEXT NOT NULL
+);
+
+-- 促销表
+CREATE TABLE groceries_promotions (
+    id INTEGER PRIMARY KEY , -- 确保唯一自增 ID
+    title TEXT NOT NULL,
+    description TEXT NOT NULL
+);
+
+-- 商品表
+CREATE TABLE groceries_items (
+    id INTEGER PRIMARY KEY , -- 确保唯一自增 ID
+    restaurant_id INTEGER NOT NULL,       -- 指向餐厅表
+    category TEXT NOT NULL,               -- 商品分类
+    name TEXT NOT NULL,                   -- 商品名称
+    price REAL NOT NULL,                  -- 商品价格
+    original_price REAL,                  -- 原价（可为空）
+    image TEXT,                           -- 商品图片 URL
+    FOREIGN KEY (restaurant_id) REFERENCES groceries_restaurants (id)
+);
+
+INSERT INTO groceries_restaurants (name, delivery_time, price_range, offer)
+VALUES
+("統一超商", "25-40 分鐘", "$45", "免費送達"),
+("萊爾富", "30-45 分鐘", "$45", "折扣"),
+("全家便利商店", "20-35 分鐘", "$45", "低消$500");
+
+INSERT INTO groceries_promotions (title, description)
+VALUES
+("生鮮雜貨新用戶", "享2次5折"),
+("派對取貨", "就愛PEPERO");
+
+INSERT INTO groceries_items (restaurant_id, category, name, price, original_price, image)
+VALUES
+-- 統一超商商品
+(1, "飲品", "可口可樂 330ml", 20, 25, "https://example.com/coke.jpg"),
+(1, "飲品", "雪碧 330ml", 18, 22, "https://example.com/sprite.jpg"),
+(1, "零食", "樂事洋芋片 80g", 30, 35, "https://example.com/chips.jpg"),
+(1, "零食", "Oreo 原味夾心餅乾 154g", 50, NULL, "https://example.com/oreo.jpg"),
+(1, "生活用品", "抽取式面紙 (盒裝)", 25, 30, "https://example.com/tissue.jpg"),
+
+-- 萊爾富商品
+(2, "飲品", "原萃綠茶 500ml", 28, 32, "https://example.com/tea.jpg"),
+(2, "飲品", "維他奶原味 250ml", 15, 20, "https://example.com/vitasoy.jpg"),
+(2, "零食", "乖乖玉米脆片 180g", 45, 50, "https://example.com/snack.jpg"),
+(2, "零食", "小熊餅乾 90g", 40, NULL, "https://example.com/teddy.jpg"),
+(2, "生活用品", "垃圾袋 (30L, 10入)", 50, 55, "https://example.com/garbagebag.jpg"),
+
+-- 全家便利商店商品
+(3, "飲品", "統一鮮奶 1L", 85, 90, "https://example.com/milk.jpg"),
+(3, "飲品", "伯朗咖啡罐 240ml", 35, 40, "https://example.com/coffee.jpg"),
+(3, "零食", "旺旺雪餅 300g", 65, 70, "https://example.com/senbei.jpg"),
+(3, "零食", "義美小泡芙 巧克力口味 85g", 55, NULL, "https://example.com/puff.jpg"),
+(3, "生活用品", "牙刷 (2入裝)", 45, 50, "https://example.com/toothbrush.jpg");
+
+
+
+
 -- 商家表
 CREATE TABLE merchants (
     merchant_id INT PRIMARY KEY,
@@ -427,3 +493,18 @@ VALUES
     (60, 21, '排骨酥湯', 59, 65, 'https://images.deliveryhero.io/image/fd-tw/Products/26014616.JPG??width=800', 0),
     (61, 21, '乾粿仔條', 59, 65, 'https://images.deliveryhero.io/image/fd-tw/Products/26014561.JPG??width=800', 0),
     (62, 21, '乾麵', 59, 65, 'https://images.deliveryhero.io/image/fd-tw/Products/26014560.jpg??width=800', 0);
+
+-- Insert Orders
+INSERT INTO orders (order_id, user_id, merchant_id, delivery_id, order_status, total_price, order_time, delivery_address)
+VALUES
+    (1, 1, 20, NULL, '已完成', 427, '2024-12-10 10:00:00', '123 Test Address'), -- Order for Pizza Hut
+    (2, 1, 21, NULL, '已完成', 177, '2024-12-10 12:00:00', '123 Test Address'); -- Order for 斗南米糕
+
+-- Insert Order Items
+INSERT INTO order_items (order_item_id, order_id, product_id, quantity, price)
+VALUES
+    (1, 1, 57, 1, 129), -- 夏威夷個人比薩買一送一
+    (2, 1, 58, 1, 299), -- 夏威夷大比薩
+    (3, 1, 59, 1, 269), -- 嫩牛鮮蝦奢華獨饗套餐盒
+    (4, 2, 60, 1, 59),  -- 排骨酥湯
+    (5, 2, 61, 2, 118); -- 乾粿仔條
