@@ -10,7 +10,8 @@ import DeliveryDiningIcon from "@mui/icons-material/DeliveryDining"; // 外送�
 import TakeoutDiningIcon from "@mui/icons-material/TakeoutDining"; // 外帶自取圖示
 import LocalGroceryStoreIcon from "@mui/icons-material/LocalGroceryStore"; // 生鮮雜貨圖示
 import Tab1 from "../components/Tab1";
-const GOOGLE_MAPS_API_KEY = "";
+
+const GOOGLE_MAPS_API_KEY = "AIzaSyAqqcudDyo4itlY1bqbDyByPh_L6GMy9cs";
 
 const FoodDeliveryPage = ({ setlogin, setlogout, restaurantData}) => {
   const navigate = useNavigate();
