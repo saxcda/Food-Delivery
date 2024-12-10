@@ -30,7 +30,7 @@ import PaymentPage from "./Pages/PaymentPage";
 import { PiReadCvLogoFill } from "react-icons/pi";
 import DeliveryPage from "./Pages/DeliveryPage";
 import HistoryPage from "./components/HistoryPage";
-
+import HistoryPageDetail from "./components/HistoryPageDetail";
 import TakewayPage from "./Pages/TakewayPage";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/ReactToastify.css";
@@ -111,6 +111,8 @@ const App = () => {
         <Route path="/home" element={<Home />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/historyPage" element={<HistoryPage />} />
+        <Route path="/history-detail/:order_id" element={<HistoryPageDetail />} />
+
         <Route
           path="/restaurants/:city"
           element={<RestaurantPage setlogin={setlogin} setlogout={setlogout} />}

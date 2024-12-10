@@ -6,11 +6,13 @@ import Header from "./Header";
 import Footer from "./Footer";
 import axios from "axios"; // Axios for API requests
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 //import "./Join_foodpanda.css";
 
 const HistoryPage = () => {
   const [completedOrders, setCompletedOrders] = useState([]);
   const [OngoingOrders, setOngoingOrders] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCompletedOrders = async () => {
@@ -47,6 +49,10 @@ const HistoryPage = () => {
 
     fetchOngoingOrders();
   }, []);
+
+  const handleOrderClick = (order_id) => {
+    navigate(`/history-detail/${order_id}`); // Pass the order_id to the detail page
+  };
 
   return (
     <div>
@@ -86,6 +92,8 @@ const HistoryPage = () => {
           OngoingOrders.map((order) => (
 
           <Box
+          key={order.order_id}
+          onClick={() => handleOrderClick(order.order_id)}
           sx={{
             backgroundColor:"#ffffff",
             minHeight:"150px",
@@ -153,6 +161,8 @@ const HistoryPage = () => {
         ) : (
           completedOrders.map((order) => (
           <Box
+          key={order.order_id}
+          onClick={() => handleOrderClick(order.order_id)}
           sx={{
             backgroundColor:"#ffffff",
             minHeight:"150px",
