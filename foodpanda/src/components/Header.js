@@ -61,6 +61,10 @@ const Header = ({ setlogin, setlogout }) => {
     handleBsPersonMenuClose(); // Close the menu first
     navigate("/profile"); // Navigate to the Profile page
   };
+  const navigateToHistoryPage = () => {
+    handleBsPersonMenuClose(); // Close the menu first
+    navigate("/historyPage"); // Navigate to the history
+  };
   const navigate = useNavigate();
 
 
@@ -250,7 +254,7 @@ const Header = ({ setlogin, setlogout }) => {
           onClose={handleBsPersonMenuClose}
         >
           <MenuItem onClick={navigateToProfile}><BsPerson />個人檔案</MenuItem>
-          <MenuItem onClick={handleBsPersonMenuClose}><TbReceipt />歷史訂單</MenuItem>
+          <MenuItem onClick={navigateToHistoryPage}><TbReceipt />歷史訂單</MenuItem>
           <MenuItem onClick={handleBsPersonMenuClose}><IoIosLogOut />登出</MenuItem>
         </Menu>
 

@@ -169,14 +169,14 @@ const RestaurantDetails = () => {
             component="img"
             alt={restaurant.name}
             src={restaurant.image}
-            sx={{ height: "200px" ,width:"220px", borderRadius:"20px", marginTop:"20px", marginRight:"20px"
+            sx={{ height: "200px" ,width:"220px", borderRadius:"20px", marginRight:"20px"
             }}
 
             />
         {/* 店家資訊 */}
         {/* 餐廳資訊 */}
 
-        <Card sx={{ mb: 4 , flex:1 , boxShadow:"none"}}>
+        <Card sx={{ mb: 4 , flex:1 , boxShadow:"none", backgroundColor:"transparent"}}>
         
         <CardContent>
           {/* 餐廳類型 */}
@@ -304,7 +304,7 @@ const RestaurantDetails = () => {
         sx={{
           border: "none", // Remove default border
           height: "2px", // Thickness of the line
-          backgroundColor: "#f5f5f5", // Line color
+          backgroundColor: "#DCDCDC", // Line color
           width: "100%", // Full width or customize as needed
           
         }}
