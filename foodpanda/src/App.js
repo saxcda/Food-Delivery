@@ -29,6 +29,7 @@ import NotHaveEmail from "./auth/NotHaveEmail";
 import PaymentPage from "./Pages/PaymentPage";
 import { PiReadCvLogoFill } from "react-icons/pi";
 import DeliveryPage from "./Pages/DeliveryPage";
+import TakewayPage from "./Pages/TakewayPage";
 
 const App = () => {
   const [restaurantData, setRestaurantData] = useState([]);
@@ -71,16 +72,7 @@ const App = () => {
             )
           }
         />
-        {/* <Route
-          path="/login"
-          element={<LoginDialog open={true} setLoginState={setlogin} onClose={handleClose}/>}
-        /> */}
-        <Route
-          path="/login"
-          element={
-            <FoodDeliveryPage setlogin={setlogin} setlogout={setlogout} restaurantData={restaurantData}/>
-          }
-        />
+        <Route path="/login" element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/profile" element={<Profile />} />
         <Route
@@ -92,13 +84,19 @@ const App = () => {
           element={<RestaurantDetailsPage restaurantData={restaurantData} />}
         />
         {/* 其他路由 */}
-        <Route 
-          path="/payment" 
-          element={<PaymentPage setlogin={setlogin} setlogout={setlogout}/>} 
+        <Route
+          path="/payment"
+          element={<PaymentPage setlogin={setlogin} setlogout={setlogout} />}
         />
-        <Route path="delivery" element={<DeliveryPage setlogin={setlogin} setlogout={setlogout}/>}/>
+        <Route
+          path="/delivery"
+          element={<DeliveryPage setlogin={setlogin} setlogout={setlogout} />}
+        />
+        <Route
+          path="/takeway"
+          element={<TakewayPage setlogin={setlogin} setlogout={setlogout} />}
+        />
       </Routes>
-      
     </Router>
   );
 };
