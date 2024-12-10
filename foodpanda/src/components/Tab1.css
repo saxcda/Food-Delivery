@@ -1,0 +1,617 @@
+/* 整體佈局 */
+.food-delivery-page {
+    display: flex;
+    margin: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* 側邊欄整體樣式 */
+  .sidebar {
+    flex: 0 0 280px; /* Fixed width */
+    max-width: 200px;
+    max-height: 760px;
+    height: calc(100vh - 40px); /* Full height minus some margin or padding */
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd; /* Border for the box */
+    border-radius: 10px; /* Rounded corners for the box */
+    overflow-y: auto; /* Enable vertical scrolling */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for better visibility */
+    margin-left: 200px;
+  }
+  .boxx {
+    display: flex; /* 啟用彈性佈局 */
+    align-items: center; /* 垂直方向置中 */
+    justify-content: space-between; /* 水平方向兩端對齊 */
+    margin-bottom: -25px;
+  }
+  .bds-c-btn-cursor {
+    display: inline-block;
+  }
+  
+  .bds-c-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px; /* 調整內部填充 */
+    font-size: 0.85rem; /* 字體大小 */
+    font-weight: bold; /* 字體粗細 */
+    color: #374151; /* 字體顏色 */
+    background-color: #f9f9f9; /* 背景顏色 */
+    border: 1px solid #f9f9f9; /* 邊框顏色 */
+    border-radius: 8px; /* 圓角效果 */
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  
+  .bds-c-btn:hover {
+    background-color: #e5e7eb; /* 滑鼠懸停時背景顏色 */
+    color: #111827; /* 滑鼠懸停時字體顏色 */
+  }
+  
+  .bds-c-btn__idle-content {
+    display: flex;
+    align-items: center;
+  }
+  
+  .bds-c-btn__idle-content__label {
+    margin: 0; /* 確保文字不受外部 margin 影響 */
+  }
+  
+  /* 側邊欄標題樣式 */
+  .sidebar h3 {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 25px;
+    border-bottom: 3px;
+    padding-bottom: 6px;
+  }
+  
+  .sidebar h4 {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  /* 側邊欄按鈕 */
+  .sorting-filter__section {
+    margin-bottom: 10px;
+  }
+  
+  .sorting-filter__section__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .sorting-filter__section__list-items {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    transition: transform 0.2s ease-in-out; /* Add hover scale effect */
+  }
+  
+  /* 側邊欄按鈕特效 */
+  .bds-c-radio-button {
+    display: flex;
+    align-items: center; /* Ensure vertical alignment */
+    cursor: pointer;
+    position: relative;
+  }
+  
+  .bds-c-radio-button__input {
+    display: none; /* Hide the default radio input */
+  }
+  
+  .bds-c-radio-button__icon {
+    width: 15px;
+    height: 15px;
+    border: 2px solid #302e2ef3; /* Default border color */
+    border-radius: 50%; /* Keep the shape circular */
+    position: relative;
+    margin-right: 15px; /* Reduce margin for better spacing */
+    overflow: hidden;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Add box-shadow transition */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center inner elements */
+  }
+  
+  .bds-c-radio-button__icon:hover {
+    border: 3px solid #302e2ef3; /* Change border color on hover */
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.3); /* Add a subtle shadow on hover */
+  }
+  
+  .bds-c-radio-button__icon::after {
+    content: "";
+    width: 0%;
+    height: 0%;
+    background-color: #302e2ef3;
+    border-radius: 50%; /* Ensure the expanding effect remains circular */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Start from the center */
+    transition: width 0.15s ease, height 0.15s ease; /* Faster transition */
+  }
+  
+  .bds-c-radio-button__icon::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    background-color: #fff; /* White center dot */
+    border-radius: 50%; /* Keep the center dot circular */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+  }
+  
+  /* Checked State */
+  .bds-c-radio-button__input:checked + .bds-c-radio-button__icon::after {
+    width: 100%; /* Expand outward */
+    height: 100%; /* Expand outward */
+  }
+  
+  /* Label Text */
+  .bds-c-radio-button__text {
+    font-weight: bold;
+    font-size: 0.85rem;
+    color: #302e2ef3;
+    margin: 0;
+    line-height: 1.5; /* Adjust line height for vertical alignment */
+  }
+  
+  /* 快速篩選 */
+  .bds-c-pill {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 5px 10px; /* 調整內部填充 */
+    margin: 3px 0; /* 垂直間距 */
+    border: 1.5px solid #b6bac0; /* 外邊框顏色 */
+    border-radius: 25px; /* 圓角效果 */
+    background-color: #f9f9f9; /* 背景顏色 */
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease,
+      box-shadow 0.2s ease;
+    font-size: 0.85rem; /* 調整字體大小 */
+    width: 80px;
+    text-align: center;
+  }
+  
+  .box-flex.quick-filters__section.fw-wrap.fd-row {
+    display: flex; /* 使用 Flexbox 排列 */
+    flex-wrap: wrap; /* 允許子項換行排列 */
+    flex-direction: row; /* 子項按行排列 */
+    justify-content: flex-start; /* 子項靠左對齊 */
+    align-items: center; /* 垂直方向置中對齊 */
+    gap: 8px; /* 子項之間的間距 */
+    padding: 0; /* 移除內邊距 */
+    list-style: none; /* 適用於 ul 時移除默認列表樣式 */
+    box-sizing: border-box; /* 包括內邊距和邊框在內 */
+    width: 100%; /* 讓容器寬度佔滿父容器 */
+  }
+  
+  .bds-c-pill.bds-is-selected {
+    border-color: #302e2ef3; /* 選中狀態的邊框顏色 */
+    background-color: #302e2ef3; /* 選中狀態的背景顏色 */
+    font-weight: bold;
+    color: #ffffff;
+  }
+  
+  .bds-c-pill__label {
+    display: flex;
+    align-items: center;
+    font-size: 0.85rem; /* 調整字體大小 */
+    font-weight: 600; /* 字體加粗 */
+    color: #333; /* 字體顏色 */
+  }
+  
+  .bds-c-pill__leading-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px; /* 圖標寬度 */
+    height: 16px; /* 圖標高度 */
+    margin-right: 3px; /* 圖標與文字的間距 */
+    color: #6b7280; /* 預設圖標顏色 */
+  }
+  
+  .bds-c-pill__input {
+    display: none; /* 隱藏原生輸入框 */
+  }
+  
+  /* 懸停效果 */
+  .bds-c-pill:hover {
+    border-color: #302e2ef3; /* 懸停時的邊框顏色 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 添加陰影效果 */
+  }
+  
+  /* 選中效果 */
+  .bds-c-pill.bds-is-selected .bds-c-pill__label {
+    color: #302e2ef3; /* 選中狀態的文字顏色 */
+  }
+  
+  .bds-c-pill.bds-is-selected .bds-c-pill__leading-icon svg {
+    fill: #000; /* 圖標內部變為黑色 */
+    stroke: #fff; /* 外邊框變為白色 */
+    stroke-width: 1.5px; /* 外邊框寬度 */
+  }
+  
+  .bds-c-pill__leading-icon svg {
+    fill: #666; /* 默認圖標顏色 */
+    stroke: none; /* 默認無外邊框 */
+    transition: fill 0.3s ease, stroke 0.3s ease; /* 添加過渡效果 */
+  }
+  
+  /* 優惠 */
+  .bds-c-checkbox {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+  
+  .bds-c-checkbox__input {
+    display: none; /* 隱藏默認的 checkbox 樣式 */
+  }
+  
+  .bds-c-checkbox__icon {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #d1d5db; /* 未選中狀態的邊框顏色 */
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+    margin-right: 10px;
+  }
+  
+  .bds-c-checkbox__icon-checked {
+    display: none; /* 默認隱藏選中狀態 */
+  }
+  
+  .bds-c-checkbox__icon-unchecked {
+    display: block; /* 默認顯示未選中狀態 */
+  }
+  
+  .bds-c-checkbox__input:checked + .bds-c-checkbox__icon .bds-c-checkbox__icon-checked {
+    display: block; /* 選中後顯示 */
+  }
+  
+  .bds-c-checkbox__input:checked + .bds-c-checkbox__icon {
+    background-color: #000000; /* 選中後的背景色 */
+    border-color: #000000; /* 選中後的邊框顏色 */
+  }
+  
+  .bds-c-checkbox__input:checked + .bds-c-checkbox__icon .bds-c-checkbox__icon-unchecked {
+    display: none; /* 選中後隱藏未選中狀態 */
+  }
+  
+  .bds-c-checkbox__icon:hover {
+    border-color: #333333; /* 滑鼠懸停時的邊框顏色 */
+  }
+  
+  .bds-c-checkbox__text {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #333333;
+  }
+  
+  /* 搜尋區域樣式 */
+  /* 搜索欄主容器 */
+  .bds-c-search-input__search-control {
+    display: flex; /* 使用 Flexbox 排列 */
+    align-items: center; /* 垂直居中 */
+    border: 1px solid #d1d5db; /* 邊框顏色 */
+    border-radius: 8px; /* 圓角效果 */
+    padding: 0; /* 移除內邊距 */
+    background-color: #ffffff; /* 背景顏色 */
+    width: 100%; /* 撐滿父容器 */
+    box-sizing: border-box; /* 包括內邊距和邊框 */
+    position: relative; /* 讓圖標和搜尋框相對定位 */
+    overflow: hidden; /* 防止內部元素溢出 */
+  }
+  
+  /* 懸停效果 */
+  .bds-c-search-input__search-control:hover {
+    border-color: #9ca3af; /* 懸停時邊框顏色 */
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1); /* 陰影效果 */
+  }
+  
+  /* 聚焦效果 */
+  .bds-c-search-input__search-control:focus-within {
+    border-color: #4b4b4b; /* 聚焦時邊框顏色 */
+    box-shadow: 0 0 6px rgba(66, 66, 66, 0.5); /* 聚焦陰影 */
+  }
+  
+  /* 搜索圖標容器 */
+  .bds-c-search-input__search-icon {
+    display: flex; /* 使用 Flexbox */
+    align-items: center; /* 垂直居中 */
+    justify-content: center; /* 水平居中 */
+    position: absolute; /* 絕對定位 */
+    left: 12px; /* 靠左側距離 */
+    top: 50%; /* 垂直居中 */
+    transform: translateY(-50%); /* 修正垂直偏移 */
+    width: 16px; /* 圖標寬度 */
+    height: 16px; /* 圖標高度 */
+    color: #6b7280; /* 圖標顏色 */
+  }
+  
+  /* 搜索圖標 SVG */
+  .bds-c-search-input__search-icon svg {
+    width: 16px; /* 圖標寬度 */
+    height: 16px; /* 圖標高度 */
+    fill: currentColor; /* 使用當前顏色 */
+  }
+  
+  /* 搜索框本體 */
+  .bds-c-search-input__field {
+    flex: 1; /* 搜索框填充剩餘空間 */
+    border: none; /* 移除默認邊框 */
+    outline: none; /* 聚焦時移除外邊框 */
+    font-size: 1rem; /* 字體大小 */
+    color: #1f2937; /* 字體顏色 */
+    padding: 8px 12px 8px 36px; /* 在左側留出空間給圖標 */
+    background-color: transparent; /* 背景透明 */
+    box-sizing: border-box; /* 包括內邊距和邊框 */
+  }
+  
+  /* 占位符樣式 */
+  .bds-c-search-input__field::placeholder {
+    color: #9ca3af; /* 占位符顏色 */
+    font-size: 0.875rem; /* 占位符字體大小 */
+  }
+  
+  /* 各種菜式選擇 */
+  .bds-c-search-input__search-control {
+    position: relative;
+    margin-bottom: 10px;
+  }
+  
+  .bds-c-search-input__field {
+    width: 100%;
+    padding: 8px 12px 8px 32px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+  }
+  
+  .bds-c-search-input__field::placeholder {
+    color: #aaa;
+  }
+  
+  .bds-c-search-input__search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+  }
+  
+  .filter-group label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+  }
+  
+  .bds-c-checkbox__input {
+    display: none; /* 隱藏原生的 checkbox */
+  }
+  
+  .bds-c-checkbox__icon {
+    width: 18px;
+    height: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #d1d5db;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .bds-c-checkbox__input:checked + .bds-c-checkbox__icon {
+    background-color: #000000;
+    border-color: #000000;
+  }
+  
+  .bds-c-checkbox__icon-checked {
+    display: none;
+  }
+  
+  .bds-c-checkbox__input:checked + .bds-c-checkbox__icon .bds-c-checkbox__icon-checked {
+    display: block;
+  }
+  
+  .bds-c-checkbox__input:checked + .bds-c-checkbox__icon .bds-c-checkbox__icon-unchecked {
+    display: none;
+  }
+  
+  .bds-c-checkbox__text {
+    margin-left: 8px;
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
+  }
+  
+  .toggle-cuisines-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f9f9f9; /* 背景顏色 */
+    border: 1px solid #f9f9f9; /* 邊框顏色 */
+    border-radius: 4px; /* 圓角 */
+    color: #333333; /* 按鈕文字顏色 */
+    font-size: 14px;
+    padding: 8px 12px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: transform 0.3s ease, background-color 0.3s, border-color 0.3s;
+  }
+  
+  .toggle-cuisines-button:hover {
+    background-color: #e8e8e8; /* 滑鼠懸停背景 */
+    border-color: #e8e8e8; /* 滑鼠懸停邊框 */
+    border-radius: 7px;
+    transform: scale(1.05);
+  }
+  
+  .toggle-cuisines-button .toggle-cuisines-icon {
+    margin-left: 5px; /* 圖標與文字之間的間距 */
+    transition: transform 0.3s ease;
+  }
+  
+  .toggle-cuisines-button[aria-expanded="true"] .toggle-cuisines-icon {
+    transform: rotate(180deg); /* 展開狀態圖標旋轉 */
+  }
+  
+  /* 價格篩選樣式 */
+  /* 整体列表样式 */
+  .price-filter-list {
+    display: flex;
+    gap: 8px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* 单个项目的样式 */
+  .price-filter-item {
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Pill 样式 */
+  .bds-m-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px;
+    border: 1px solid #d1d5db; /* 未选中状态边框颜色 */
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 25px;
+  }
+  
+  .bds-m-pill__input {
+    display: none; /* 隐藏原始输入框 */
+  }
+  .bds-m-pill.bds-is-selected {
+    border-color: #302e2ef3; /* 選中狀態的邊框顏色 */
+    background-color: #302e2ef3; /* 選中狀態的背景顏色 */
+    font-weight: bold;
+    color: #ffffff;
+  }
+  
+  .bds-m-pill__label {
+    display: flex;
+    align-items: center;
+    font-size: 0.85rem; /* 調整字體大小 */
+    font-weight: 600; /* 字體加粗 */
+    color: #333; /* 字體顏色 */
+  }
+  
+  .bds-m-pill__leading-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px; /* 圖標寬度 */
+    height: 16px; /* 圖標高度 */
+    margin-right: 3px; /* 圖標與文字的間距 */
+    color: #6b7280; /* 預設圖標顏色 */
+  }
+  
+  .bds-m-pill__input {
+    display: none; /* 隱藏原生輸入框 */
+  }
+  /* 懸停效果 */
+  .bds-m-pill:hover {
+    border-color: #302e2ef3; /* 懸停時的邊框顏色 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 添加陰影效果 */
+  }
+  
+  /* 選中效果 */
+  .bds-m-pill.bds-is-selected .bds-m-pill__label {
+    color: #302e2ef3; /* 選中狀態的文字顏色 */
+  }
+  
+  .bds-m-pill.bds-is-selected .bds-m-pill__leading-icon svg {
+    fill: #000; /* 圖標內部變為黑色 */
+    stroke: #fff; /* 外邊框變為白色 */
+    stroke-width: 1.5px; /* 外邊框寬度 */
+  }
+  
+  .bds-m-pill__leading-icon svg {
+    fill: #666; /* 默認圖標顏色 */
+    stroke: none; /* 默認無外邊框 */
+    transition: fill 0.3s ease, stroke 0.3s ease; /* 添加過渡效果 */
+  }
+  
+  /* 分隔線樣式 */
+  .sidebar .divider {
+    height: 1px;
+    background-color: #ddd;
+    margin: 20px 0;
+  }
+  
+  /* 餐廳列表容器 */
+  .restaurantData-list {
+    flex: 3;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  /* 單個餐廳卡片 */
+  .restaurantData-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.2s;
+  }
+  
+  .restaurantData-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .restaurantData-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .restaurantData-card h2 {
+    font-size: 1.2rem;
+    margin: 10px 0;
+  }
+  
+  .restaurantData-card p {
+    color: #555;
+    margin: 5px 0;
+    font-size: 0.9rem;
+  }
+  
+  .restaurantData-card span {
+    display: block;
+    margin: 10px 0;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #ff5722;
+  }
+  
