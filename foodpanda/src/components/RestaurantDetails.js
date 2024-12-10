@@ -165,7 +165,7 @@ const RestaurantDetails = () => {
             
             component="img"
             alt={restaurant.name}
-            image={restaurant.image}
+            src={restaurant.image}
             sx={{ height: "200px" ,width:"220px", borderRadius:"20px", marginTop:"20px", marginRight:"20px"
             }}
 

@@ -19,7 +19,7 @@ const RestaurantCard = ({ restaurant, onClick }) => {
           component="img"
           height="200"
           image={restaurant.image}
-          //alt={restaurant.name}
+          alt={restaurant.name}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
