@@ -30,6 +30,38 @@ import PaymentPage from "./Pages/PaymentPage";
 import { PiReadCvLogoFill } from "react-icons/pi";
 import DeliveryPage from "./Pages/DeliveryPage";
 import TakewayPage from "./Pages/TakewayPage";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/ReactToastify.css";
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from "@mui/material";
+import GroceriesDetailPage from "./Pages/GroceriesDetailPage";
+
+const ProtectedRoute = ({ loginState, element }) => {
+  const [open, setOpen] = useState(!loginState);
+
+  const handleClose = () => {
+    setOpen(false);
+    window.location.href = "/login"; // 跳转到登录页面
+  };
+
+  if (!loginState) {
+    return (
+      <>
+        <Dialog open={open} onClose={handleClose}>
+          <DialogTitle>提醒</DialogTitle>
+          <DialogContent>您尚未登入，請先登入再繼續。</DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              確定
+            </Button>
+          </DialogActions>
+        </Dialog>
+        {/* 避免渲染其他内容 */}
+      </>
+    );
+  }
+
+  return element;
+};
 
 const App = () => {
   const [restaurantData, setRestaurantData] = useState([]);
@@ -96,6 +128,26 @@ const App = () => {
           path="/takeway"
           element={<TakewayPage setlogin={setlogin} setlogout={setlogout} />}
         />
+
+        <Route
+          path="/fooddeliverypage"
+          element={
+            <ProtectedRoute
+              loginState={loginState}
+              element={
+                <FoodDeliveryPage
+                  setlogin={setlogin}
+                  setlogout={setlogout}
+                  restaurantData={restaurantData}
+                />
+              }
+            />
+          }
+        />
+
+        <Route path="/groceries/:storeName" element={<GroceriesDetailPage />} />
+
+
       </Routes>
     </Router>
   );

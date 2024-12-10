@@ -4,6 +4,7 @@ import panda_burger from "./Pictures/panda_burger.jpg";
 import { ThemeProvider } from "@mui/material/styles";
 import { PiGpsFixBold } from "react-icons/pi";
 import "./Location.css";
+import { useNavigate } from "react-router-dom";
 
 import {
   Box,
@@ -17,6 +18,12 @@ import {
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 const Location = ({ location, loadingLocation, handleFindMyLocation }) => {
+  const navigate = useNavigate();
+
+  const handleSearchClick = () => {
+    navigate(`/fooddeliverypage`);
+  };
+
   return (
     <div>
     <Box
@@ -110,6 +117,7 @@ const Location = ({ location, loadingLocation, handleFindMyLocation }) => {
 
             <Button
                 variant="contained"
+                onClick={handleSearchClick}
                 sx={{
                   margin:"0 0 0 15px",
                   backgroundColor: "#D70F64", // Foodpanda pink
