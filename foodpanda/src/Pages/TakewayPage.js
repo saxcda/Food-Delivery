@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import "./DeliveryPage.css";
+import "./TakewayPage.css";
 import HeaderLocation from "../components/HeaderLocation";
 
-const DeliveryPage = ({ setlogin, setlogout }) => {
-  const [timeLeft, setTimeLeft] = useState(30); // 倒數計時初始值
-  const [progress, setProgress] = useState(0);
-  const [orderStatus, setOrderStatus] = useState("訂單正在準備中...");
+const TakewayPage = ({ setlogin, setlogout }) => {
   const [showDetails, setShowDetails] = useState(false);
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -14,6 +11,8 @@ const DeliveryPage = ({ setlogin, setlogout }) => {
   const remarks = queryParams.get("remarks");
   const restaurant = queryParams.get("restaurant");
   const totalprice = queryParams.get("totalprice");
+  const [pickupDate, setPickupDate] = useState("");
+  const [pickupTime, setPickupTime] = useState("");
   const [showChatBox, setShowChatBox] = useState(false);
   const [isCancelScreen, setIsCancelScreen] = useState(false);
   const [cancelReason, setCancelReason] = useState("");
@@ -89,85 +88,107 @@ const DeliveryPage = ({ setlogin, setlogout }) => {
   };
 
   useEffect(() => {
-    if (timeLeft > 0) {
-      const timer = setInterval(() => {
-        setTimeLeft((prevTime) => prevTime - 1);
-        setProgress((prevProgress) => prevProgress + 3.33); // 每秒進度條增加
-      }, 1000);
-
-      return () => clearInterval(timer);
-    } else {
-      // 當倒數結束時，更新訂單狀態
-      setOrderStatus("訂單完成");
-    }
-  }, [timeLeft]);
+    // 获取当前时间并加上 40 分钟
+    const now = new Date();
+    // 设置 start 时间为当前时间 + 40 分钟
+    const start = new Date(now.getTime() + 40 * 60 * 1000);
+    // 设置 end 时间为 start 时间 + 40 分钟
+    const end = new Date(start.getTime() + 30 * 60 * 1000);
+    // 格式化日期和时间
+    const optionsDate = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      weekday: "long",
+    };
+    const optionsTime = { hour: "2-digit", minute: "2-digit" };
+    const formattedDate = start.toLocaleDateString("zh-TW", optionsDate); // 日期格式化为中文
+    const formattedTimeStart = start.toLocaleTimeString("zh-TW", optionsTime); // 格式化 start 时间
+    const formattedTimeEnd = end.toLocaleTimeString("zh-TW", optionsTime); // 格式化 end 时间
+    setPickupDate(formattedDate); // 设置日期
+    setPickupTime(`${formattedTimeStart} – ${formattedTimeEnd}`); // 设置时间范围
+  }, []);
 
   return (
     <div>
       <HeaderLocation />
-      <div className="delivery-page">
-        {/* 左邊主要內容 */}
-        <div className="left-section">
-          {/* 預估外送時間 */}
-          <div className="order-status-container">
-            <div className="order-status-content">
-              <div className="left-content">
-                <h4 className="order-status-title">預估外送時間</h4>
-                <div className="order-estimate-time">
-                  <span className="time-highlight">{timeLeft}</span> 秒
+      <div className="takeaway-page">
+        {/* 左側主要內容 */}
+        <div className="main-section">
+          <div className="status-container">
+            <div className="status-content">
+              <div className="status-left">
+                <h4 className="status-title">外帶自取時間</h4>
+                <div className="pickup-details">
+                  <div className="pickup-date">{pickupDate}</div>
+                  <div className="pickup-time">{pickupTime}</div>
                 </div>
-                <div className="progress-bar-container">
-                  <div
-                    className="progress-bar"
-                    style={{ width: `${progress}%` }}
-                  ></div>
+                <div className="pickup-code">
+                  <span className="pickup-code-label">外帶自取號碼：</span>
+                  <span className="pickup-code-value">8189</span>
                 </div>
-                <p className="order-status-primary">{orderStatus}</p>
-                <h6 className="order-status-secondary">
-                  請記得開啟手機通知，才能收到訂單最新進度喔！如需協助可點擊「與我們聊聊」。
+                <p className="status-primary">
+                  <span className="wave">
+                    <span className="waveText">訂</span>
+                    <span className="waveText">單</span>
+                    <span className="waveText">正</span>
+                    <span className="waveText">在</span>
+                    <span className="waveText">準</span>
+                    <span className="waveText">備</span>
+                    <span className="waveText">中</span>
+                    <span className="waveText">.</span>
+                    <span className="waveText">.</span>
+                    <span className="waveText">.</span>
+                  </span>
+                </p>
+                <h6 className="status-secondary">
+                  領取時請檢查餐點是否正確。如需協助可點擊「與我們聊聊」！
+                  此單為外帶訂單，不適用於餐廳內用。
                 </h6>
               </div>
-              <div className="right-content">
+              <div className="status-right">
                 <img
                   src="https://images.deliveryhero.io/image/pd-otp-illustrations/v2/FP_TW/illu-preparing.gif"
                   alt="準備中"
-                  className="order-status-image"
+                  className="status-image"
                 />
               </div>
             </div>
           </div>
+
           {/* 訂單詳情 */}
-          <div className="order-details-container">
-            <h2 className="order-cart-title">訂單詳情</h2>
-            <div className="order-item">
+          <div className="details-container">
+            <h2 className="details-title">訂單詳情</h2>
+            <div className="details-item">
               <img
-                className="order-image"
+                className="details-image"
                 src="https://images.deliveryhero.io/image/fd-tw/LH/b5bm-listing.jpg?width=235&height=170"
                 alt="Pasta Hut"
               />
-              <div className="order-info">
-                <p className="order-name">{restaurant}</p>
-                <p className="order-id">訂單編號 #pn3u-2439-4yd8</p>
-                <div className="deliveryAddress">送餐地址: {address}</div>
-                <div className="reMark">外送備註: {remarks || "無備註"}</div>
+              <div className="details-info">
+                <p className="details-restaurant">{restaurant}</p>
+                <p className="details-id">訂單編號: {orderId}</p>
+                <div className="details-address">送餐地址: {address}</div>
+                <div className="details-remarks">
+                  外送備註: {remarks || "無備註"}
+                </div>
               </div>
-              <p className="order-price">$ {totalprice}</p>
+              <p className="details-price">$ {totalprice}</p>
             </div>
             <button
               onClick={() => setShowDetails((prev) => !prev)}
-              className="toggle-cuisines-button"
+              className="details-toggle-button"
             >
-              <span className="bds-c-btn__idle-content">
-                <span className="bds-c-btn__idle-content__label">
+              <span className="button-content">
+                <span className="button-label">
                   {showDetails ? "顯示更少" : "查看細節"}
                 </span>
-                <span className="bds-c-btn__idle-content__suffix">
+                <span className="button-icon">
                   {showDetails ? (
-                    // 顯示更少的圖標
                     <svg
                       aria-hidden="true"
                       focusable="false"
-                      className="fl-interaction-primary"
+                      className="icon-primary"
                       width="20"
                       height="20"
                       viewBox="0 0 24 24"
@@ -180,11 +201,10 @@ const DeliveryPage = ({ setlogin, setlogout }) => {
                       ></path>
                     </svg>
                   ) : (
-                    // 顯示更多的圖標
                     <svg
                       aria-hidden="true"
                       focusable="false"
-                      className="fl-interaction-primary"
+                      className="icon-primary"
                       width="20"
                       height="20"
                       viewBox="0 0 24 24"
@@ -202,24 +222,26 @@ const DeliveryPage = ({ setlogin, setlogout }) => {
             </button>
           </div>
         </div>
-        {/* 右邊客服區域 */}
-        <div className="right-section2">
-          <div className="customer-support">
+
+        {/* 右側客服區域 */}
+        <div className="support-section">
+          <div className="support-container">
             <img
               src="https://images.deliveryhero.io/image/foodpanda/help-center/tw/help-center.png"
               alt="客服圖示"
-              className="customer-support-logo"
+              className="support-logo"
             />
-            <div className="customer-support-content">
-              <h2 className="customer-support-title">你的訂單需要協助嗎？</h2>
-              <div className="hello">
-                <button className="chat-button" onClick={handleChatClick}>
-                  <span className="chat-button__content">與我們聊聊</span>
-                </button>
-              </div>
+            <div className="support-content">
+              <h2 className="support-title">你的訂單需要協助嗎？</h2>
+              <button className="support-button">
+                <span className="button-text" onClick={handleChatClick}>
+                  與我們聊聊
+                </span>
+              </button>
             </div>
           </div>
         </div>
+        {/* 客服中心弹窗 */}
         {showChatBox && (
           <div className="chat-box">
             <div className="chat-header">
@@ -281,7 +303,7 @@ const DeliveryPage = ({ setlogin, setlogout }) => {
                       className="cancel-button"
                       onClick={() => setIsCancelScreen(true)}
                     >
-                      取消订单
+                      取消訂單
                     </button>
                   </div>
                 </>
@@ -350,4 +372,4 @@ const DeliveryPage = ({ setlogin, setlogout }) => {
   );
 };
 
-export default DeliveryPage;
+export default TakewayPage;
