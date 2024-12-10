@@ -136,25 +136,28 @@ const VerifyEmail = ({ email, onBack, onClose, setlogin, setlogout }) => {
           </g>
         </svg>
       </Box>
-      <Typography variant="h5" className="verifyEmailModalTitle">
-        我們已發送一個驗證連結至{email}
-      </Typography>
-      <Typography variant="body1" className="verifyEmailDescription">
-        請點擊信箱內的驗證連結
-      </Typography>
-
-      <Button
-        className={`verifyEmailPrimaryButton ${isCompleted ? "completed" : ""}`}
-        variant="contained"
-        onClick={sendEmail}
-        disabled={!isCompleted}
-      >
-        {isCompleted ? (
-          <span>重新傳送驗證連結</span> // 當倒數結束後顯示這個文字
-        ) : (
-          <span>請於 {countdown} 秒後再次傳送</span> // 顯示倒數
-        )}
-      </Button>
+      <div>
+        <Typography variant="h5" className="verifyEmailModalTitle">
+          我們已發送一個驗證連結至{email}
+        </Typography>
+        <Typography variant="body1" className="verifyEmailDescription">
+          請點擊信箱內的驗證連結
+        </Typography>
+      </div>
+      <div className="verifyEmailPrimaryButton">
+        <Button
+          className={`verifyEmailButton ${isCompleted ? "completed" : ""}`}
+          variant="contained"
+          onClick={sendEmail}
+          disabled={!isCompleted}
+        >
+          {isCompleted ? (
+            <span>重新傳送驗證連結</span> // 當倒數結束後顯示這個文字
+          ) : (
+            <span>請於 {countdown} 秒後再次傳送</span> // 顯示倒數
+          )}
+        </Button>
+      </div>
     </Box>
   );
 };

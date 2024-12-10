@@ -2,9 +2,10 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 import sqlite3
-
 from sendemail import sendEmail
-from SQL import email_confirm, password_confirm
+from forgetpassword import send_forgetpassword_email
+from SQL import email_confirm, password_confirm, update_password
+from randmopassword import generate_formatted_password
 
 app = Flask(__name__)
 # Configuration for SQLite database
@@ -65,6 +66,30 @@ def check_password_api():
     except Exception as e:
         print(e)
         return jsonify({'error': str(e)}), 500
+
+# API: 忘記密碼
+@app.route('/api/forgot_password', methods=['POST'])
+def forgot_password():
+    data = request.get_json()
+    email = data.get('email')
+    if not email:
+            return jsonify({"message": "請提供有效的電子郵件地址"}), 400
+    try:
+        # 查詢資料庫是否存在該電子郵件
+        user_exists = email_confirm(email)  # 假設此函式執行查詢並返回布林值
+        if not user_exists:
+            return jsonify({"message": "該電子郵件未註冊"}), 404
+        # 隨機生成一段密碼
+        new_password = generate_formatted_password()
+        # 更新資料庫中的密碼
+        update_password(email, new_password)  # 假設此函式執行密碼更新
+        # 將新密碼發送到用戶的電子郵件
+        send_forgetpassword_email(email, new_password)  # 假設此函式執行電子郵件發送
+
+        return jsonify({"message": "密碼已重置，請檢查您的電子郵件"})
+    except Exception as e:
+        print(f"處理錯誤: {e}")
+        return jsonify({"message": "伺服器發生錯誤，請稍後再試"}), 500
 
 @app.route('/restaurants', methods=['GET'])
 def get_restaurants():
