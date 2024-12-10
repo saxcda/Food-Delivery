@@ -4,8 +4,11 @@ import RestaurantCard from "../components/RestaurantCard";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { Grid, Typography } from "@mui/material";
+import { Grid, Typography, Tabs, Tab, Box } from "@mui/material";
 import HeaderLocation from "../components/HeaderLocation";
+import DeliveryDiningIcon from "@mui/icons-material/DeliveryDining"; // 外送圖示
+import TakeoutDiningIcon from "@mui/icons-material/TakeoutDining"; // 外帶自取圖示
+import LocalGroceryStoreIcon from "@mui/icons-material/LocalGroceryStore"; // 生鮮雜貨圖示
 const GOOGLE_MAPS_API_KEY = "";
 
 const FoodDeliveryPage = ({ setlogin, setlogout, restaurantData}) => {
@@ -18,8 +21,14 @@ const FoodDeliveryPage = ({ setlogin, setlogout, restaurantData}) => {
   const [filteredSearch, setFilteredSearch] = useState(""); // 用來篩選的狀態
   const [showAllCuisines, setShowAllCuisines] = useState(false);
 
+  const [activeTab, setActiveTab] = useState(0); // 用於追蹤當前選中的 tab
+
   const handleRestaurantClick = (restaurantName) => {
     navigate(`/restaurants/${city}/${encodeURIComponent(restaurantName)}`);
+  };
+
+  const handleTabChange = (event, newValue) => {
+    setActiveTab(newValue);
   };
 
   useEffect(() => {
@@ -251,7 +260,40 @@ const FoodDeliveryPage = ({ setlogin, setlogout, restaurantData}) => {
     return (
     <div>
       <HeaderLocation setlogin={setlogin} setlogout={setlogout} />
+      <Tabs
+          value={activeTab}
+          onChange={handleTabChange}
+          aria-label="Food delivery tabs"
+          indicatorColor="primary"
+          textColor="primary"
+        >
+          <Tab
+            label={
+              <Box display="flex" alignItems="center">
+                <DeliveryDiningIcon style={{ marginRight: 8 }} />
+                外送
+              </Box>
+            }
+          />
+          <Tab
+            label={
+              <Box display="flex" alignItems="center">
+                <TakeoutDiningIcon style={{ marginRight: 8 }} />
+                外帶自取
+              </Box>
+            }
+          />
+          <Tab
+            label={
+              <Box display="flex" alignItems="center">
+                <LocalGroceryStoreIcon style={{ marginRight: 8 }} />
+                生鮮雜貨
+              </Box>
+            }
+          />
+        </Tabs>
       <div className="food-delivery-page">
+      
         
         {/* 篩選和排序的側邊欄 */}
         <div className="sidebar">
@@ -711,7 +753,8 @@ const FoodDeliveryPage = ({ setlogin, setlogout, restaurantData}) => {
             )
           )}
         </Grid>
-      </div></div>
+      </div>
+    </div>
     );
   };
 export default FoodDeliveryPage;
