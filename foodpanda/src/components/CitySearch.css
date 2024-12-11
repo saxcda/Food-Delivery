@@ -1,0 +1,51 @@
+.city-search-container {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    max-width: 500px;
+    margin: auto;
+  }
+  
+  .city-search-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #000;
+  }
+  
+  .city-search-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .city-search-select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    color: #333;
+  }
+  
+  .city-search-button {
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .city-search-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .city-search-error {
+    color: red;
+    margin-top: 20px;
+    font-size: 14px;
+  }
+  
