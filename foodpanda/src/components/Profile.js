@@ -23,7 +23,7 @@ const Profile = ({ setlogin, setlogout, loginState,  user, setUser}) => {
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:5000/users/1")
+      .get("http://127.0.0.1:5000/users/${user.id}")
       .then((response) => {
         setFormData({
           firstName: response.data.firstName || "",
@@ -72,7 +72,7 @@ if (error) {
   const handleSave = () => {
     // Save updated user data
     axios
-      .put("http://127.0.0.1:5000/users/1", formData) // Replace with the actual user ID or API endpoint
+      .put("http://127.0.0.1:5000/users/${user.id}", formData) // Replace with the actual user ID or API endpoint
       .then((response) => {
         console.log("Saved Data:", response.data);
         alert("Profile updated successfully!");

@@ -17,7 +17,7 @@ const HistoryPage = ({ setlogin, setlogout, loginState,  user, setUser}) => {
   useEffect(() => {
     const fetchCompletedOrders = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:5000/order-history?user_id=1`);
+        const response = await fetch(`http://127.0.0.1:5000/order-history?user_id=${user.id}`);
         if (response.ok) {
           const data = await response.json();
           setCompletedOrders(data);
@@ -35,7 +35,7 @@ const HistoryPage = ({ setlogin, setlogout, loginState,  user, setUser}) => {
   useEffect(() => {
     const fetchOngoingOrders = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:5000/order-history-ongoing?user_id=1`);
+        const response = await fetch(`http://127.0.0.1:5000/order-history-ongoing?user_id=${user.id}`);
         if (response.ok) {
           const data = await response.json();
           setOngoingOrders(data);
