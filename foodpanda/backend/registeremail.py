@@ -10,6 +10,7 @@ def send_verification_email(user_email, verification_link):
     content["subject"] = "準備好要登入你的foodpanda帳號了嗎？"
     content["from"] = EMAIL
     content["to"] = user_email
+    verification_link = f"http://localhost:3000/register?email={user_email}"
     # Email HTML 內容
     email_body = f"""
                   <div style="width:100%; background-color:#ffffff; margin:0; padding:0; font-family:'Avenir Next LT Pro',Helvetica,Arial,'Roboto',sans-serif;">
@@ -63,7 +64,3 @@ def send_verification_email(user_email, verification_link):
             print("驗證信發送成功！")
         except Exception as e:
             print("發送驗證信時發生錯誤：", e)
-# 測試函數
-user_email = "bensonb921122@gmail.com"
-verification_link = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-send_verification_email(user_email, verification_link)
