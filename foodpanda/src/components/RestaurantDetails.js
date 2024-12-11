@@ -51,15 +51,38 @@ const RestaurantDetails = () => {
     setSearchQuery(event.target.value.toLowerCase());
   };
 
-  const addToCart = (item) => {
-    setCart((prevCart) => [...prevCart, item]);
+  const addToCart = (menuItem) => {
+    setCart((prevCart) => {
+      // Check if the item already exists in the cart
+      const existingItem = prevCart.find((item) => item.name === menuItem.name);
+      if (existingItem) {
+        // Increment the quantity of the existing item
+        return prevCart.map((item) =>
+          item.name === menuItem.name
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      }
+      // Add a new item to the cart
+      return [...prevCart, { ...menuItem, quantity: 1 }];
+    });
   };
+  
+  
 
-  const removeFromCart = (indexToRemove) => {
+  const removeFromCart = (menuItem) => {
     setCart((prevCart) =>
-      prevCart.filter((_, index) => index !== indexToRemove)
+      prevCart
+        .map((item) =>
+          item.name === menuItem.name
+            ? { ...item, quantity: item.quantity - 1 }
+            : item
+        )
+        .filter((item) => item.quantity > 0) // Remove items with quantity 0
     );
   };
+  
+  
 
   const openDialog = () => setIsDialogOpen(true);
   const closeDialog = () => setIsDialogOpen(false);
@@ -152,7 +175,8 @@ const RestaurantDetails = () => {
     );
   }
 
-  const totalPrice = cart.reduce((total, item) => total + item.price, 0).toFixed(2);
+  const totalPrice = cart.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2);
+
 
   return (
     <Box>
@@ -591,14 +615,13 @@ const RestaurantDetails = () => {
                         sx={{ minWidth: "30px", fontSize: "1rem" }}
                         onClick={() => {
                           // 減少數量的邏輯
-                          
-                          
+                          removeFromCart(item)
                         }}
                       >
                         -
                       </Button>
                       <Typography variant="body2" sx={{ width: "24px", textAlign: "center" }}>
-                      1
+                      {item.quantity}
                       </Typography>
                       <Button
                         size="small"
@@ -606,7 +629,7 @@ const RestaurantDetails = () => {
                         sx={{ minWidth: "30px", fontSize: "1rem" }}
                         onClick={() => {
                           // 增加數量的邏輯
-                        
+                          addToCart(item)
                         }}
                       >
                         +
