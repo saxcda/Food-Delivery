@@ -312,11 +312,13 @@ const GroceriesDetailPage = ({ setlogin, setlogout, loginState,  user, setUser})
               <Box
                 sx={{
                   //border: "1px solid #E0E0E0",
+                  position:"fixed",
                   boxShadow:"0px 4px 6px rgba(0, 0, 0, 0.1)",
                   borderRadius: "10px",
                   padding: "10px",
                   backgroundColor: "#ffffff",
                   height:"100vh",
+                  width:"25%",
                 }}
               >
                 <Typography variant="h6" fontWeight="bold">
