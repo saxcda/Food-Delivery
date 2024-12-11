@@ -272,11 +272,11 @@ const Header = ({ setlogin, setlogout, loginState,  user, setUser}) => {
               註冊
             </Button>
           </Box>
-
+          {/*}
           <IconButton color="inherit" onClick={handleBsPersonMenuOpen}>
             <BsPerson />
           </IconButton>
-
+          */}
           <Menu
             anchorEl={bsPersonMenuAnchorEl}
             open={Boolean(bsPersonMenuAnchorEl)}

@@ -121,7 +121,7 @@ const Profile = ({ setlogin, setlogout, loginState,  user, setUser}) => {
           </Box>
 
           <TextField
-            label="名"
+            label="全名"
             name="firstName"
             value={formData.firstName}
             onChange={handleChange}
@@ -133,7 +133,7 @@ const Profile = ({ setlogin, setlogout, loginState,  user, setUser}) => {
           },
             }}
           />
-
+        {/*
           <TextField
             label="姓"
             name="lastName"
@@ -147,7 +147,7 @@ const Profile = ({ setlogin, setlogout, loginState,  user, setUser}) => {
           },
             }}
           />
-
+        */}
           <TextField
             label="手機號碼"
             name="phoneNumber"

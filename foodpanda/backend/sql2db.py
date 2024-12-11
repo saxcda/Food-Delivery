@@ -20,6 +20,7 @@ def create_database(inputfile, outputfile):
     for command in commands:
         command = command.strip()
         if command:
+            print(str(command))  
             cursor.execute(str(command))        
 
     conn.commit()

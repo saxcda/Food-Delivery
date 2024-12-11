@@ -33,7 +33,7 @@ const RestaurantDetailsPage = ({restaurantData, setlogin, setlogout, loginState,
         onBackToRestaurants={() => navigate(`/restaurants/${restaurant.city}`)}
       />
       <RestaurantDetails restaurant={restaurant} />
-      <button onClick={handleBack}>Back to Restaurant List</button>
+      {/*<button onClick={handleBack}>Back to Restaurant List</button>*/}
       <Footer />
     </div>
   );
