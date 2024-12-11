@@ -19,7 +19,6 @@ const Transition = React.forwardRef((props, ref) => (
 ));
 
 const LoginDialog = ( { open, onClose, setlogin, setlogout, user, setUser } ) => {
-  console.log("LoginDialog props:", { open, onClose, setlogin });
 
   const [showEmailConfirm, setShowEmailConfirm] = useState(false); // 狀態管理
 

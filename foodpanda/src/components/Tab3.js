@@ -204,9 +204,9 @@ const Tab3 = ({ handleRestaurantClick }) => {
     <div
       className="food-promotions-page"
       style={{
-        padding: "20px",
+        padding: "20px 50px 20px 20px",
         display: "flex",
-        gap: "150px",
+        gap: "80px",
         flexDirection: "row", // Ensure proper alignment
         width: "100%", // Allow it to stretch to the full width
         height: "100%", // Optional: Allow it to stretch vertically

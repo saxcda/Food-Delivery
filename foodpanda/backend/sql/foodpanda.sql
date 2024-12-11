@@ -54,7 +54,12 @@ INSERT INTO groceries_restaurants (name, delivery_time, price_range, offer,image
 VALUES
 ("統一超商", "25-40 分鐘", "$45", "免費送達","https://images.deliveryhero.io/image/fd-tw/LH/mpwp-listing.jpg"),
 ("萊爾富", "30-45 分鐘", "$45", "折扣","https://images.deliveryhero.io/image/fd-tw/LH/e5mh-listing.jpg"),
-("全家便利商店", "20-35 分鐘", "$45", "低消$500","https://images.deliveryhero.io/image/fd-tw/LH/f7vj-listing.jpg");
+("全家便利商店", "20-35 分鐘", "$45", "低消$500","https://images.deliveryhero.io/image/fd-tw/LH/f7vj-listing.jpg"),
+("大甲鎮瀾宮線上購物商城(鎮瀾買足)(24小時出貨)", "20-35 分鐘", "$45", "低消$500","https://images.deliveryhero.io/image/fd-tw/LH/p5ku-listing.jpg"),
+("縱貫線3C旗艦館 (24小時出貨)", "20-35 分鐘", "$45", "低消$500","https://images.deliveryhero.io/image/fd-tw/LH/q4w4-listing.jpg"),
+("特福旗艦館 (24小時出貨)", "20-35 分鐘","$45", "低消$500","https://images.deliveryhero.io/image/fd-tw/LH/rtwq-listing.jpg"),
+("小紅帽咖啡 (24小時出貨)", "20-35 分鐘", "$45", "低消$500","https://images.deliveryhero.io/image/fd-tw/LH/t12l-listing.jpg"),
+("3M品牌旗艦店 (24小時出貨)", "20-35 分鐘", "$45", "低消$500","https://images.deliveryhero.io/image/fd-tw/LH/ga3k-listing.jpg");
 
 INSERT INTO groceries_promotions (title, description, image)
 VALUES
@@ -65,26 +70,64 @@ VALUES
 INSERT INTO groceries_items (restaurant_id, category, name, price, original_price, image)
 VALUES
 -- 統一超商商品
-(1, "飲品", "可口可樂 330ml", 20, 25, "https://example.com/coke.jpg"),
-(1, "飲品", "雪碧 330ml", 18, 22, "https://example.com/sprite.jpg"),
-(1, "零食", "樂事洋芋片 80g", 30, 35, "https://example.com/chips.jpg"),
-(1, "零食", "Oreo 原味夾心餅乾 154g", 50, NULL, "https://example.com/oreo.jpg"),
-(1, "生活用品", "抽取式面紙 (盒裝)", 25, 30, "https://example.com/tissue.jpg"),
+(1, "飲品", "可口可樂 330ml", 20, 25, "https://images.deliveryhero.io/image/nv/Taiwan/cw2qe-384683-1.jpg?height=480"),
+(1, "飲品", "雪碧 330ml", 18, 22, "https://images.deliveryhero.io/image/nv/Taiwan/cw2qe-342184-1.jpg?height=480"),
+(1, "飲品", "百事可樂宇宙機器人PET600", 18, 22, "https://images.deliveryhero.io/image/darkstores/nv-global-catalog/tw/1dd0016b-0f9f-4957-8fdd-f4b1057af21d.jpg?height=480"),
+(1, "飲品", "OOHA氣泡飲-檸檬蜂蜜 | 500 ml", 18, 22, "https://images.deliveryhero.io/image/nv/Taiwan/cw2qe-526530-1.jpg?height=480"),
+(1, "零食", "樂事洋芋片 80g", 30, 35, "https://images.deliveryhero.io/image/nv/Taiwan/cw2qe-411706-1.jpg?height=480"),
+(1, "零食", "HelloKitty餅乾-奶油玫瑰鹽", 50, NULL, "https://images.deliveryhero.io/image/darkstores/nv-global-catalog/tw/740e3472-3f86-4043-8adf-b5a1f6da7a42.jpg?height=480"),
+(1, "零食", "Oreo 原味夾心餅乾 154g", 50, NULL, "https://images.deliveryhero.io/image/nv/Taiwan/cw2qe-320735-1.jpg?height=480"),
+(1, "零食", "KONOMI相撲手脆紫菜-辣味 32 g", 50, NULL, "https://images.deliveryhero.io/image/nv/Taiwan/cw2qe-310132-1.jpg?height=480"),
+(1, "生活用品", "抽取式面紙 (盒裝)", 25, 30, "https://images.deliveryhero.io/image/nv/Taiwan/cw2qe-579940-1.jpg?height=480"),
+(1, "生活用品", "【買1送1】高露潔全效牙齦護理專家牙膏", 35, NULL, "https://images.deliveryhero.io/image/darkstores/nv-global-catalog/tw/f8a94932-833b-438d-b525-9736792f07a0.jpg?height=480"),
+(1, "生活用品", "G)韓國MF城市護手霜-鳶尾花 50g", 25, 60, "https://images.deliveryhero.io/image/nv/Taiwan/cw2qe-579940-1.jpg?height=480"),
+(1, "生活用品", "抽取式面紙 (盒裝)", 25, 50, "https://images.deliveryhero.io/image/darkstores/nv-global-catalog/tw/9b66c16d-7725-4f9c-a183-a901279cb66b.jpg?height=480"),
 
 -- 萊爾富商品
-(2, "飲品", "原萃綠茶 500ml", 28, 32, "https://example.com/tea.jpg"),
-(2, "飲品", "維他奶原味 250ml", 15, 20, "https://example.com/vitasoy.jpg"),
-(2, "零食", "乖乖玉米脆片 180g", 45, 50, "https://example.com/snack.jpg"),
-(2, "零食", "小熊餅乾 90g", 40, NULL, "https://example.com/teddy.jpg"),
-(2, "生活用品", "垃圾袋 (30L, 10入)", 50, 55, "https://example.com/garbagebag.jpg"),
+(2, "生活用品", "抽取式面紙 (盒裝)", 25, 30, "https://images.deliveryhero.io/image/nv/Taiwan/cw2qe-579940-1.jpg?height=480"),
+(2, "生活用品", "【買1送1】高露潔全效牙齦護理專家牙膏", 35, NULL, "https://images.deliveryhero.io/image/darkstores/nv-global-catalog/tw/f8a94932-833b-438d-b525-9736792f07a0.jpg?height=480"),
+(2, "生活用品", "G)韓國MF城市護手霜-鳶尾花 50g", 25, 60, "https://images.deliveryhero.io/image/nv/Taiwan/cw2qe-579940-1.jpg?height=480"),
+(2, "生活用品", "抽取式面紙 (盒裝)", 25, 50, "https://images.deliveryhero.io/image/darkstores/nv-global-catalog/tw/9b66c16d-7725-4f9c-a183-a901279cb66b.jpg?height=480"),
+(2, "飲品", "可口可樂 330ml", 20, 25, "https://images.deliveryhero.io/image/nv/Taiwan/cw2qe-384683-1.jpg?height=480"),
+(2, "飲品", "雪碧 330ml", 18, 22, "https://images.deliveryhero.io/image/nv/Taiwan/cw2qe-342184-1.jpg?height=480"),
+(2, "飲品", "百事可樂宇宙機器人PET600", 18, 22, "https://images.deliveryhero.io/image/darkstores/nv-global-catalog/tw/1dd0016b-0f9f-4957-8fdd-f4b1057af21d.jpg?height=480"),
+(2, "飲品", "OOHA氣泡飲-檸檬蜂蜜 | 500 ml", 18, 22, "https://images.deliveryhero.io/image/nv/Taiwan/cw2qe-526530-1.jpg?height=480"),
+(2, "零食", "樂事洋芋片 80g", 30, 35, "https://images.deliveryhero.io/image/nv/Taiwan/cw2qe-411706-1.jpg?height=480"),
+(2, "零食", "HelloKitty餅乾-奶油玫瑰鹽", 50, NULL, "https://images.deliveryhero.io/image/darkstores/nv-global-catalog/tw/740e3472-3f86-4043-8adf-b5a1f6da7a42.jpg?height=480"),
+(2, "零食", "Oreo 原味夾心餅乾 154g", 50, NULL, "https://images.deliveryhero.io/image/nv/Taiwan/cw2qe-320735-1.jpg?height=480"),
+(2, "零食", "KONOMI相撲手脆紫菜-辣味 32 g", 50, NULL, "https://images.deliveryhero.io/image/nv/Taiwan/cw2qe-310132-1.jpg?height=480"),
+
+
 
 -- 全家便利商店商品
-(3, "飲品", "統一鮮奶 1L", 85, 90, "https://example.com/milk.jpg"),
-(3, "飲品", "伯朗咖啡罐 240ml", 35, 40, "https://example.com/coffee.jpg"),
-(3, "零食", "旺旺雪餅 300g", 65, 70, "https://example.com/senbei.jpg"),
-(3, "零食", "義美小泡芙 巧克力口味 85g", 55, NULL, "https://example.com/puff.jpg"),
-(3, "生活用品", "牙刷 (2入裝)", 45, 50, "https://example.com/toothbrush.jpg");
+(3, "零食", "樂事洋芋片 80g", 30, 35, "https://images.deliveryhero.io/image/nv/Taiwan/cw2qe-411706-1.jpg?height=480"),
+(3, "零食", "HelloKitty餅乾-奶油玫瑰鹽", 50, NULL, "https://images.deliveryhero.io/image/darkstores/nv-global-catalog/tw/740e3472-3f86-4043-8adf-b5a1f6da7a42.jpg?height=480"),
+(3, "零食", "Oreo 原味夾心餅乾 154g", 50, NULL, "https://images.deliveryhero.io/image/nv/Taiwan/cw2qe-320735-1.jpg?height=480"),
+(3, "零食", "KONOMI相撲手脆紫菜-辣味 32 g", 50, NULL, "https://images.deliveryhero.io/image/nv/Taiwan/cw2qe-310132-1.jpg?height=480"),
+(3, "飲品", "可口可樂 330ml", 20, 25, "https://images.deliveryhero.io/image/nv/Taiwan/cw2qe-384683-1.jpg?height=480"),
+(3, "飲品", "雪碧 330ml", 18, 22, "https://images.deliveryhero.io/image/nv/Taiwan/cw2qe-342184-1.jpg?height=480"),
+(3, "飲品", "百事可樂宇宙機器人PET600", 18, 22, "https://images.deliveryhero.io/image/darkstores/nv-global-catalog/tw/1dd0016b-0f9f-4957-8fdd-f4b1057af21d.jpg?height=480"),
+(3, "飲品", "OOHA氣泡飲-檸檬蜂蜜 | 500 ml", 18, 22, "https://images.deliveryhero.io/image/nv/Taiwan/cw2qe-526530-1.jpg?height=480"),
 
+(3, "生活用品", "抽取式面紙 (盒裝)", 25, 30, "https://images.deliveryhero.io/image/nv/Taiwan/cw2qe-579940-1.jpg?height=480"),
+(3, "生活用品", "【買1送1】高露潔全效牙齦護理專家牙膏", 35, NULL, "https://images.deliveryhero.io/image/darkstores/nv-global-catalog/tw/f8a94932-833b-438d-b525-9736792f07a0.jpg?height=480"),
+(3, "生活用品", "G)韓國MF城市護手霜-鳶尾花 50g", 25, 60, "https://images.deliveryhero.io/image/nv/Taiwan/cw2qe-579940-1.jpg?height=480"),
+(3, "生活用品", "抽取式面紙 (盒裝)", 25, 50, "https://images.deliveryhero.io/image/darkstores/nv-global-catalog/tw/9b66c16d-7725-4f9c-a183-a901279cb66b.jpg?height=480"),
+
+--鎮瀾買足
+(4, "飲品", "統一鮮奶 1L", 85, 90, "https://example.com/milk.jpg"),
+(4, "飲品", "伯朗咖啡罐 240ml", 35, 40, "https://example.com/coffee.jpg"),
+(4, "零食", "旺旺雪餅 300g", 65, 70, "https://example.com/senbei.jpg"),
+(4, "零食", "義美小泡芙 巧克力口味 85g", 55, NULL, "https://example.com/puff.jpg"),
+(4, "生活用品", "牙刷 (2入裝)", 45, 50, "https://example.com/toothbrush.jpg"),
+
+(5, "生活用品", "牙刷 (2入裝)", 45, 50, "https://example.com/toothbrush.jpg"),
+
+(6, "生活用品", "牙刷 (2入裝)", 45, 50, "https://example.com/toothbrush.jpg"),
+
+(7, "生活用品", "牙刷 (2入裝)", 45, 50, "https://example.com/toothbrush.jpg"),
+
+(8, "生活用品", "牙刷 (2入裝)", 45, 50, "https://example.com/toothbrush.jpg");
 
 
 
@@ -139,7 +182,7 @@ CREATE TABLE products (
     availability_status TEXT NOT NULL CHECK(availability_status IN ('上架', '下架')), -- 產品狀態限制
     FOREIGN KEY (merchant_id) REFERENCES merchants(merchant_id)
 );
-
+ 
 CREATE TABLE orders (
     order_id INT PRIMARY KEY,
     user_id INT NOT NULL,

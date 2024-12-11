@@ -4,7 +4,7 @@ import "./PaymentPage.css";
 import HeaderLocation from "../components/HeaderLocation";
 import AddressDialog from "../components/AddressDialog";
 
-const PaymentPage = ({setlogin, setlogout, loginState,  user, setUser}) => {
+const PaymentPage = ({ setlogin, setlogout, loginState, user, setUser }) => {
   const [deliveryOption, setDeliveryOption] = useState("standard");
   const [deliveryFee, setDeliveryFee] = useState(35);
   const [contactless, setContactless] = useState(false);
@@ -14,39 +14,72 @@ const PaymentPage = ({setlogin, setlogout, loginState,  user, setUser}) => {
   const [isChecked, setIsChecked] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [addressDialogOpen, setAddressDialogOpen] = useState(false); // 控制地址彈窗顯示
-  const [currentAddress, setCurrentAddress] = useState("");
+  const [currentAddress, setCurrentAddress] = useState(
+    "33301 桃園市, 文化一路259號"
+  );
+
   const [remarks, setRemarks] = useState("");
   const [restaurantName, setRestaurantName] = useState("");
+  const [cart, setCart] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0); // 接收的總金額
   const navigate = useNavigate();
   const location = useLocation();
 
   const handleRemarksChange = (e) => {
-    setRemarks(e.target.value); // 更新输入框内容
+    setRemarks(e.target.value); // 更新输入框=内容
   };
   // 餐點價格及費用
   const [mealPrice, setMealPrice] = useState(65); // 預設餐點價格
   const platformFee = 60; // 平台費用
 
   useEffect(() => {
-    const queryParams = new URLSearchParams(location.search);
-    const restaurant = queryParams.get("restaurant");
-    if (restaurant) {
-      setRestaurantName(restaurant);
+    if (location.state) {
+      // 从 location.state 中提取数据
+      const { restaurant_name, total_price, items, address, remarks } =
+        location.state;
+
+      setRestaurantName(restaurant_name || "");
+      setTotalPrice(total_price || 0);
+      setCart(items || []);
+      setCurrentAddress(address || "");
+      setRemarks(remarks || "");
+
+      if (total_price > 149) {
+        setDeliveryFee(0); // 外送服務費為 0
+      }
+    } else {
+      // 从查询字符串中提取数据（如果未使用 state）
+      const queryParams = new URLSearchParams(location.search);
+      const restaurant = queryParams.get("restaurant");
+      const total = queryParams.get("totalprice");
+
+      setRestaurantName(restaurant || "");
+      setTotalPrice(total ? parseFloat(total) : 0);
+      if (parseFloat(total) > 149) {
+        setDeliveryFee(0); // 外送服務費為 0
+      }
     }
   }, [location]);
 
   // 外送選項處理邏輯
   useEffect(() => {
-    if (deliveryOption === "priority") {
-      setDeliveryFee(35 + 29); // 優先專送
-    } else {
-      setDeliveryFee(35); // 標準方案
+    if (totalPrice <= 149) {
+      // 如果餐點價格小於等於 149，則按外送選項計算服務費
+      if (deliveryOption === "priority") {
+        setDeliveryFee(35 + 29); // 優先專送
+      } else {
+        setDeliveryFee(35); // 標準方案
+      }
     }
-  }, [deliveryOption]);
+  }, [deliveryOption, totalPrice]);
 
   // 計算總費用
   const calculateTotal = () => {
-    const subtotal = mealPrice; // 小計為餐點價格
+    console.log(cart)
+    const subtotal = cart.reduce(
+      (total, item) => total + item.price * item.quantity,
+      0
+    );
     const total = subtotal + deliveryFee + platformFee + selectedTip; // 總計
     return { subtotal, total };
   };
@@ -65,18 +98,41 @@ const PaymentPage = ({setlogin, setlogout, loginState,  user, setUser}) => {
     alert(`統一編號: ${inputValue} 使用成功`);
   };
 
-  const handlePayment = () => {
-    // 将多个参数组合成一个查询字符串
-    const query = new URLSearchParams({
-      address: currentAddress,
-      remarks: remarks,
-      restaurant: restaurantName,
-      totalprice: total
-    }).toString();
-
-    // 跳转到目标页面并附加查询字符串
-    navigate(`/delivery?${query}`);
+  const handlePayment = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/setHistory', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          address: currentAddress,
+          remarks: remarks,
+          restaurant: restaurantName,
+          totalprice: total,
+          user_id: user.id,
+          cart: cart
+        }),
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Order created successfully:', data);
+        // Navigate to the delivery page with query parameters
+        const query = new URLSearchParams({
+          address: currentAddress,
+          remarks: remarks,
+          restaurant: restaurantName,
+          totalprice: total,
+        }).toString();
+        navigate(`/delivery?${query}`);
+      } else {
+        const errorData = await response.json();
+        console.error('Error creating order:', errorData);
+      }
+    } catch (error) {
+      console.error('Error during payment handling:', error);
+    }
   };
+  
 
   const handleAddressChange = (newAddress) => {
     setCurrentAddress(newAddress);
@@ -85,7 +141,13 @@ const PaymentPage = ({setlogin, setlogout, loginState,  user, setUser}) => {
 
   return (
     <div>
-      <HeaderLocation setlogin={setlogin} setlogout={setlogout} loginState={loginState}  user={user} setUser={setUser}/>
+      <HeaderLocation
+        setlogin={setlogin}
+        setlogout={setlogout}
+        loginState={loginState}
+        user={user}
+        setUser={setUser}
+      />
       <div className="payment-page">
         <div className="main">
           {/* Left Section */}
@@ -360,15 +422,20 @@ const PaymentPage = ({setlogin, setlogout, loginState,  user, setUser}) => {
               <h2>您的訂單</h2>
               <p1>{restaurantName}</p1>
               <ul className="order-items">
-                <li>1 x 餐點: ${mealPrice}</li>
+                {cart.map((item, index) => (
+                  <li key={index}>
+                    {item.quantity} x {item.name} - $
+                    {item.price * item.quantity}
+                  </li>
+                ))}
               </ul>
               <div className="order-costs">
-                <p>小計: ${subtotal}</p>
+                <p>小計: ${subtotal.toFixed(2)}</p>
                 <p>外送服務費: ${deliveryFee}</p>
                 <p>平台費: ${platformFee}</p>
                 <p>外送夥伴小費: ${selectedTip}</p>
               </div>
-              <h3 className="order-total">${total}</h3>
+              <h3 className="order-total">總計: ${total.toFixed(2)}</h3>
             </section>
           </div>
         </div>

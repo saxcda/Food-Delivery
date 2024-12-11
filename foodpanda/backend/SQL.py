@@ -69,3 +69,69 @@ def insert_user(email, full_name, password):
     except sqlite3.Error as e:
         # 處理資料庫錯誤
         return {"success": False, "message": f"資料庫錯誤: {e}"}
+    
+
+def insert_order(user_id, merchant_id, delivery_id, order_status, total_price, order_time, delivery_address):
+    try:
+        # Connect to the SQLite database
+        conn = sqlite3.connect("./db/foodpanda.db")
+        cursor = conn.cursor()
+
+        # Get the next available order_id
+        cursor.execute("SELECT MAX(order_id) FROM orders")
+        max_order_id = cursor.fetchone()[0]
+        new_order_id = (max_order_id or 0) + 1
+
+        # Insert the order into the orders table
+        query = """
+        INSERT INTO orders (order_id, user_id, merchant_id, delivery_id, order_status, total_price, order_time, delivery_address)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        """
+        cursor.execute(query, (
+            new_order_id, user_id, merchant_id, delivery_id, order_status, total_price, order_time, delivery_address
+        ))
+
+        conn.commit()
+        rows_affected = cursor.rowcount
+        conn.close()
+
+        if rows_affected > 0:
+            return {"success": True, "message": "訂單插入成功", "order_id": new_order_id}
+        else:
+            return {"success": False, "message": "訂單插入失敗"}
+
+    except sqlite3.Error as e:
+        # Handle database errors
+        return {"success": False, "message": f"資料庫錯誤: {e}"}
+
+def insert_order_item(order_id, product_id, quantity, price):
+    try:
+        # Connect to the SQLite database
+        conn = sqlite3.connect("./db/foodpanda.db")
+        cursor = conn.cursor()
+
+        # Get the next available order_item_id
+        cursor.execute("SELECT MAX(order_item_id) FROM order_items")
+        max_order_item_id = cursor.fetchone()[0]
+        new_order_item_id = (max_order_item_id or 0) + 1
+
+        # Insert the order item into the order_items table
+        query = """
+        INSERT INTO order_items (order_item_id, order_id, product_id, quantity, price)
+        VALUES (?, ?, ?, ?, ?)
+        """
+        cursor.execute(query, (new_order_item_id, order_id, product_id, quantity, price))
+
+        conn.commit()
+        rows_affected = cursor.rowcount
+        conn.close()
+
+        if rows_affected > 0:
+            return {"success": True, "message": "訂單項目插入成功"}
+        else:
+            return {"success": False, "message": "訂單項目插入失敗"}
+
+    except sqlite3.Error as e:
+        # Handle database errors
+        return {"success": False, "message": f"資料庫錯誤: {e}"}
+

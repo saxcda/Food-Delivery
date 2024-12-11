@@ -4,8 +4,9 @@ from flask_sqlalchemy import SQLAlchemy
 import sqlite3
 from registeremail import send_verification_email
 from forgetpassword import send_forgetpassword_email
-from SQL import email_confirm, password_confirm, update_password, insert_user
+from SQL import email_confirm, password_confirm, update_password, insert_user, insert_order_item, insert_order
 from randmopassword import generate_formatted_password
+import datetime
 
 app = Flask(__name__)
 CORS(app)
@@ -384,7 +385,7 @@ def get_order_history_ongoing():
     
 @app.route('/order-detail', methods=['GET'])
 def get_order_detail():
-    try:
+    try: 
         order_id = request.args.get('order_id', type=int)
         if not order_id:
             return jsonify({'error': 'Order ID is required'}), 400
@@ -525,6 +526,190 @@ def update_user_details(user_id):
     except Exception as e:
         print(e)
         return jsonify({'error': str(e)}), 500
+    
+
+@app.route('/setHistory', methods=['POST'])
+def setHistory():
+    data = request.json
+    print(data)
+    try:
+        # Extract order data
+        user_id = data.get('user_id')
+        total_price = data.get('totalprice')
+        delivery_address = data.get('address')
+        cart_items = data.get('cart')  # List of items
+        restaurantName = data.get('restaurant')
+
+        restaurantName = data.get('restaurant')
+        print(user_id, total_price, delivery_address, cart_items, )
+
+        # Default delivery address if none provided
+        if not delivery_address:
+            delivery_address = "33301 桃園市, 文化一路259號"
+
+        order_time = datetime.datetime.now()
+
+        # Retrieve merchant_id based on restaurantName
+        conn = sqlite3.connect("./db/foodpanda.db")
+        cursor = conn.cursor()
+        cursor.execute("SELECT merchant_id FROM merchants WHERE name = ?", (restaurantName,))
+        merchant_id_result = cursor.fetchone()
+
+        print(merchant_id_result)
+
+        if not merchant_id_result:
+            return jsonify({'success': False, 'message': '找不到對應的餐廳'}), 400
+
+        merchant_id = merchant_id_result[0]
+
+        print(merchant_id)
+
+        # Insert order into the orders table
+        cursor.execute("SELECT MAX(order_id) FROM orders")
+        max_order_id = cursor.fetchone()[0]
+        new_order_id = (max_order_id or 0) + 1
+
+        print(new_order_id)
+
+        print(new_order_id, user_id, merchant_id, 'None', '已完成', total_price, order_time, delivery_address)
+
+
+        cursor.execute("""
+        INSERT INTO orders (order_id, user_id, merchant_id, delivery_id, order_status, total_price, order_time, delivery_address)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        """, (new_order_id, user_id, merchant_id, None, '已完成', total_price, order_time, delivery_address))
+
+        # Insert each item in the cart into the order_items table
+        for item in cart_items:
+            product_name = item.get('name')
+            quantity = item.get('quantity')
+            price = item.get('price')
+
+            print(product_name, quantity, price)
+        
+            cursor.execute("SELECT item_id FROM menu_items WHERE name = ?", (product_name,))
+            product_id = cursor.fetchone()
+
+
+            if product_id:
+                product_id = product_id[0]  # 获取结果中的 item_id
+            else:
+                print("No matching product found for the given name.")
+                product_id = None  # 或其他逻辑处理
+
+            print(product_id, "qergqerh")
+
+            cursor.execute("SELECT MAX(order_item_id) FROM order_items")
+            max_order_id = cursor.fetchone()[0]
+            new_order_item_id = (max_order_id or 0) + 1
+
+            cursor.execute("""
+            INSERT INTO order_items (order_item_id, order_id, product_id, quantity, price)
+            VALUES (?, ?, ?, ?, ?)
+            """, (new_order_item_id, new_order_id, product_id, quantity, price))
+
+        conn.commit()
+        conn.close()
+
+        return jsonify({'success': True, 'message': '歷史記錄已成功建立', 'order_id': new_order_id}), 200
+
+    except sqlite3.Error as e:
+        return jsonify({'success': False, 'message': f'資料庫錯誤: {e}'}), 501
+
+    except Exception as e:
+        return jsonify({'success': False, 'message': f'伺服器錯誤: {e}'}), 500
+
+
+@app.route('/setHistory_gro', methods=['POST'])
+def setHistory_gro():
+    data = request.json
+    print(data)
+    try:
+        # Extract order data
+        user_id = data.get('user_id')
+        total_price = data.get('totalprice')
+        delivery_address = data.get('address')
+        cart_items = data.get('cart')  # List of items
+        restaurantName = data.get('restaurant')
+
+        restaurantName = data.get('restaurant')
+        print(user_id, total_price, delivery_address, cart_items, )
+
+        # Default delivery address if none provided
+        if not delivery_address:
+            delivery_address = "33301 桃園市, 文化一路259號"
+
+        order_time = datetime.datetime.now()
+
+        # Retrieve merchant_id based on restaurantName
+        conn = sqlite3.connect("./db/foodpanda.db")
+        cursor = conn.cursor()
+        cursor.execute("SELECT merchant_id FROM merchants WHERE name = ?", (restaurantName,))
+        merchant_id_result = cursor.fetchone()
+
+        print(merchant_id_result)
+
+        if not merchant_id_result:
+            return jsonify({'success': False, 'message': '找不到對應的餐廳'}), 400
+
+        merchant_id = merchant_id_result[0]
+
+        print(merchant_id)
+
+        # Insert order into the orders table
+        cursor.execute("SELECT MAX(order_id) FROM orders")
+        max_order_id = cursor.fetchone()[0]
+        new_order_id = (max_order_id or 0) + 1
+
+        print(new_order_id)
+
+        print(new_order_id, user_id, merchant_id, 'None', '已完成', total_price, order_time, delivery_address)
+
+
+        cursor.execute("""
+        INSERT INTO orders (order_id, user_id, merchant_id, delivery_id, order_status, total_price, order_time, delivery_address)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        """, (new_order_id, user_id, merchant_id, None, '已完成', total_price, order_time, delivery_address))
+
+        # Insert each item in the cart into the order_items table
+        for item in cart_items:
+            product_name = item.get('name')
+            quantity = item.get('quantity')
+            price = item.get('price')
+
+            print(product_name, quantity, price)
+        
+            cursor.execute("SELECT item_id FROM menu_items WHERE name = ?", (product_name,))
+            product_id = cursor.fetchone()
+
+
+            if product_id:
+                product_id = product_id[0]  # 获取结果中的 item_id
+            else:
+                print("No matching product found for the given name.")
+                product_id = None  # 或其他逻辑处理
+
+            print(product_id, "qergqerh")
+
+            cursor.execute("SELECT MAX(order_item_id) FROM order_items")
+            max_order_id = cursor.fetchone()[0]
+            new_order_item_id = (max_order_id or 0) + 1
+
+            cursor.execute("""
+            INSERT INTO order_items (order_item_id, order_id, product_id, quantity, price)
+            VALUES (?, ?, ?, ?, ?)
+            """, (new_order_item_id, new_order_id, product_id, quantity, price))
+
+        conn.commit()
+        conn.close()
+
+        return jsonify({'success': True, 'message': '歷史記錄已成功建立', 'order_id': new_order_id}), 200
+
+    except sqlite3.Error as e:
+        return jsonify({'success': False, 'message': f'資料庫錯誤: {e}'}), 501
+
+    except Exception as e:
+        return jsonify({'success': False, 'message': f'伺服器錯誤: {e}'}), 500
 
 
 
