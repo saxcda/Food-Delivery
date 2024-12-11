@@ -370,6 +370,63 @@ def get_order_history_ongoing():
     except Exception as e:
         print(e)
         return jsonify({'error': str(e)}), 500
+    
+@app.route('/order-detail', methods=['GET'])
+def get_order_detail():
+    try:
+        order_id = request.args.get('order_id', type=int)
+        if not order_id:
+            return jsonify({'error': 'Order ID is required'}), 400
+
+        conn = sqlite3.connect('./db/foodpanda.db')
+        cursor = conn.cursor()
+
+        # Fetch the order details
+        order_query = """
+            SELECT o.order_id, m.name, m.image, o.order_time, o.total_price, o.delivery_address, m.location
+            FROM orders o
+            JOIN merchants m ON o.merchant_id = m.merchant_id
+            WHERE o.order_id = ?
+        """
+        cursor.execute(order_query, (order_id,))
+        order = cursor.fetchone()
+
+        if not order:
+            return jsonify({'error': 'Order not found'}), 404
+
+        order_id, restaurant_name, restaurant_image, order_time, total_price, delivery_address, merchant_location = order
+
+        # Fetch associated menu items
+        menu_items_query = """
+            SELECT mi.item_id, mi.name, mi.price, oi.quantity
+            FROM order_items oi
+            JOIN menu_items mi ON oi.product_id = mi.item_id
+            WHERE oi.order_id = ?
+        """
+        cursor.execute(menu_items_query, (order_id,))
+        items = cursor.fetchall()
+
+        result = {
+            "order_id": order_id,
+            "restaurant_name": restaurant_name,
+            "restaurant_image": restaurant_image,
+            "order_time": order_time,
+            "total_price": total_price,
+            "delivery_address": delivery_address,
+            "merchant_location": merchant_location,
+            "items": [
+                {"item_id": item[0], "name": item[1], "price": item[2], "quantity": item[3]}
+                for item in items
+            ]
+        }
+
+        conn.close()
+        return jsonify(result), 200
+
+    except Exception as e:
+        print(e)
+        return jsonify({'error': str(e)}), 500
+
 
 
 class User(db.Model):
