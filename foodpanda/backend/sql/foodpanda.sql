@@ -26,7 +26,8 @@ CREATE TABLE groceries_restaurants (
     name TEXT NOT NULL,
     delivery_time TEXT NOT NULL,
     price_range TEXT NOT NULL,
-    offer TEXT NOT NULL
+    offer TEXT NOT NULL,
+    image TEXT
 );
 
 -- 促销表
@@ -48,11 +49,11 @@ CREATE TABLE groceries_items (
     FOREIGN KEY (restaurant_id) REFERENCES groceries_restaurants (id)
 );
 
-INSERT INTO groceries_restaurants (name, delivery_time, price_range, offer)
+INSERT INTO groceries_restaurants (name, delivery_time, price_range, offer,image)
 VALUES
-("統一超商", "25-40 分鐘", "$45", "免費送達"),
-("萊爾富", "30-45 分鐘", "$45", "折扣"),
-("全家便利商店", "20-35 分鐘", "$45", "低消$500");
+("統一超商", "25-40 分鐘", "$45", "免費送達","https://images.deliveryhero.io/image/fd-tw/LH/mpwp-listing.jpg"),
+("萊爾富", "30-45 分鐘", "$45", "折扣","https://images.deliveryhero.io/image/fd-tw/LH/e5mh-listing.jpg"),
+("全家便利商店", "20-35 分鐘", "$45", "低消$500","https://images.deliveryhero.io/image/fd-tw/LH/f7vj-listing.jpg");
 
 INSERT INTO groceries_promotions (title, description)
 VALUES

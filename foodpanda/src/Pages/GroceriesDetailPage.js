@@ -12,6 +12,7 @@ import {
 import { HiPlus } from "react-icons/hi2";
 import { useParams, useNavigate } from "react-router-dom";
 import "./GroceriesDetailPage.css"; // 加入 CSS 檔案的導入
+import Header from "../components/Header";
 
 const GroceriesDetailPage = () => {
   const { storeName } = useParams();
@@ -88,181 +89,291 @@ const GroceriesDetailPage = () => {
   }
 
   return (
-    <Box>
-      {/* 商店信息 */}
-      <Box sx={{ display: "flex", padding: "20px 5%" }}>
-        <Box>
-          <Typography variant="h5" fontWeight="bold">
-            {store.name}
-          </Typography>
-          <Button
-            variant="contained"
-            sx={{ marginTop: "10px" }}
-            onClick={() => alert("已收藏該商家！")}
-          >
-            加入收藏
-          </Button>
-        </Box>
-      </Box>
-
-      {/* 類別導航 */}
+    <div>
+      <Header></Header>
+    <Box
+      sx={{
+        display:"flex",
+        flexDirection:"row",
+        backgroundColor:"#ffffff"
+      }}
+    >
       <Box
         sx={{
-          position: "sticky",
-          top: 0,
-          zIndex: 1000,
-          display: "flex",
-          gap: 2,
-          alignItems: "center",
-          padding: "10px 5%",
-          backgroundColor: "#ffffff",
-          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+          width:"75%",
         }}
       >
-        <TextField
-          variant="outlined"
-          placeholder="搜尋商品..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value.toLowerCase())}
-          sx={{ flex: 1 }}
-        />
-        {categories.map((category, index) => (
+
+        {/* search */}
+        <Box
+          sx={{
+            top: 0,
+            height:"270px",
+            display: "flex",
+            gap: 2,
+            alignItems: "center",
+            position:"relative",
+            backgroundColor: "#ffffff",
+            //boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+          }}
+        >
+          <Box
+            component="img"
+            src={"https://images.deliveryhero.io/image/fd-tw/LH/f7vj-listing.jpg"}
+            alt="hello"
+            sx={{
+              display:"flex",
+              width:"100%",
+              height:"270px",
+              flexGrow:"1",
+              position: "absolute",
+              objectFit:"cover",
+              }}
+          />
+
+         
+          <TextField
+            variant="outlined"
+            placeholder="搜尋商品..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value.toLowerCase())}
+            sx={{
+              position: "absolute", 
+              width:"400px",
+              height:"50px",
+              bottom:"0px",
+              left:"10%",
+              backgroundColor:"#ffffff"
+            }}
+          />
+          
+        </Box>
+
+        {/* 商店信息 */}
+        <Box sx={{ display: "flex", flexDirection: "row", padding: "20px 5%" }}>
+          <Box sx={{ flexGrow: 1 }}> {/* This box will take up available space and push the button down */}
+            <Typography variant="h5" fontWeight="bold">
+              {store.name}
+            </Typography>
+          </Box>
+          
           <Button
-            key={index}
-            variant={activeCategory === index ? "contained" : "outlined"}
-            onClick={() => scrollToCategory(index)}
+            variant="contained"
+            sx={{
+              
+              alignSelf: "flex-end", // This will align the button to the bottom right of the parent container
+            }}
+            onClick={() => alert("Happy Shopping！")}
           >
-            {category.name} ({category.items.length})
+            商店資訊
           </Button>
-        ))}
-      </Box>
+        </Box>
 
-      {/* 商品和購物車 */}
-      <Grid container spacing={2} sx={{ padding: "20px 5%" }}>
-        {/* 商品列表 */}
-        <Grid item xs={12} md={8}>
-          {categories.map((category, categoryIndex) => (
-            <Box
-              key={categoryIndex}
-              ref={(el) => (categoryRefs.current[categoryIndex] = el)}
-              sx={{ marginBottom: "20px" }}
-            >
-              <Typography variant="h6" fontWeight="bold">
-                {category.name}
-              </Typography>
-              <Grid container spacing={2}>
-                {category.items
-                  .filter((item) =>
-                    item.name.toLowerCase().includes(searchQuery)
-                  )
-                  .map((item, index) => (
-                    <Grid item xs={12} sm={6} key={index}>
-                      <Box
-                        sx={{
-                          border: "1px solid #E0E0E0",
-                          padding: "10px",
-                          borderRadius: "10px",
-                          position: "relative",
-                        }}
-                      >
-                        <Box
-                          component="img"
-                          src={item.image}
-                          alt={item.name}
-                          sx={{
-                            width: "100px",
-                            height: "100px",
-                            position: "absolute",
-                            right: "10px",
-                            borderRadius: "8px",
-                          }}
-                        />
-                        <Typography variant="body1">{item.name}</Typography>
-                        <Typography variant="body2" color="textSecondary">
-                          ${item.price}
-                        </Typography>
-                        <IconButton
-                          onClick={() => addToCart(item)}
-                          sx={{
-                            position: "absolute",
-                            bottom: "10px",
-                            right: "10px",
-                          }}
-                        >
-                          <HiPlus />
-                        </IconButton>
-                      </Box>
-                    </Grid>
-                  ))}
-              </Grid>
-            </Box>
-          ))}
-        </Grid>
-
-        {/* 購物車 */}
-        <Grid item xs={12} md={4}>
+            <hr/>
+        
+        
+        {/* 商品和購物車 */}
+        <Box
+          sx={{display:"flex",
+            
+          }}
+        >
+          {/* 類別導航 */}
           <Box
             sx={{
-              border: "1px solid #E0E0E0",
-              borderRadius: "10px",
-              padding: "10px",
-              backgroundColor: "#ffffff",
+              position: "sticky",
+              display:"flex",
+              flexDirection:"column",
+              margin:"30px 0 0 55px",
+              width:"15%"
             }}
           >
-            <Typography variant="h6" fontWeight="bold">
-              購物車
+            <Typography variant="h5">所有類表</Typography>
+          {categories.map((category, index) => (
+            <Typography
+              key={index}
+              variant={activeCategory === index ? "contained" : "outlined"}
+              onClick={() => scrollToCategory(index)}
+              sx={{
+                "&:hover":{
+                  textDecoration: "underline"
+                }
+              }}
+            >
+              {category.name} ({category.items.length})
             </Typography>
-            {cart.length === 0 ? (
+          ))}
+          </Box>
+        <Grid container spacing={2} sx={{ padding: "20px 5%" }}>
+          <Box
+          component="img"
+          src="https://images.deliveryhero.io/image/adtech-display/campaigns/fp_tw/f606209e-a7e1-11ef-9c83-0a9d38fbb5b2.png?height=224"
+          sx={{margin:"0 50px 0 20px"}}
+          >
+            </Box>
+          <Box
+          component="img"
+          src="https://images.deliveryhero.io/image/adtech-display/campaigns/fp_tw/db76ccb0-b6c9-11ef-b28f-a216af6418eb.png?height=224"
+          >
+          
+          </Box>
+          {/* 商品列表 */}
+          <Grid item xs={12} md={8}>
+            {categories.map((category, categoryIndex) => (
+              <Box
+                key={categoryIndex}
+                ref={(el) => (categoryRefs.current[categoryIndex] = el)}
+                sx={{ marginBottom: "20px" }}
+              >
+                <Typography variant="h6" fontWeight="bold">
+                  {category.name}
+                </Typography>
+                <Grid container spacing={4}>
+                  {category.items
+                    .filter((item) =>
+                      item.name.toLowerCase().includes(searchQuery)
+                    )
+                    .map((item, index) => (
+                      <Grid item xs={12} md={4} key={index} >
+                          <Box
+                            sx={{
+                              backgroundColor:"#f5f5f5",
+                              position:"relative",
+                              width: "160px",
+                              height: "160px",
+                            }}
+                            >
+                            <Box
+                            component="img"
+                            src={item.image}
+                            alt={item.name}
+                            sx={{
+                              width: "160px",
+                              height: "160px",
+                              position: "relative",
+                              objectFit:"cover"
+                              
+                            }}
+                            />
+                            <IconButton
+                            onClick={() => addToCart(item)}
+                            sx={{
+                              position: "absolute",
+                              bottom: "10px",        // Position it 10px from the bottom of the parent Box
+                              right: "10px",  
+                              backgroundColor:"#ffffff",
+                              border:"1px solid "
+                            }}
+                          >
+                            <HiPlus />
+                          </IconButton>
+                          </Box>
+
+                        <Box
+                          sx={{
+                            
+                            width: "160px",
+                            height:"50px",
+                            
+                            position: "relative",
+                          }}
+                        >
+                          <Typography variant="body2" color="textSecondary">
+                            ${item.price}
+                          </Typography>
+                          <Typography variant="body1" 
+                          sx={{
+                              whiteSpace: "nowrap",     // Prevent text from wrapping
+                              overflow: "hidden",       // Hide any overflow text
+                              textOverflow: "ellipsis", // Add "..." if text overflows
+                            }}
+                          >{item.name}</Typography>
+                          
+                        </Box>
+                      </Grid>
+                    ))}
+                </Grid>
+              </Box>
+            ))}
+          </Grid>
+
+          
+        </Grid>
+        </Box>
+      </Box>
+          <Box
+            sx={{
+              flexGrow:"1",
+              zIndex:"1000",
+            }}
+          >
+              {/* 購物車 */}
+            <Grid item xs={12} md={4}>
               <Box
                 sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  height: "200px",
+                  //border: "1px solid #E0E0E0",
+                  boxShadow:"0px 4px 6px rgba(0, 0, 0, 0.1)",
+                  borderRadius: "10px",
+                  padding: "10px",
+                  backgroundColor: "#ffffff",
+                  height:"100vh",
                 }}
               >
-                <Typography variant="body2" color="textSecondary">
-                  購物車目前是空的
+                <Typography variant="h6" fontWeight="bold">
+                  購物車
                 </Typography>
-              </Box>
-            ) : (
-              <Box>
-                {cart.map((item, index) => (
+                {cart.length === 0 ? (
                   <Box
-                    key={index}
                     sx={{
                       display: "flex",
-                      justifyContent: "space-between",
+                      flexDirection: "column",
                       alignItems: "center",
-                      padding: "8px 0",
-                      borderBottom: "1px solid #E0E0E0",
+                      justifyContent: "center",
+                      height: "100%",
                     }}
                   >
-                    <Typography variant="body2">{item.name}</Typography>
-                    <Button size="small" onClick={() => removeFromCart(index)}>
-                      移除
+                    <Typography variant="body2" color="textSecondary">
+                      購物車目前是空的
+                    </Typography>
+                  </Box>
+                ) : (
+                  <Box>
+                    {cart.map((item, index) => (
+                      <Box
+                        key={index}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          padding: "8px 0",
+                          borderBottom: "1px solid #E0E0E0",
+                        }}
+                      >
+                        <Typography variant="body2">{item.name}</Typography>
+                        <Button size="small" onClick={() => removeFromCart(index)}>
+                          移除
+                        </Button>
+                      </Box>
+                    ))}
+                    <Divider sx={{ marginY: "10px" }} />
+                    <Typography variant="h6">總計: ${totalPrice}</Typography>
+                    <Button
+                      variant="contained"
+                      fullWidth
+                      sx={{ marginTop: "10px", backgroundColor: "#D70F64" }}
+                      onClick={() =>
+                        navigate("/payment", { state: { cart, storeName } })
+                      }
+                    >
+                      查看付款方式及地址
                     </Button>
                   </Box>
-                ))}
-                <Divider sx={{ marginY: "10px" }} />
-                <Typography variant="h6">總計: ${totalPrice}</Typography>
-                <Button
-                  variant="contained"
-                  fullWidth
-                  sx={{ marginTop: "10px", backgroundColor: "#D70F64" }}
-                  onClick={() =>
-                    navigate("/payment", { state: { cart, storeName } })
-                  }
-                >
-                  查看付款方式及地址
-                </Button>
+                )}
               </Box>
-            )}
+            </Grid>
           </Box>
-        </Grid>
-      </Grid>
     </Box>
+    </div>
   );
 };
 
