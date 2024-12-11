@@ -134,46 +134,45 @@ const App = () => {
             />
           }
         />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/historyPage" element={<HistoryPage />} />
-        <Route path="/history-detail/:order_id" element={<HistoryPageDetail />} />
+        <Route path="/profile" element={<Profile setlogin={setlogin} setlogout={setlogout} loginState={true} user={user} setUser={setUser}/>} />
+        <Route path="/historyPage" element={<HistoryPage setlogin={setlogin} setlogout={setlogout} loginState={true} user={user} setUser={setUser}/>} />
+        <Route path="/history-detail/:order_id" element={<HistoryPageDetail setlogin={setlogin} setlogout={setlogout} loginState={true} user={user} setUser={setUser}/>} />
 
         <Route
           path="/restaurants/:city"
-          element={<RestaurantPage setlogin={setlogin} setlogout={setlogout} />}
+          element={<RestaurantPage setlogin={setlogin} setlogout={setlogout} loginState={true} user={user} setUser={setUser} />}
         />
         <Route
           path="/restaurants/:city/:restaurantName"
-          element={<RestaurantDetailsPage restaurantData={restaurantData} />}
+          element={<RestaurantDetailsPage restaurantData={restaurantData} setlogin={setlogin} setlogout={setlogout} loginState={true} user={user} setUser={setUser}/>}
         />
         {/* 其他路由 */}
         <Route
           path="/payment"
-          element={<PaymentPage setlogin={setlogin} setlogout={setlogout} />}
+          element={<PaymentPage setlogin={setlogin} setlogout={setlogout} loginState={true} user={user} setUser={setUser}/>}
         />
         <Route
           path="/delivery"
-          element={<DeliveryPage setlogin={setlogin} setlogout={setlogout} />}
+          element={<DeliveryPage  setlogin={setlogin} setlogout={setlogout} loginState={true} user={user} setUser={setUser} />}
         />
         <Route
           path="/takeway"
-          element={<TakewayPage setlogin={setlogin} setlogout={setlogout} />}
+          element={<TakewayPage setlogin={setlogin} setlogout={setlogout} loginState={true} user={user} setUser={setUser} />}
         />
 
         <Route
           path="/fooddeliverypage"
           element={
                 <FoodDeliveryPage
-                  setlogin={setlogin}
-                  setlogout={setlogout}
-                  restaurantData={restaurantData}
+                setlogin={setlogin} setlogout={setlogout} loginState={true} user={user} setUser={setUser}
+                restaurantData={restaurantData}
                 />
               }
         />
 
         <Route path="/area/:areaName" element={<AreaPage />} />
 
-        <Route path="/groceries/:storeName" element={<GroceriesDetailPage />} />
+        <Route path="/groceries/:storeName" element={<GroceriesDetailPage setlogin={setlogin} setlogout={setlogout} loginState={true} user={user} setUser={setUser}/>} />
         <Route path="/register" element={<Register />} />
       </Routes>
     </Router>

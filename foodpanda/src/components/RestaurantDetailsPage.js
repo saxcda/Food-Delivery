@@ -6,7 +6,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import HeaderLocation from "./HeaderLocation";
 
-const RestaurantDetailsPage = ({ restaurantData }) => {
+const RestaurantDetailsPage = ({restaurantData, setlogin, setlogout, loginState,  user, setUser}) => {
   const { city, restaurantName } = useParams();
   const navigate = useNavigate();
 
@@ -25,7 +25,7 @@ const RestaurantDetailsPage = ({ restaurantData }) => {
 
   return (
     <div>
-      <HeaderLocation />
+      <HeaderLocation setlogin={setlogin} setlogout={setlogout} loginState={loginState}  user={user} setUser={setUser}/>
       <NavigationBreadcrumbs
         selectedCity={restaurant.city}
         selectedRestaurant={restaurant}
