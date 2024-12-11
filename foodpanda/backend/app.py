@@ -27,13 +27,14 @@ def register_account():
             return jsonify({'error': 'All fields are required'}), 400
         # 呼叫資料庫插入函數
         result = insert_user(email, full_name, password)
+        print(result)
 
         if result['success']:
             return jsonify({
                 'success': True,
                 'message': result['message'],
                 'user_id': result.get('user_id')
-            }), 201  # HTTP 201: Created
+            }), 200  # HTTP 201: Created
         else:
             return jsonify({'success': False, 'message': result['message']}), 500
     except Exception as e:
@@ -68,8 +69,21 @@ def check_email_api():
         if not email:
             return jsonify({'error': 'Email is required'}), 400
         result = email_confirm(email)
-        exists = bool(result)
-        return jsonify({'exists': exists}), 200
+        if result:
+            # Assuming the columns are: id, name, password, email, phone, country, role, extra
+            user_info = {
+                "id": result[0],
+                "name": result[1],
+                "password": result[2],
+                "email": result[3],
+                "phone": result[4],
+                "country": result[5],
+                "role": result[6],
+                "extra": result[7],
+            }
+            return jsonify({'user_info':user_info})
+        else:
+            return jsonify(None), 404
     except Exception as e:
         print(e)
         return jsonify({'error': str(e)}), 500

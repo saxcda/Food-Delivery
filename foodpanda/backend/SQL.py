@@ -3,7 +3,7 @@ import sqlite3
 def email_confirm(email):
     conn = sqlite3.connect("./db/foodpanda.db")
     cursor = conn.cursor()
-    query = "SELECT email FROM users WHERE email = ?"
+    query = "SELECT * FROM users WHERE email = ?"
     cursor.execute(query, (email,))
     result = cursor.fetchone()
     print(f"Query executed: {query} with parameter: {email}")
