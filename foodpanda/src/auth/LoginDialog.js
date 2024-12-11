@@ -18,7 +18,7 @@ const Transition = React.forwardRef((props, ref) => (
   <Slide direction="down" ref={ref} {...props} />
 ));
 
-const LoginDialog = ( { open, onClose, setlogin, setlogout } ) => {
+const LoginDialog = ( { open, onClose, setlogin, setlogout, user, setUser } ) => {
   console.log("LoginDialog props:", { open, onClose, setlogin });
 
   const [showEmailConfirm, setShowEmailConfirm] = useState(false); // 狀態管理
@@ -47,6 +47,8 @@ const LoginDialog = ( { open, onClose, setlogin, setlogout } ) => {
         onBack={handleBack} // 返回到 LoginDialog
         setlogin={setlogin}
         setlogout={setlogout}
+        user={user}
+        setUser={setUser}
       />
     );
   }

@@ -92,6 +92,7 @@ const App = () => {
   }, []);
 
   const [loginState, setLoginState] = useState(false);
+  const [user, setUser] = useState('')
   console.log(typeof setLoginState);
 
   const setlogin = () => {
@@ -118,7 +119,7 @@ const App = () => {
         <Route
           path="/login"
           element={
-            <Home setlogin={setlogin} setlogout={setlogout} loginState={true} />
+            <Home setlogin={setlogin} setlogout={setlogout} loginState={true} user={user} setUser={setUser}/>
           }
         />
         <Route
@@ -128,6 +129,8 @@ const App = () => {
               setlogin={setlogin}
               setlogout={setlogout}
               loginState={false}
+              user={user}
+              setUser={setUser}
             />
           }
         />

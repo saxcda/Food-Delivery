@@ -20,7 +20,7 @@ const Transition = React.forwardRef((props, ref) => (
   <Slide direction="down" ref={ref} {...props} />
 ));
 
-const EmailConfirm = ({ open, onClose, onBack, setlogin, setlogout }) => {
+const EmailConfirm = ({ open, onClose, onBack, setlogin, setlogout, user, setUser }) => {
   const [email, setEmail] = useState("");
   const [step, setStep] = useState("");
 
@@ -45,8 +45,10 @@ const EmailConfirm = ({ open, onClose, onBack, setlogin, setlogout }) => {
           email: email,
         }
       );
-      if (response.data.exists) {
-        setStep("haveEmail");
+      if (response.data.email === email) {
+        setUser(response.data)
+        setStep("haveEmail")
+  
       } else {
         setStep("notHaveEmail");
       }
@@ -57,6 +59,8 @@ const EmailConfirm = ({ open, onClose, onBack, setlogin, setlogout }) => {
       );
     }
   };
+
+  
 
   const renderContent = () => {
     if (step === "haveEmail") {
@@ -71,8 +75,9 @@ const EmailConfirm = ({ open, onClose, onBack, setlogin, setlogout }) => {
   };
 
   useEffect(() => {
-    console.log(step); // 當 step 改變時顯示新的狀態
-  }, [checkEmail]); // 當 step 改變時觸發
+    console.log(step, user); // 當 step 改變時顯示新的狀態
+
+  }, [checkEmail, user]); // 當 step 改變時觸發
 
   return (
     <Dialog

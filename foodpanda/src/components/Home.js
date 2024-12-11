@@ -11,7 +11,7 @@ import { useRef , useEffect } from "react";
 import CitySearch from "./CitySearch";
 
 
-const Home = ({ setlogin, setlogout, loginState }) => {
+const Home = ({ setlogin, setlogout, loginState, user, setUser }) => {
   const [location, setLocation] = React.useState("");
   const [loadingLocation, setLoadingLocation] = React.useState(false);
 
@@ -25,7 +25,7 @@ const Home = ({ setlogin, setlogout, loginState }) => {
 
   return (
     <>
-      <Header setlogin={setlogin} setlogout={setlogout} loginState={loginState}/>
+      <Header setlogin={setlogin} setlogout={setlogout} loginState={loginState}  user={user} setUser={setUser}/>
       <Location
         location={location}
         loadingLocation={loadingLocation}

@@ -36,7 +36,7 @@ import foodpanda_logo from "./Pictures/foodpanda_logo.jpg";
 
 const GOOGLE_MAPS_API_KEY = "";
 
-const Header = ({ setlogin, setlogout, loginState }) => {
+const Header = ({ setlogin, setlogout, loginState,  user, setUser}) => {
   const [menuAnchorEl, setMenuAnchorEl] = React.useState(null);
   const [locationAnchorEl, setLocationAnchorEl] = React.useState(null);
   const [location, setLocation] = React.useState("");
@@ -46,7 +46,12 @@ const Header = ({ setlogin, setlogout, loginState }) => {
   const [languageMenuAnchor, setLanguageMenuAnchor] = React.useState(null);
   // const [userName, setUserName] = React.useState("");
 
-  const userName = "高翊恩";
+  const [userName, setUserName] = React.useState('');
+
+  React.useEffect(() => {
+    console.log(user);
+    setUserName(user.name)
+  }, [user]);
 
   const handleAccountMenuOpen = (event) =>
     setAccountMenuAnchor(event.currentTarget);
@@ -506,6 +511,8 @@ const Header = ({ setlogin, setlogout, loginState }) => {
         onClose={handleLoginDialogClose}
         setlogin={setlogin}
         setlogout={setlogout}
+        user={user}
+        setUser={setUser}
       />
     </AppBar>
   );
