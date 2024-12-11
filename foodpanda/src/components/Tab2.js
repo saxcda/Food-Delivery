@@ -16,6 +16,26 @@ const Tab1 = ({ handleRestaurantClick, restaurantData }) => {
   const [isVoucherEnabled, setIsVoucherEnabled] = useState(
     JSON.parse(localStorage.getItem("is_voucher_enabled")) || false
   );
+  const [searchTerm, setSearchTerm] = useState("");
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const hotSearches = [
+    "早餐",
+    "mcdonalds",
+    "宵夜",
+    "滷味",
+    "麥當勞",
+    "麵線",
+    "臭豆腐",
+    "飲料",
+    "kfc",
+    "哈胖",
+  ];
+
+  const handleSearch = (term) => {
+    setSearchTerm(term);
+    setShowSuggestions(false);
+    alert(`搜尋：${term}`);
+  };
 
   // Save state to localStorage on change
   useEffect(() => {
@@ -47,13 +67,20 @@ const Tab1 = ({ handleRestaurantClick, restaurantData }) => {
       hasDiscount,
       isVoucherEnabled
     );
-  }, [filters, sortKey, searchValue, filteredSearch, hasDiscount, isVoucherEnabled]);
+  }, [
+    filters,
+    sortKey,
+    searchValue,
+    filteredSearch,
+    hasDiscount,
+    isVoucherEnabled,
+  ]);
 
   const handleClear = () => {
     setFilters({});
     handleSortChange("default");
-    setHasDiscount(false)
-    setIsVoucherEnabled(false)
+    setHasDiscount(false);
+    setIsVoucherEnabled(false);
   };
 
   const visibleCuisines = showAllCuisines
@@ -170,9 +197,9 @@ const Tab1 = ({ handleRestaurantClick, restaurantData }) => {
           cat.items.some((item) => priceMapping[filters.price](item.price))
         )
       );
-      }
+    }
 
-    console.log(filtered)
+    console.log(filtered);
 
     // 篩選 - 類型 (小吃，鹹酥雞/雞排，台式)
     if (filters.type) {
@@ -183,9 +210,9 @@ const Tab1 = ({ handleRestaurantClick, restaurantData }) => {
       });
     }
 
-  console.log(filtered);
+    console.log(filtered);
 
-    console.log(filtered)
+    console.log(filtered);
 
     return filtered;
   }, [filters, filteredSearch, restaurantData]);
@@ -536,7 +563,6 @@ const Tab1 = ({ handleRestaurantClick, restaurantData }) => {
             </label>
           ))}
 
-
           <button
             onClick={() => setShowAllCuisines((prev) => !prev)}
             className="toggle-cuisines-button"
@@ -620,33 +646,229 @@ const Tab1 = ({ handleRestaurantClick, restaurantData }) => {
         </div>
       </div>
 
-      <Grid
-        container
-        spacing={1}
-        justifyContent="flex-start"
-        minHeight={"450px"}
-        padding={"30px"}
-        style={{ flexGrow: 1 }}
-      >
-        {filteredAndSortedRestaurants.length === 0 ? (
-          <Typography variant="h6" color="textSecondary">
-            沒有找到符合條件的餐廳。
-          </Typography>
-        ) : (
-          filteredAndSortedRestaurants.map(
-            (filteredAndSortedRestaurants, index) => (
-              <Grid item key={index} md={3}>
-                <RestaurantCard
-                  restaurant={filteredAndSortedRestaurants}
-                  onClick={() =>
-                    handleRestaurantClick(filteredAndSortedRestaurants.name)
-                  }
-                />
-              </Grid>
-            )
-          )
+      <div className="pp" style={{display: "flex", flexDirection: "column", gap: "10px", marginLeft: "30px"}}>
+        <div
+          className="restaurants__tool-box-wrapper"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-end",
+            borderRadius: "8px",
+            width: "100%",
+            height: "10%",
+            padding: "15px",
+            backgroundImage: `url("https://micro-assets.foodora.com/img/img-map-background.jpg")`,
+            backgroundSize: "cover", // 背景圖案填滿區域
+            backgroundPosition: "center", // 背景圖案居中
+            gap: "20px", // gap 的值需要包含單位
+            marginBottom: "20px",
+          }}
+        >
+          {/* 地圖入口區域 */}
+          <div
+            className="map-and-input-box"
+            style={{
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+              padding: "8px",
+              gap: "10px",
+            }}
+          >
+            <div
+              className="cl-neutral-primary"
+              style={{ fontSize: "16px", fontWeight: "bold" }}
+            >
+              探索附近的美食
+            </div>
+            <a
+              href="#"
+              style={{
+                width: "100px",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                padding: "8px 16px",
+                backgroundColor: "#fff",
+                borderRadius: "20px",
+                textDecoration: "none",
+                boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", // 添加按鈕陰影
+                cursor: "pointer",
+              }}
+            >
+              <span
+                style={{
+                  fontSize: "14px",
+                  fontWeight: "bold",
+                  color: "#333",
+                  marginRight: "8px", // 與箭頭之間的間距
+                }}
+              >
+                顯示地圖
+              </span>
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                class="fl-interaction-primary"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="#ff3366"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M12.6032 4.39702L12.6874 4.46963L19.8828 11.6639C20.0386 11.8197 20.0391 12.0722 19.8839 12.2286L12.6382 19.5284C12.3464 19.8223 11.8716 19.8241 11.5776 19.5323C11.3103 19.267 11.2846 18.8505 11.5013 18.556L11.5736 18.4716L17.0818 12.9204C17.1207 12.8812 17.1205 12.8179 17.0813 12.779C17.0625 12.7604 17.0372 12.75 17.0108 12.75L4.75 12.75C4.33579 12.75 4 12.4142 4 12C4 11.5858 4.33579 11.25 4.75 11.25L17.1055 11.25C17.1607 11.25 17.2055 11.2052 17.2055 11.15C17.2055 11.1235 17.195 11.098 17.1762 11.0793L11.6268 5.53037C11.3605 5.26413 11.3363 4.84747 11.5541 4.55384L11.6267 4.46971C11.8929 4.20343 12.3096 4.17918 12.6032 4.39702Z"
+                ></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+        {/* 全屏遮罩 */}
+        {showSuggestions && (
+          <div
+            onClick={() => setShowSuggestions(false)} // 點擊遮罩隱藏彈窗
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              backgroundColor: "rgba(0, 0, 0, 0.5)", // 半透明背景
+              zIndex: 5,
+            }}
+          ></div>
         )}
-      </Grid>
+        <div
+          style={{
+            position: "relative", // 設置父元素為相對定位
+            display: "flex",
+            alignItems: "center",
+            backgroundColor: "#f9f9f9",
+            borderRadius: "30px",
+            padding: "20px 20px",
+            border: "1px solid #ccc",
+            boxShadow: showSuggestions ? "0 0 5px #007bff" : "none",
+            zIndex: 10,
+            marginBottom: "20px",
+          }}
+        >
+          {/* 搜尋框 */}
+          <svg
+            aria-hidden="true"
+            focusable="false"
+            class="fl-none"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            style={{
+              position: "absolute", // 設置圖標為絕對定位
+              top: "50%", // 垂直居中
+              left: "15px", // 距離左側15px
+              transform: "translateY(-50%)", // 修正垂直偏移，真正居中
+              fill: "#888",
+            }}
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M10.5 2C15.1944 2 19 5.80558 19 10.5C19 12.4076 18.3716 14.1684 17.3106 15.5867C17.2902 15.614 17.2661 15.6455 17.2383 15.6811C17.1139 15.8403 17.1279 16.0674 17.2708 16.2102L20.8386 19.7747C21.1316 20.0675 21.1318 20.5424 20.839 20.8354C20.5728 21.1018 20.1562 21.1261 19.8625 20.9084L19.7783 20.8358L16.2103 17.2705C16.0675 17.1279 15.8408 17.114 15.6817 17.2381C15.655 17.2588 15.6311 17.2772 15.6099 17.2932C14.1876 18.3648 12.418 19 10.5 19C5.80558 19 2 15.1944 2 10.5C2 5.80558 5.80558 2 10.5 2ZM10.5 3.5C6.63401 3.5 3.5 6.63401 3.5 10.5C3.5 14.366 6.63401 17.5 10.5 17.5C14.366 17.5 17.5 14.366 17.5 10.5C17.5 6.63401 14.366 3.5 10.5 3.5Z"
+            ></path>
+          </svg>
+          <input
+            type="text"
+            placeholder="搜尋店家或產品"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onFocus={() => setShowSuggestions(true)}
+            onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+            style={{
+              width: "100%",
+              border: "none",
+              outline: "none",
+              fontSize: "16px",
+              backgroundColor: "transparent",
+              alignItems: "center",
+              paddingLeft: "25px", // 確保文字不與圖標重疊
+            }}
+          />
+
+          {/* 熱門搜尋彈窗 */}
+          {showSuggestions && (
+            <div
+              style={{
+                position: "absolute",
+                top: "70px",
+                left: "0",
+                width: "100%",
+                background: "#fff",
+                borderRadius: "15px",
+                boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
+                padding: "10px",
+                zIndex: 10,
+              }}
+            >
+              <div style={{ marginBottom: "20px", fontWeight: "bold" }}>
+                熱門搜尋
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: "10px",
+                  padding: "10px",
+                }}
+              >
+                {hotSearches.map((item, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleSearch(item)}
+                    style={{
+                      padding: "5px 10px",
+                      border: "1px solid #ccc",
+                      borderRadius: "20px",
+                      background: "white",
+                      cursor: "pointer",
+                      fontSize: "14px",
+                    }}
+                  >
+                    {item}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+        <Grid
+          container
+          spacing={1}
+          justifyContent="flex-start"
+          minHeight={"450px"}
+          padding={"30px"}
+          style={{ flexGrow: 1 }}
+        >
+          {filteredAndSortedRestaurants.length === 0 ? (
+            <Typography variant="h6" color="textSecondary">
+              沒有找到符合條件的餐廳。
+            </Typography>
+          ) : (
+            filteredAndSortedRestaurants.map(
+              (filteredAndSortedRestaurants, index) => (
+                <Grid item key={index} md={3}>
+                  <RestaurantCard
+                    restaurant={filteredAndSortedRestaurants}
+                    onClick={() =>
+                      handleRestaurantClick(filteredAndSortedRestaurants.name)
+                    }
+                  />
+                </Grid>
+              )
+            )
+          )}
+        </Grid>
+      </div>
     </div>
   );
 };
