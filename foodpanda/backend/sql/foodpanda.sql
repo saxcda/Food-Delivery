@@ -189,23 +189,31 @@ INSERT INTO users (user_id, username, password, email, phone, address, user_type
 INSERT INTO merchants (merchant_id, name, image, rating, type, details, promotions, location, city)
 VALUES (
     1,
-    '阿春台菜海鮮',
-    'path/to/image6.png',
-    4.9,
-    '台式',
-    '阿春主打新鮮的台式海鮮與家常菜，是全家聚餐的好地方。',
-    '["滿 $500 享 85 折", "迎新禮：贈送小菜"]',
-    '桃園市龜山區',
+    '達美樂Domino(湖口中正店)',
+    'https://images.deliveryhero.io/image/fd-tw/tw-logos/cd8eg-logo.jpg?',
+    4.8,
+    '披薩，歐美，<店內價>',
+    '達美樂基於顧客至上的經營理念，不斷用心於食品安全及品質提升，以確保顧客滿意，特訂食品安全政策：產品、服務、形象，快樂送披薩的安心選擇。',
+    '["滿 $359 折 $60", "金額低於$ 179 的訂單，我們將收取少量訂單費用。"]',
+    '(#)新竹縣湖口鄉中正路一段219號',
     '桃園市'
 ),(
     2,
-    '小偉咖哩',
-    'path/to/image6.png',
+    'CoCo都可',
+    'https://images.deliveryhero.io/image/fd-tw/tw-logos/cs2ww-logo.jpg?',
     4.9,
+<<<<<<< Updated upstream
     '日式',
     '阿春主打新鮮的台式海鮮與家常菜，是全家聚餐的好地方。',
     '["滿 $500 享 85 折", "迎新禮：贈送小菜"]',
     '桃園市龜山區',
+=======
+    '飲料',
+    '營業人名稱：富宏行
+    1. 本店每筆訂單酌收餐點包裝費1元。因應環保署公告，店家不得免費提供購物用環保袋，為確保送餐品質，餐點皆由塑膠袋包裝。',
+    '["滿 $500 享 85 折", "精選商品 5 折"]',
+    '(O)桃園市楊梅區富岡里中正路84號',
+>>>>>>> Stashed changes
     '桃園市'
 ),(
     3,
