@@ -15,7 +15,7 @@ import Tab3 from "../components/Tab3";
 const GOOGLE_MAPS_API_KEY = "AIzaSyAqqcudDyo4itlY1bqbDyByPh_L6GMy9cs";
 
 
-const FoodDeliveryPage = ({ setlogin, setlogout, restaurantData}) => {
+const FoodDeliveryPage = ({restaurantData, setlogin, setlogout, loginState,  user, setUser}) => {
   const navigate = useNavigate();
   const [city, setCity] = useState("未知城市");
   const [loadingLocation, setLoadingLocation] = useState(false);
@@ -263,7 +263,7 @@ const FoodDeliveryPage = ({ setlogin, setlogout, restaurantData}) => {
 
     return (
     <div>
-      <HeaderLocation setlogin={setlogin} setlogout={setlogout} />
+      <HeaderLocation setlogin={setlogin} setlogout={setlogout} loginState={loginState}  user={user} setUser={setUser}/>
       <Tabs
           value={activeTab}
           onChange={handleTabChange}

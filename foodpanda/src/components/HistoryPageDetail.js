@@ -9,7 +9,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 
 
-const HistoryPageDetail = () => {
+const HistoryPageDetail = ({ setlogin, setlogout, loginState,  user, setUser}) => {
   const { order_id } = useParams(); // Get order_id from URL
   const [orderDetails, setOrderDetails] = useState(null);
   const navigate = useNavigate();
@@ -38,7 +38,7 @@ const HistoryPageDetail = () => {
 
   return (
     <div>
-      <Header />
+      <Header setlogin={setlogin} setlogout={setlogout} loginState={loginState}  user={user} setUser={setUser}/>
 
       <Box
         sx={{

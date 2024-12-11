@@ -14,7 +14,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import "./GroceriesDetailPage.css"; // 加入 CSS 檔案的導入
 import Header from "../components/Header";
 
-const GroceriesDetailPage = () => {
+const GroceriesDetailPage = ({ setlogin, setlogout, loginState,  user, setUser}) => {
   const { storeName } = useParams();
   const navigate = useNavigate();
   const [store, setStore] = useState(null);
@@ -90,7 +90,7 @@ const GroceriesDetailPage = () => {
 
   return (
     <div>
-      <Header></Header>
+      <Header setlogin={setlogin} setlogout={setlogout} loginState={loginState}  user={user} setUser={setUser}/>
     <Box
       sx={{
         display:"flex",

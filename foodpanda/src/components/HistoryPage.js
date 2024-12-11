@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 //import "./Join_foodpanda.css";
 
-const HistoryPage = () => {
+const HistoryPage = ({ setlogin, setlogout, loginState,  user, setUser}) => {
   const [completedOrders, setCompletedOrders] = useState([]);
   const [OngoingOrders, setOngoingOrders] = useState([]);
   const navigate = useNavigate();
@@ -56,7 +56,7 @@ const HistoryPage = () => {
 
   return (
     <div>
-      <Header />
+      <Header setlogin={setlogin} setlogout={setlogout} loginState={loginState}  user={user} setUser={setUser}/>
         <Box
           sx={{
             display: "flex",

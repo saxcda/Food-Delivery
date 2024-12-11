@@ -8,7 +8,7 @@ import axios from "axios"; // Axios for API requests
 import { useEffect } from "react";
 //import "./Join_foodpanda.css";
 
-const Profile = () => {
+const Profile = ({ setlogin, setlogout, loginState,  user, setUser}) => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -87,7 +87,7 @@ if (error) {
 
   return (
     <div>
-      <Header />
+      <Header setlogin={setlogin} setlogout={setlogout} loginState={loginState}  user={user} setUser={setUser}/>
         <Box
           sx={{
             display: "flex",
