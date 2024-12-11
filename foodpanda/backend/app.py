@@ -710,6 +710,36 @@ def setHistory_gro():
 
     except Exception as e:
         return jsonify({'success': False, 'message': f'伺服器錯誤: {e}'}), 500
+    
+@app.route('/restaurant_address', methods=['GET'])
+def get_restaurant_address():
+    try:
+        # Get the restaurant name from query parameters
+        restaurant_name = request.args.get('restaurantName')
+
+        if not restaurant_name:
+            return jsonify({"error": "restaurantName parameter is required."}), 400
+
+        # Connect to the database
+        conn = sqlite3.connect('./db/foodpanda.db')
+        cursor = conn.cursor()
+
+        # Query to find the address by restaurant name
+        query = "SELECT location FROM merchants WHERE name = ?"
+        cursor.execute(query, (restaurant_name,))
+
+        # Fetch the result
+        result = cursor.fetchone()
+
+        conn.close()
+
+        if result:
+            return jsonify({"restaurantName": restaurant_name, "address": result[0]}), 200
+        else:
+            return jsonify({"error": "Restaurant not found."}), 404
+
+    except Exception as e:
+        return jsonify({"error": "An error occurred.", "details": str(e)}), 500
 
 
 

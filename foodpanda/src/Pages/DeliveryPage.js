@@ -2,18 +2,27 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import "./DeliveryPage.css";
 import HeaderLocation from "../components/HeaderLocation";
+import GoogleMapAnimation from "../components/GoogleMapAnimation";
 
-const DeliveryPage = ({ setlogin, setlogout, loginState,  user, setUser}) => {
-  const [timeLeft, setTimeLeft] = useState(30); // 倒數計時初始值
+const DeliveryPage = ({ setlogin, setlogout, loginState, user, setUser }) => {
+  const [timeLeft, setTimeLeft] = useState(60); // 倒數計時初始值
   const [progress, setProgress] = useState(0);
   const [orderStatus, setOrderStatus] = useState("訂單正在準備中...");
   const [showDetails, setShowDetails] = useState(false);
   const location = useLocation();
+  const [cart, setCart] = useState(null)
+
+
   const queryParams = new URLSearchParams(location.search);
   const address = queryParams.get("address");
   const remarks = queryParams.get("remarks");
   const restaurant = queryParams.get("restaurant");
   const totalprice = queryParams.get("totalprice");
+  const lat1 = queryParams.get("lat1");
+  const lng1 = queryParams.get("lng1");
+  const lat2 = queryParams.get("lat2");
+  const lng2 = queryParams.get("lng2");
+  console.log(cart)
   const [showChatBox, setShowChatBox] = useState(false);
   const [isCancelScreen, setIsCancelScreen] = useState(false);
   const [cancelReason, setCancelReason] = useState("");
@@ -26,6 +35,16 @@ const DeliveryPage = ({ setlogin, setlogout, loginState,  user, setUser}) => {
     },
   ]);
   const [userInput, setUserInput] = useState("");
+
+  useEffect(() => {
+    if (location.state) {
+      // 从 location.state 中提取数据
+      const { restaurant_name, total_price, items, address, remarks } =
+        location.state;
+      setCart(items || []);
+      
+    }
+  }, [location]);
 
   const handleSendMessage = () => {
     if (userInput.trim() === "") return;
@@ -92,7 +111,7 @@ const DeliveryPage = ({ setlogin, setlogout, loginState,  user, setUser}) => {
     if (timeLeft > 0) {
       const timer = setInterval(() => {
         setTimeLeft((prevTime) => prevTime - 1);
-        setProgress((prevProgress) => prevProgress + 3.33); // 每秒進度條增加
+        setProgress((prevProgress) => prevProgress + 0.8); // 每秒進度條增加
       }, 1000);
 
       return () => clearInterval(timer);
@@ -104,7 +123,7 @@ const DeliveryPage = ({ setlogin, setlogout, loginState,  user, setUser}) => {
 
   return (
     <div>
-      <HeaderLocation setlogin={setlogin} setlogout={setlogout} loginState={loginState}  user={user} setUser={setUser}/>
+      <HeaderLocation setlogin={setlogin} setlogout={setlogout} loginState={loginState} user={user} setUser={setUser} />
       <div className="delivery-page">
         {/* 左邊主要內容 */}
         <div className="left-section">
@@ -136,6 +155,8 @@ const DeliveryPage = ({ setlogin, setlogout, loginState,  user, setUser}) => {
               </div>
             </div>
           </div>
+          <GoogleMapAnimation startLat={lat1} startLng={lng1} endLat={lat2} endLng={lng2} duration={60} />
+
           {/* 訂單詳情 */}
           <div className="order-details-container">
             <h2 className="order-cart-title">訂單詳情</h2>
@@ -251,11 +272,10 @@ const DeliveryPage = ({ setlogin, setlogout, loginState,  user, setUser}) => {
                     {messages.map((msg, index) => (
                       <div
                         key={index}
-                        className={`message ${
-                          msg.sender === "user"
-                            ? "user-message"
-                            : "delivery-message"
-                        }`}
+                        className={`message ${msg.sender === "user"
+                          ? "user-message"
+                          : "delivery-message"
+                          }`}
                       >
                         {msg.text}
                       </div>

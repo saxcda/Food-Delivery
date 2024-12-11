@@ -86,7 +86,7 @@
   background: linear-gradient(90deg, #e21b70 0%, #e21b70 50%, #e21b70 100%);
   background-size: 200% 100%;
   animation: progress-bar-glow 1.5s infinite linear,
-    progress-bar-fill 30s linear;
+    progress-bar-fill 60s linear;
   position: relative;
 }
 

@@ -4,6 +4,9 @@ import "./PaymentPage.css";
 import HeaderLocation from "../components/HeaderLocation";
 import AddressDialog from "../components/AddressDialog";
 
+const GOOGLE_MAPS_API_KEY = "AIzaSyAqqcudDyo4itlY1bqbDyByPh_L6GMy9cs";
+
+
 const PaymentPage = ({ setlogin, setlogout, loginState, user, setUser }) => {
   const [deliveryOption, setDeliveryOption] = useState("standard");
   const [deliveryFee, setDeliveryFee] = useState(35);
@@ -31,6 +34,79 @@ const PaymentPage = ({ setlogin, setlogout, loginState, user, setUser }) => {
   // 餐點價格及費用
   const [mealPrice, setMealPrice] = useState(65); // 預設餐點價格
   const platformFee = 60; // 平台費用
+  const [restaurantaddress, setrestaurantaddress] = useState(null);
+
+
+  const [latlng2, setLatlng1] = useState(null); // 儲存 currentAddress 經緯度
+  const [latlng1, setLatlng2] = useState(null); // 儲存 restaurantAddress 經緯度
+
+
+  const fetchCoordinates = async (address) => {
+    try {
+      const response = await fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${GOOGLE_MAPS_API_KEY}`
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      if (data.results && data.results.length > 0) {
+        const { lat, lng } = data.results[0].geometry.location;
+        return { lat, lng };
+      }
+      return null;
+    } catch (err) {
+      console.error('Error fetching coordinates:', err.message);
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    const fetchAllCoordinates = async () => {
+      if (currentAddress) {
+        console.log(currentAddress)
+        const coords1 = await fetchCoordinates(currentAddress);
+        setLatlng1(coords1);
+      }
+      if (restaurantaddress) {
+        console.log(restaurantaddress)
+
+        const coords2 = await fetchCoordinates(restaurantaddress);
+        setLatlng2(coords2);
+      }
+    };
+
+    fetchAllCoordinates();
+  }, [currentAddress, restaurantaddress]);
+
+  useEffect(() => {
+    console.log('Current Address Coordinates:', latlng1);
+    console.log('Restaurant Address Coordinates:', latlng2);
+  }, [latlng1, latlng2]);
+
+  
+
+  useEffect(() => {
+    const fetchAddress = async () => {
+        try {
+            const response = await fetch(`http://localhost:5000/restaurant_address?restaurantName=${encodeURIComponent(restaurantName)}`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            console.log(data)
+            setrestaurantaddress(data.address);
+            
+            
+        } catch (err) {
+            console.log(err.message);
+        }
+    };
+
+    if (restaurantName) {
+        fetchAddress();
+    }
+}, [currentAddress, restaurantName]);
 
   useEffect(() => {
     if (location.state) {
@@ -41,7 +117,7 @@ const PaymentPage = ({ setlogin, setlogout, loginState, user, setUser }) => {
       setRestaurantName(restaurant_name || "");
       setTotalPrice(total_price || 0);
       setCart(items || []);
-      setCurrentAddress(address || "");
+      setCurrentAddress(address || "33301 桃園市, 文化一路259號");
       setRemarks(remarks || "");
 
       if (total_price > 149) {
@@ -104,6 +180,7 @@ const PaymentPage = ({ setlogin, setlogout, loginState, user, setUser }) => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          
           address: currentAddress,
           remarks: remarks,
           restaurant: restaurantName,
@@ -117,13 +194,32 @@ const PaymentPage = ({ setlogin, setlogout, loginState, user, setUser }) => {
         const data = await response.json();
         console.log('Order created successfully:', data);
         // Navigate to the delivery page with query parameters
+        const orderDetails = {
+          total_price: parseFloat(totalPrice), // 總金額
+          restaurant_name: restaurantName, // 店家名稱
+          items: cart.map((item) => ({
+            name: item.name,
+            price: item.price,
+            quantity: item.quantity,
+          })), // 訂單的產品列表
+        };
+
+        // 打印或传递订单内容
+        console.log("Order Details:", orderDetails);
+
         const query = new URLSearchParams({
           address: currentAddress,
           remarks: remarks,
           restaurant: restaurantName,
           totalprice: total,
+          lat1:latlng1.lat,
+          lng1:latlng1.lng,
+          lat2:latlng2.lat,
+          lng2:latlng2.lng,
         }).toString();
-        navigate(`/delivery?${query}`);
+        navigate(`/delivery?${query}`, {
+          state: {  ...orderDetails },
+        });
       } else {
         const errorData = await response.json();
         console.error('Error creating order:', errorData);
