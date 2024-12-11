@@ -34,6 +34,7 @@ CREATE TABLE groceries_restaurants (
 CREATE TABLE groceries_promotions (
     id INTEGER PRIMARY KEY , -- 确保唯一自增 ID
     title TEXT NOT NULL,
+    image VARCHAR(255),
     description TEXT NOT NULL
 );
 
@@ -55,10 +56,10 @@ VALUES
 ("萊爾富", "30-45 分鐘", "$45", "折扣","https://images.deliveryhero.io/image/fd-tw/LH/e5mh-listing.jpg"),
 ("全家便利商店", "20-35 分鐘", "$45", "低消$500","https://images.deliveryhero.io/image/fd-tw/LH/f7vj-listing.jpg");
 
-INSERT INTO groceries_promotions (title, description)
+INSERT INTO groceries_promotions (title, description, image)
 VALUES
-("生鮮雜貨新用戶", "享2次5折"),
-("派對取貨", "就愛PEPERO");
+("生鮮雜貨新用戶", "享2次5折", "https://images.deliveryhero.io/image/fd-tw/campaign-assets/dbb5b4c8-8fee-11ee-a50b-8a74b1813098/desktop_tile_ZhkIdx.png?height=240&quality=95&width=560&"),
+("派對取貨", "就愛PEPERO", "https://images.deliveryhero.io/image/fd-tw/campaign-assets/d735d20b-ad83-11ef-9536-eee1d84c0665/desktop_tile_ZhAiVD.png?height=240&quality=95&width=560&");
 
 INSERT INTO groceries_items (restaurant_id, category, name, price, original_price, image)
 VALUES
@@ -201,7 +202,7 @@ VALUES (
     '小偉咖哩',
     'path/to/image6.png',
     4.9,
-    '日是',
+    '日式',
     '阿春主打新鮮的台式海鮮與家常菜，是全家聚餐的好地方。',
     '["滿 $500 享 85 折", "迎新禮：贈送小菜"]',
     '桃園市龜山區',

@@ -214,7 +214,7 @@ def groceries_promotions():
     conn = sqlite3.connect('./db/foodpanda.db')
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM groceries_promotions")
-    promotions = [{"id": row[0], "title": row[1], "description": row[2]} for row in cursor.fetchall()]
+    promotions = [{"id": row[0], "title": row[1], "image": row[2], "description": row[3]} for row in cursor.fetchall()]
     conn.close()
     return jsonify(promotions)
 
