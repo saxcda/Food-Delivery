@@ -390,7 +390,7 @@ const RestaurantDetails = () => {
               }
             }}
           >
-            {category.displayName} ({category.items.length})
+            {category.display_name} ({category.items.length})
           </Button>
         ))}
       </Box>

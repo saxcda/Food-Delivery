@@ -22,6 +22,7 @@ import pingtung from "./Citypic/pingtung.jpeg";
 import taoyuan from "./Citypic/taoyuan.jpeg";
 import yilan from "./Citypic/yilan.jpeg";
 import yunlin from "./Citypic/yunlin.jpeg";
+import CitySearch from "./CitySearch";
 
 // Define the cities with imported images
 const cities = [
@@ -63,6 +64,7 @@ const CityGrid = () => {
       padding:"0 5% 0 7%",
     }}
     >
+
       {cities.map((city, index) => (
         <Grid
           item
@@ -74,6 +76,7 @@ const CityGrid = () => {
             alignItems: "center",
           }}
         >
+          
           <Card sx={{ 
             maxWidth: 300 ,
             borderRadius:"15px",
