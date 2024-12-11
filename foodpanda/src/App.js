@@ -163,20 +163,12 @@ const App = () => {
         <Route
           path="/fooddeliverypage"
           element={
-<<<<<<< Updated upstream
-=======
-            
->>>>>>> Stashed changes
                 <FoodDeliveryPage
                   setlogin={setlogin}
                   setlogout={setlogout}
                   restaurantData={restaurantData}
                 />
               }
-<<<<<<< Updated upstream
-=======
-            
->>>>>>> Stashed changes
         />
 
         <Route path="/area/:areaName" element={<AreaPage />} />
