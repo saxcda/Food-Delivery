@@ -59,21 +59,39 @@ const GroceriesDetailPage = ({ setlogin, setlogout, loginState,  user, setUser})
   }, [storeName]);
 
   // 添加商品到購物車
-  const addToCart = (item) => {
-    setCart((prevCart) => [...prevCart, item]);
+  const addToCart = (menuItem) => {
+    setCart((prevCart) => {
+      // Check if the item already exists in the cart
+      const existingItem = prevCart.find((item) => item.name === menuItem.name);
+      if (existingItem) {
+        // Increment the quantity of the existing item
+        return prevCart.map((item) =>
+          item.name === menuItem.name
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      }
+      // Add a new item to the cart
+      return [...prevCart, { ...menuItem, quantity: 1 }];
+    });
   };
+  
+  
 
-  // 從購物車移除商品
-  const removeFromCart = (indexToRemove) => {
+  const removeFromCart = (menuItem) => {
     setCart((prevCart) =>
-      prevCart.filter((_, index) => index !== indexToRemove)
+      prevCart
+        .map((item) =>
+          item.name === menuItem.name
+            ? { ...item, quantity: item.quantity - 1 }
+            : item
+        )
+        .filter((item) => item.quantity > 0) // Remove items with quantity 0
     );
   };
 
   // 計算購物車總價
-  const totalPrice = cart
-    .reduce((total, item) => total + item.price, 0)
-    .toFixed(2);
+  const totalPrice = cart.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2);
 
   // 滾動到指定分類
   const scrollToCategory = (index) => {
@@ -95,7 +113,7 @@ const GroceriesDetailPage = ({ setlogin, setlogout, loginState,  user, setUser})
       sx={{
         display:"flex",
         flexDirection:"row",
-        backgroundColor:"#ffffff"
+        backgroundColor:"#ffffff",
       }}
     >
       <Box
@@ -119,7 +137,7 @@ const GroceriesDetailPage = ({ setlogin, setlogout, loginState,  user, setUser})
         >
           <Box
             component="img"
-            src={"https://images.deliveryhero.io/image/fd-tw/LH/f7vj-listing.jpg"}
+            src={"https://images.deliveryhero.io/image/fd-tw/campaign-assets/dbb5b4c8-8fee-11ee-a50b-8a74b1813098/desktop_landing_ZhFlbK.png?height=450&quality=95&width=2000&?width=2000"}
             alt="hello"
             sx={{
               display:"flex",
@@ -219,7 +237,7 @@ const GroceriesDetailPage = ({ setlogin, setlogout, loginState,  user, setUser})
           
           </Box>
           {/* 商品列表 */}
-          <Grid item xs={12} md={8}>
+          <Grid item xs={12} md={12}>
             {categories.map((category, categoryIndex) => (
               <Box
                 key={categoryIndex}
@@ -229,13 +247,13 @@ const GroceriesDetailPage = ({ setlogin, setlogout, loginState,  user, setUser})
                 <Typography variant="h6" fontWeight="bold">
                   {category.name}
                 </Typography>
-                <Grid container spacing={4}>
+                <Grid container spacing={2}>
                   {category.items
                     .filter((item) =>
                       item.name.toLowerCase().includes(searchQuery)
                     )
                     .map((item, index) => (
-                      <Grid item xs={12} md={4} key={index} >
+                      <Grid item xs={12} md={3} key={index} >
                           <Box
                             sx={{
                               backgroundColor:"#f5f5f5",
@@ -306,6 +324,7 @@ const GroceriesDetailPage = ({ setlogin, setlogout, loginState,  user, setUser})
             sx={{
               flexGrow:"1",
               zIndex:"1000",
+             
             }}
           >
               {/* 購物車 */}
@@ -343,22 +362,57 @@ const GroceriesDetailPage = ({ setlogin, setlogout, loginState,  user, setUser})
                   <Box>
                     {cart.map((item, index) => (
                       <Box
-                        key={index}
-                        sx={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                          padding: "8px 0",
-                          borderBottom: "1px solid #E0E0E0",
-                        }}
-                      >
+                      key={index}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        padding: "8px 10px 0 0",
+                        borderBottom: "1px solid #E0E0E0",
+
+                      }}
+                    >
+                      <Box>
                         <Typography variant="body2">{item.name}</Typography>
-                        <Button size="small" onClick={() => removeFromCart(index)}>
-                          移除
+                        <Typography
+                          variant="caption"
+                          color="textSecondary"
+                          sx={{ fontSize: "0.85rem" }}
+                        >
+                          ${item.price}
+                        </Typography>
+                      </Box>
+                      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                        <Button
+                          size="small"
+                          variant="text"
+                          sx={{ minWidth: "30px", fontSize: "1rem" }}
+                          onClick={() => {
+                            // 減少數量的邏輯
+                            removeFromCart(item)
+                          }}
+                        >
+                          -
+                        </Button>
+                        <Typography variant="body2" sx={{ width: "24px", textAlign: "center" }}>
+                        {item.quantity}
+                        </Typography>
+                        <Button
+                          size="small"
+                          variant="text"
+                          sx={{ minWidth: "30px", fontSize: "1rem" }}
+                          onClick={() => {
+                            // 增加數量的邏輯
+                            addToCart(item)
+                          }}
+                        >
+                          +
                         </Button>
                       </Box>
+                    </Box>
                     ))}
                     <Divider sx={{ marginY: "10px" }} />
+                    <Box>
                     <Typography variant="h6">總計: ${totalPrice}</Typography>
                     <Button
                       variant="contained"
@@ -370,6 +424,7 @@ const GroceriesDetailPage = ({ setlogin, setlogout, loginState,  user, setUser})
                     >
                       查看付款方式及地址
                     </Button>
+                    </Box>
                   </Box>
                 )}
               </Box>
