@@ -27,15 +27,16 @@ const Footer = () => {
   ];
 
   const countries = [
-    "Bulgaria",
-    "Romania",
-    "Hong Kong",
-    "Pakistan",
-    "Bangladesh",
-    "Singapore",
-    "Malaysia",
-    "Philippines",
-    "Thailand",
+    { name: "Laos", url: "https://www.foodpanda.la/" },
+    { name: "Cambodia", url: "https://www.foodpanda.com.kh/" },
+    { name: "Myanmar", url: "https://www.foodpanda.com.mm/" },
+    { name: "Thailand", url: "https://www.foodpanda.co.th/" },
+    { name: "Hong Kong", url: "https://www.foodpanda.hk/" },
+    { name: "Malaysia", url: "https://www.foodpanda.my/" },
+    { name: "Philippines", url: "https://www.foodpanda.ph/" },
+    { name: "Singapore", url: "https://www.foodpanda.sg/" },
+    { name: "Pakistan", url: "https://www.foodpanda.pk/" },
+    { name: "Bangladesh", url: "https://www.foodpanda.com.bd/" },
   ];
 
   const nearbyLocations = [
@@ -92,12 +93,19 @@ const Footer = () => {
 
       {/* 國家連結 */}
       <Box sx={{ mb: 2, display: "flex", flexWrap: "wrap", gap: 2 }}>
-        {countries.map((country, index) => (
-          <Link href="#" underline="hover" color="inherit" key={index}>
-            {country}
-          </Link>
-        ))}
-      </Box>
+      {countries.map((country, index) => (
+        <Link
+          href={country.url}
+          underline="hover"
+          color="inherit"
+          key={index}
+          target="_blank" // 打開新分頁
+          rel="noopener noreferrer" // 安全性建議
+        >
+          {country.name}
+        </Link>
+      ))}
+    </Box>
 
       {/* 鄰近地區 */}
       <Box sx={{ mb: 2 }}>

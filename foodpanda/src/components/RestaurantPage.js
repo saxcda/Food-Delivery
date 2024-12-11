@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom";
 import panda_burger from "./Pictures/panda_burger.jpg";
 import { Box, Typography } from "@mui/material";
 import HeaderLocation from "./HeaderLocation";
+import CitySearch from "./CitySearch";
 
 const RestaurantPage = ({ setlogin, setlogout }) => {
   const navigate = useNavigate();
@@ -67,6 +68,8 @@ const RestaurantPage = ({ setlogin, setlogout }) => {
             推薦美食，外送到家
           </Typography>
         </Box>
+        
+        
 
         <Box
           component="img"
@@ -81,12 +84,17 @@ const RestaurantPage = ({ setlogin, setlogout }) => {
         />
       </Box>
 
+      
+
       <NavigationBreadcrumbs
         selectedCity={city}
         selectedRestaurant={null}
         onBackToHome={handleBackToHome}
         onBackToRestaurants={() => navigate(`/restaurants/${city}`)} // Use 'city' for the back navigation
       />
+
+      <CitySearch location={city}/>
+      
       <RestaurantGrid
         restaurants={restaurants}
         onRestaurantClick={handleRestaurantClick} // Pass handler to grid

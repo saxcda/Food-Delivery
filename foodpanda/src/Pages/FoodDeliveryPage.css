@@ -5,6 +5,7 @@
   font-family: Arial, sans-serif;
 }
 
+
 /* 側邊欄整體樣式 */
 .sidebar {
   flex: 0 0 280px; /* Fixed width */
@@ -17,7 +18,7 @@
   border-radius: 10px; /* Rounded corners for the box */
   overflow-y: auto; /* Enable vertical scrolling */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for better visibility */
-  margin-left: 200px;
+  margin-left: 20px;
 }
 .boxx {
   display: flex; /* 啟用彈性佈局 */
@@ -570,7 +571,7 @@
 .restaurantData-list {
   flex: 3;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
   padding: 20px;
 }

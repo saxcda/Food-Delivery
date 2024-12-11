@@ -15,6 +15,7 @@ const Tab3 = ({ handleRestaurantClick }) => {
         const response = await fetch(`http://localhost:5000/groceries_promotions`);
         const data = await response.json();
         setPromotions(data);
+        console.log(data)
       } catch (error) {
         console.error("Failed to fetch promotions:", error);
       }
@@ -26,6 +27,7 @@ const Tab3 = ({ handleRestaurantClick }) => {
         const response = await fetch(`http://localhost:5000/groceries_restaurants`);
         const data = await response.json();
         setRestaurantData(data);
+        console.log(data)
       } catch (error) {
         console.error("Failed to fetch restaurant data:", error);
       }
@@ -40,7 +42,15 @@ const Tab3 = ({ handleRestaurantClick }) => {
   };
 
   return (
-    <div className="tab3-container">
+    <div className="tab3-container"
+    style={{
+      
+      width: "100%", // Allow it to stretch to the full width
+      height: "100%", // Optional: Allow it to stretch vertically
+      //flexGrow: 1, // Allow the children to grow within the flex layout
+      boxSizing: "border-box", // Include padding/border in the dimensions
+    }}
+    >
       {/* Promotions Section */}
       <Typography variant="h5" gutterBottom>
         精選優惠
@@ -54,7 +64,8 @@ const Tab3 = ({ handleRestaurantClick }) => {
               padding={2}
               borderRadius={2}
               bgcolor="#ffe4e1"
-              flex={1}
+              //flex={1}
+              width={"200px"}
               textAlign="center"
             >
               <Typography variant="body1" fontWeight="bold">
@@ -77,7 +88,7 @@ const Tab3 = ({ handleRestaurantClick }) => {
       <Grid container spacing={2} className="today-offers">
         {restaurantData.length > 0 ? (
           restaurantData.map((restaurant, index) => (
-            <Grid item xs={12} sm={6} md={4} key={index}>
+            <Grid item xs={12} sm={4} md={3} key={index}>
               <RestaurantCard
                 restaurant={restaurant}
                 onClick={() => handleCardClick(restaurant.name)} // 点击事件

@@ -46,6 +46,10 @@ import Register from "./auth/Register";
 
 // const ProtectedRoute = ({ loginState, element }) => {
 //   const [open, setOpen] = useState(!loginState);
+import AreaPage from "./components/AreaPage";
+
+// const ProtectedRoute = ({ loginState, element }) => {
+//   const [open, setOpen] = useState(!loginState);
 
 //   const handleClose = () => {
 //     setOpen(false);
@@ -158,13 +162,20 @@ const App = () => {
         <Route
           path="/fooddeliverypage"
           element={
-            <FoodDeliveryPage
-              setlogin={setlogin}
-              setlogout={setlogout}
-              restaurantData={restaurantData}
+            <ProtectedRoute
+              loginState={loginState}
+              element={
+                <FoodDeliveryPage
+                  setlogin={setlogin}
+                  setlogout={setlogout}
+                  restaurantData={restaurantData}
+                />
+              }
             />
           }
         />
+
+        <Route path="/area/:areaName" element={<AreaPage />} />
 
         <Route path="/groceries/:storeName" element={<GroceriesDetailPage />} />
         <Route path="/register" element={<Register />} />
