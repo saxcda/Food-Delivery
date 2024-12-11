@@ -1,27 +1,39 @@
+/* 整體佈局 */
+.food-promotions-page {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-family: Arial, sans-serif;
+}
+
+.select-dig-page {
+  margin-left: 50px;
+  display: flex;
+  flex-direction: column;
+}
+
 .tab3-container {
-    padding: 20px;
-    background-color: #f7f7f7;
-  }
-  
-  .promotion-section {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  
-  .promo-card {
-    flex: 1;
-    min-width: 200px;
-    padding: 15px;
-    background-color: #ffe4e1;
-    border-radius: 8px;
-    text-align: center;
-  }
-  
-  .today-offers {
-    margin-top: 20px;
-  }
-  
-  .today-offers .MuiGrid-item {
-    padding: 10px;
-  }
-  
+  padding: 20px;
+  background-color: #f7f7f7;
+}
+
+.promotion-section {
+  display: flex;
+  flex-wrap: wrap;
+  max-height: 120px;
+}
+
+.select-chill-guy {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.today-offers {
+  margin-top: 20px;
+}
+
+.today-offers .MuiGrid-item {
+  padding: 10px;
+}
