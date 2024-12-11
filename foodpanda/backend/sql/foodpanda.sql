@@ -138,7 +138,7 @@ CREATE TABLE products (
     availability_status TEXT NOT NULL CHECK(availability_status IN ('上架', '下架')), -- 產品狀態限制
     FOREIGN KEY (merchant_id) REFERENCES merchants(merchant_id)
 );
-
+ 
 CREATE TABLE orders (
     order_id INT PRIMARY KEY,
     user_id INT NOT NULL,
