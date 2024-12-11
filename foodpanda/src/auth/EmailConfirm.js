@@ -33,27 +33,25 @@ const EmailConfirm = ({ open, onClose, onBack, setlogin, setlogout, user, setUse
   };
 
   const checkEmail = async () => {
-    console.log("123")
+    console.log("123");
     if (!email) {
       alert("請輸入電子郵件");
       return;
     }
-
-    try {
-      console.log(email)
-      const response = await axios.post(
-        "http://localhost:5000/api/check_email",
-        {
-          email: email,
-        }
-      );
-      console.log(response.data.user_info.email, email)
-      if (response.data.user_info.email === email) {
-        setUser(response.data.user_info)
-        setStep("haveEmail")
   
-      } else {
+    try {
+      console.log(email);
+      const response = await axios.post("http://localhost:5000/api/check_email", {
+        email: email,
+      });
+  
+      if (response.status === 404 || response.data.user_info === null) {
         setStep("notHaveEmail");
+        console.log("notHaveEmail");
+      } else if (response.data.user_info.email === email) {
+        setUser(response.data.user_info);
+        setStep("haveEmail");
+        console.log("haveEmail");
       }
     } catch (error) {
       console.error(
@@ -62,6 +60,7 @@ const EmailConfirm = ({ open, onClose, onBack, setlogin, setlogout, user, setUse
       );
     }
   };
+  
 
   
 

@@ -84,7 +84,7 @@ def check_email_api():
             print(user_info)
             return jsonify({'user_info':user_info})
         else:
-            return jsonify(None), 404
+            return jsonify({'user_info': None})
     except Exception as e:
         print(e)
         return jsonify({'error': str(e)}), 500

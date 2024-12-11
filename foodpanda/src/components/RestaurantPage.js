@@ -10,7 +10,7 @@ import { Box, Typography } from "@mui/material";
 import HeaderLocation from "./HeaderLocation";
 import CitySearch from "./CitySearch";
 
-const RestaurantPage = ({ setlogin, setlogout }) => {
+const RestaurantPage = ({ setlogin, setlogout, loginState,  user, setUser }) => {
   const navigate = useNavigate();
   const { city } = useParams();
 
@@ -46,7 +46,7 @@ const RestaurantPage = ({ setlogin, setlogout }) => {
 
   return (
     <div>
-      <HeaderLocation setlogin={setlogin} setlogout={setlogout} />
+      <HeaderLocation setlogin={setlogin} setlogout={setlogout} loginState={loginState}  user={user} setUser={setUser} />
 
       <Box
         sx={{
