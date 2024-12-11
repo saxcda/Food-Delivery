@@ -81,6 +81,7 @@ def check_email_api():
                 "role": result[6],
                 "extra": result[7],
             }
+            print(user_info)
             return jsonify({'user_info':user_info})
         else:
             return jsonify(None), 404

@@ -33,20 +33,23 @@ const EmailConfirm = ({ open, onClose, onBack, setlogin, setlogout, user, setUse
   };
 
   const checkEmail = async () => {
+    console.log("123")
     if (!email) {
       alert("請輸入電子郵件");
       return;
     }
 
     try {
+      console.log(email)
       const response = await axios.post(
         "http://localhost:5000/api/check_email",
         {
           email: email,
         }
       );
-      if (response.data.email === email) {
-        setUser(response.data)
+      console.log(response.data.user_info.email, email)
+      if (response.data.user_info.email === email) {
+        setUser(response.data.user_info)
         setStep("haveEmail")
   
       } else {
@@ -76,7 +79,6 @@ const EmailConfirm = ({ open, onClose, onBack, setlogin, setlogout, user, setUse
 
   useEffect(() => {
     console.log(step, user); // 當 step 改變時顯示新的狀態
-
   }, [checkEmail, user]); // 當 step 改變時觸發
 
   return (
