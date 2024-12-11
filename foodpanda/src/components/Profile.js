@@ -9,79 +9,82 @@ import { useEffect } from "react";
 //import "./Join_foodpanda.css";
 
 const Profile = ({ setlogin, setlogout, loginState,  user, setUser}) => {
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     phoneNumber: "",
-    email:"",
-    currentPassword:"",
-    newPassword:"",
-    address:"",
+    email: "",
+    currentPassword: "",
+    newPassword: "",
+    address: "",
   });
 
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios
-      .get("http://127.0.0.1:5000/users/${user.id}")
-      .then((response) => {
-        setFormData({
-          firstName: response.data.firstName || "",
-          lastName: response.data.lastName || "",
-          phoneNumber: response.data.phone || "",
-          email: response.data.email || "",
-          address: response.data.address || "",
-          currentPassword: "", // Passwords are not fetched
-          newPassword: "",
-        });
+    const fetchUserDetails = async () => {
+      try {
+        const response = await fetch(`http://127.0.0.1:5000/user-details?user_id=${user.id}`);
+        if (response.ok) {
+          const data = await response.json();
+          setFormData({
+            firstName: data.firstName || "",
+            lastName: data.lastName || "",
+            phoneNumber: data.phone || "",
+            email: data.email || "",
+            address: data.address || "",
+            currentPassword: "",
+            newPassword: "",
+          });
+        } else {
+          console.error("Failed to fetch user details:", response.statusText);
+          setError("Failed to load user data.");
+        }
+      } catch (err) {
+        console.error("Error fetching user details:", err);
+        setError("Failed to load user data.");
+      } finally {
         setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching user data:", error);
-        //setError("Failed to load user data.");
-        setFormData({
-          firstName: "Failed to load user data.",
-          lastName: "Failed to load user data.",
-          phoneNumber: "Failed to load user data.",
-          email: "Failed to load user data.",
-          address: "Failed to load user data.",
-          currentPassword: "", // Password fields remain empty
-          newPassword: "",
-        });
-        setLoading(false);
-      });
-  }, []);
+      }
+    };
 
-const [loading, setLoading] = useState(true); // Define loading state
-
-
-if (loading) {
-  return <Typography>Loading...</Typography>;
-}
-
-if (error) {
-  return <Typography color="error">{error}</Typography>;
-}
-
+    fetchUserDetails();
+  }, [user.id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSave = () => {
-    // Save updated user data
-    axios
-      .put("http://127.0.0.1:5000/users/${user.id}", formData) // Replace with the actual user ID or API endpoint
-      .then((response) => {
-        console.log("Saved Data:", response.data);
-        alert("Profile updated successfully!");
-      })
-      .catch((error) => {
-        console.error("Error saving profile:", error);
-        alert("Failed to save profile.");
+  const handleSave = async () => {
+    try {
+      const response = await fetch(`http://127.0.0.1:5000/users/${user.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
       });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Saved Data:", data);
+        alert("Profile updated successfully!");
+      } else {
+        console.error("Failed to save profile:", response.statusText);
+        alert("Failed to save profile.");
+      }
+    } catch (error) {
+      console.error("Error saving profile:", error);
+      alert("Failed to save profile.");
+    }
   };
+
+  if (loading) return <Typography>Loading...</Typography>;
+  if (error) return <Typography color="error">{error}</Typography>;
+
+
+  
 
 
 
