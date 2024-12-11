@@ -208,11 +208,12 @@ const GroceriesDetailPage = ({ setlogin, setlogout, loginState,  user, setUser})
           <Box
           component="img"
           src="https://images.deliveryhero.io/image/adtech-display/campaigns/fp_tw/f606209e-a7e1-11ef-9c83-0a9d38fbb5b2.png?height=224"
-          sx={{margin:"0 50px 0 20px"}}
+          sx={{margin:"0 50px 0 20px", width:"350px", height:"220px"}}
           >
             </Box>
           <Box
           component="img"
+          sx={{ width:"350px", height:"220px"}}
           src="https://images.deliveryhero.io/image/adtech-display/campaigns/fp_tw/db76ccb0-b6c9-11ef-b28f-a216af6418eb.png?height=224"
           >
           
