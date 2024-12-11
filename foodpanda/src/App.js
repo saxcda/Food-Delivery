@@ -44,8 +44,6 @@ import {
 import GroceriesDetailPage from "./Pages/GroceriesDetailPage";
 import Register from "./auth/Register";
 
-// const ProtectedRoute = ({ loginState, element }) => {
-//   const [open, setOpen] = useState(!loginState);
 import AreaPage from "./components/AreaPage";
 
 // const ProtectedRoute = ({ loginState, element }) => {
