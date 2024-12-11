@@ -2,9 +2,9 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 import sqlite3
-from sendemail import sendEmail
+from registeremail import send_verification_email
 from forgetpassword import send_forgetpassword_email
-from SQL import email_confirm, password_confirm, update_password
+from SQL import email_confirm, password_confirm, update_password, insert_user
 from randmopassword import generate_formatted_password
 
 app = Flask(__name__)
@@ -14,20 +14,45 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 CORS(app)
 
-# API: 發送電子郵件
-@app.route('/api/send_email', methods=['POST'])
-def send_email_api():
+# 註冊資訊射進資料庫
+@app.route('/api/register_account', methods=['POST'])
+def register_account():
+    data = request.json
+    email = data.get('email')
+    full_name = data.get('fullName')
+    password = data.get('password')
+    try:
+        # 簡單驗證
+        if not email or not full_name or not password:
+            return jsonify({'error': 'All fields are required'}), 400
+        # 呼叫資料庫插入函數
+        result = insert_user(email, full_name, password)
+
+        if result['success']:
+            return jsonify({
+                'success': True,
+                'message': result['message'],
+                'user_id': result.get('user_id')
+            }), 201  # HTTP 201: Created
+        else:
+            return jsonify({'success': False, 'message': result['message']}), 500
+    except Exception as e:
+        return jsonify({'success': False, 'error': f"Server error: {str(e)}"}), 500
+
+# 註冊時的驗證信
+@app.route('/api/verify_email', methods=['POST'])
+def verify_email_api():
     data = request.json
     email = data.get('email')
     try:
         if not email:
             return jsonify({'error': 'Email is required'}), 400
         
-        verification_code = sendEmail(email)
+        verification_link = f"http://localhost:3000/register?email={email}"
+        send_verification_email(email, verification_link)
         
         return jsonify({
             'message': 'Email sent successfully',
-            'verification_code': verification_code
         }), 200
     except Exception as e:
         print(e)
@@ -345,6 +370,63 @@ def get_order_history_ongoing():
     except Exception as e:
         print(e)
         return jsonify({'error': str(e)}), 500
+    
+@app.route('/order-detail', methods=['GET'])
+def get_order_detail():
+    try:
+        order_id = request.args.get('order_id', type=int)
+        if not order_id:
+            return jsonify({'error': 'Order ID is required'}), 400
+
+        conn = sqlite3.connect('./db/foodpanda.db')
+        cursor = conn.cursor()
+
+        # Fetch the order details
+        order_query = """
+            SELECT o.order_id, m.name, m.image, o.order_time, o.total_price, o.delivery_address, m.location
+            FROM orders o
+            JOIN merchants m ON o.merchant_id = m.merchant_id
+            WHERE o.order_id = ?
+        """
+        cursor.execute(order_query, (order_id,))
+        order = cursor.fetchone()
+
+        if not order:
+            return jsonify({'error': 'Order not found'}), 404
+
+        order_id, restaurant_name, restaurant_image, order_time, total_price, delivery_address, merchant_location = order
+
+        # Fetch associated menu items
+        menu_items_query = """
+            SELECT mi.item_id, mi.name, mi.price, oi.quantity
+            FROM order_items oi
+            JOIN menu_items mi ON oi.product_id = mi.item_id
+            WHERE oi.order_id = ?
+        """
+        cursor.execute(menu_items_query, (order_id,))
+        items = cursor.fetchall()
+
+        result = {
+            "order_id": order_id,
+            "restaurant_name": restaurant_name,
+            "restaurant_image": restaurant_image,
+            "order_time": order_time,
+            "total_price": total_price,
+            "delivery_address": delivery_address,
+            "merchant_location": merchant_location,
+            "items": [
+                {"item_id": item[0], "name": item[1], "price": item[2], "quantity": item[3]}
+                for item in items
+            ]
+        }
+
+        conn.close()
+        return jsonify(result), 200
+
+    except Exception as e:
+        print(e)
+        return jsonify({'error': str(e)}), 500
+
 
 
 class User(db.Model):

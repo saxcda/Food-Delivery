@@ -29,14 +29,14 @@ const VerifyEmail = ({ email, onBack, onClose, setlogin, setlogout }) => {
     return () => clearInterval(timer); // 清除計時器，防止內存洩漏
   }, [countdown]);
 
-  const sendEmail = async () => {
+  const verifyEmail = async () => {
     if (!email) {
       alert("無法發送, 請稍後再試。");
       return;
     }
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/send_email",
+        "http://localhost:5000/api/verify_email",
         {
           email: email,
         }
@@ -148,7 +148,7 @@ const VerifyEmail = ({ email, onBack, onClose, setlogin, setlogout }) => {
         <Button
           className={`verifyEmailButton ${isCompleted ? "completed" : ""}`}
           variant="contained"
-          onClick={sendEmail}
+          onClick={verifyEmail}
           disabled={!isCompleted}
         >
           {isCompleted ? (
