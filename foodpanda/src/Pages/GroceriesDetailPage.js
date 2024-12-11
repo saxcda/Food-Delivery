@@ -252,7 +252,7 @@ const GroceriesDetailPage = () => {
                   fullWidth
                   sx={{ marginTop: "10px", backgroundColor: "#D70F64" }}
                   onClick={() =>
-                    navigate("/checkout", { state: { cart, storeName } })
+                    navigate("/payment", { state: { cart, storeName } })
                   }
                 >
                   查看付款方式及地址

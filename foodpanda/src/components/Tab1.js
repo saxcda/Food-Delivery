@@ -111,7 +111,16 @@ const Tab1 = ({
   }, [filters, filteredSearch, restaurantData]);
 
   return (
-    <div className="food-delivery-page">    
+    <div className="food-delivery-page" 
+    style={{
+      display: "flex",
+      flexDirection: "row", // Ensure proper alignment
+      width: "100%", // Allow it to stretch to the full width
+      height: "100%", // Optional: Allow it to stretch vertically
+      //flexGrow: 1, // Allow the children to grow within the flex layout
+      boxSizing: "border-box", // Include padding/border in the dimensions
+    }}
+    >    
         {/* 篩選和排序的側邊欄 */}
         <div className="sidebar">
           <div className="box-flex ai-center jc-space-between fd-row">
@@ -533,11 +542,11 @@ const Tab1 = ({
           </div>
         </div>
         <Grid
-          container
-          spacing={1}
+          container spacing={1}
           justifyContent="flex-start"
           minHeight={"450px"}
-          padding={"0 8% 0 8%"}
+          padding={"30px"}
+          style={{flexGrow: 1 }}
         >
           {filteredAndSortedRestaurants.length === 0 ? (
             <Typography variant="h6" color="textSecondary">
@@ -546,7 +555,7 @@ const Tab1 = ({
           ) : (
             filteredAndSortedRestaurants.map(
               (filteredAndSortedRestaurants, index) => (
-                <Grid item key={index} md={4}>
+                <Grid item key={index} md={3}>
                   <RestaurantCard
                     restaurant={filteredAndSortedRestaurants}
                     onClick={() =>

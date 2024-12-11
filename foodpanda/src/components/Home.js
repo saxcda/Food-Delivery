@@ -8,6 +8,7 @@ import Download from "./Download";
 import Know_more from "./Know_more";
 import Note_foodpanda from "./Note_foodpanda";
 import { useRef , useEffect } from "react";
+import CitySearch from "./CitySearch";
 
 
 const Home = ({ setlogin, setlogout, loginState }) => {
@@ -31,6 +32,7 @@ const Home = ({ setlogin, setlogout, loginState }) => {
         handleFindMyLocation={handleFindMyLocation}
       />
       <Join_foodpanda />
+      
       <CityGrid />
       <Download />
       <Know_more />

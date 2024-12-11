@@ -36,6 +36,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/ReactToastify.css";
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from "@mui/material";
 import GroceriesDetailPage from "./Pages/GroceriesDetailPage";
+import AreaPage from "./components/AreaPage";
 
 const ProtectedRoute = ({ loginState, element }) => {
   const [open, setOpen] = useState(!loginState);
@@ -148,6 +149,8 @@ const App = () => {
             />
           }
         />
+
+        <Route path="/area/:areaName" element={<AreaPage />} />
 
         <Route path="/groceries/:storeName" element={<GroceriesDetailPage />} />
 
