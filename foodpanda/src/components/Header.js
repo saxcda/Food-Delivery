@@ -403,8 +403,8 @@ const Header = ({ setlogin, setlogout, loginState }) => {
                 open={Boolean(accountMenuAnchor)}
                 onClose={handleAccountMenuClose}
               >
-                <MenuItem onClick={handleAccountMenuClose}>個人檔案</MenuItem>
-                <MenuItem onClick={handleAccountMenuClose}>歷史訂單</MenuItem>
+                <MenuItem onClick={navigateToProfile}>個人檔案</MenuItem>
+                <MenuItem onClick={navigateToHistoryPage}>歷史訂單</MenuItem>
                 <MenuItem
                   onClick={() => {
                     handleAccountMenuClose();
