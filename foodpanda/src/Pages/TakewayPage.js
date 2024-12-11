@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import "./TakewayPage.css";
 import HeaderLocation from "../components/HeaderLocation";
 
-const TakewayPage = ({ setlogin, setlogout }) => {
+const TakewayPage = ({setlogin, setlogout, loginState,  user, setUser}) => {
   const [showDetails, setShowDetails] = useState(false);
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -111,7 +111,7 @@ const TakewayPage = ({ setlogin, setlogout }) => {
 
   return (
     <div>
-      <HeaderLocation />
+      <HeaderLocation setlogin={setlogin} setlogout={setlogout} loginState={loginState}  user={user} setUser={setUser}/>
       <div className="takeaway-page">
         {/* 左側主要內容 */}
         <div className="main-section">

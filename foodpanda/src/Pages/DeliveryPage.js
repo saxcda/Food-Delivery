@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import "./DeliveryPage.css";
 import HeaderLocation from "../components/HeaderLocation";
 
-const DeliveryPage = ({ setlogin, setlogout }) => {
+const DeliveryPage = ({ setlogin, setlogout, loginState,  user, setUser}) => {
   const [timeLeft, setTimeLeft] = useState(30); // 倒數計時初始值
   const [progress, setProgress] = useState(0);
   const [orderStatus, setOrderStatus] = useState("訂單正在準備中...");
@@ -104,7 +104,7 @@ const DeliveryPage = ({ setlogin, setlogout }) => {
 
   return (
     <div>
-      <HeaderLocation />
+      <HeaderLocation setlogin={setlogin} setlogout={setlogout} loginState={loginState}  user={user} setUser={setUser}/>
       <div className="delivery-page">
         {/* 左邊主要內容 */}
         <div className="left-section">

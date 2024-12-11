@@ -431,6 +431,16 @@ VALUES (
     '["滿 $200 享 85 折", "滿 $200 享 9 折"]',
     '(O)桃園市桃園區中正路599號',
     '桃園市'
+),(
+    25,
+    '榕樹下綿綿冰 (桃園創始店)',
+    'https://images.deliveryhero.io/image/fd-tw/LH/vdbk-listing.jpg?',
+    4.9,
+    '甜點，豆花',
+    '',
+    '["滿 $200 享 85 折", "滿 $200 享 9 折"]',
+    '(△)桃園市桃園區中正路671-1號',
+    '桃園市'
 );
 
 
@@ -463,7 +473,11 @@ VALUES
     (24, 23, 'Popular', '人氣精選✨'),
     (25, 23, 'Winter Melon', '冬瓜系列'),
     (26, 24, 'Popular', '人氣精選✨'),
-    (27, 24, 'Skewer', '串物');
+    (27, 24, 'Skewer', '串物'),
+    (28, 25, 'Popular', '人氣精選✨'),
+    (29, 25, 'Winter Sweet Soup', '冬季甜湯'),
+    (30, 25, 'Tea', '仙草茶'),
+    (31, 25, 'Mian Mian Ice', '綿綿冰單點');
 
 
 -- 插入菜單項目資料
@@ -539,7 +553,17 @@ VALUES
     (68, 25, '冬瓜愛玉', 52, 65, 'https://images.deliveryhero.io/image/fd-tw/Products/1469275.jpg??width=800', 0),
     (69, 26, '酥皮香雞排', 130, 130, 'https://images.deliveryhero.io/image/menu-import-gateway-prd/regions/AS/chains/everywarechain/dc24288219e3cc57a878b4bc2fb53d80.png??width=800', 0),
     (70, 26, '脆薯', 45, 45, 'https://images.deliveryhero.io/image/menu-import-gateway-prd/regions/AS/chains/everywarechain/9f6c8877f816159f2c6490f087a53532.png??width=800', 0),
-    (71, 27, '雞心', 40, 40, 'https://images.deliveryhero.io/image/menu-import-gateway-prd/regions/AS/chains/everywarechain/f406bdf39bfd331406d6c8a6078997dd.png??width=800', 0);
+    (71, 27, '雞心', 40, 40, 'https://images.deliveryhero.io/image/menu-import-gateway-prd/regions/AS/chains/everywarechain/f406bdf39bfd331406d6c8a6078997dd.png??width=800', 0),
+    (72, 28, '綜合綿綿冰【任選3球】', 75, 75, 'https://images.deliveryhero.io/image/fd-tw/Products/82982017.jpg??width=800', 0),
+    (73, 28, '小紅豆牛奶冰', 75, 75, 'https://images.deliveryhero.io/image/fd-tw/Products/82982007.jpg??width=800', 0),
+    (74, 28, '抹茶紅豆冰', 120, 120, 'https://images.deliveryhero.io/image/fd-tw/Products/82982001.jpg??width=800', 0),
+    (75, 28, '綠豆沙牛奶', 75, 75, 'https://images.deliveryhero.io/image/fd-tw/Products/82982009.jpg??width=800', 0),
+    (76, 29, '紅豆湯', 65, 65, 'https://images.deliveryhero.io/image/fd-tw/Products/105034550.jpg??width=800', 0),
+    (77, 29, '綜合豆花', 60, 60, 'https://images.deliveryhero.io/image/fd-tw/Products/105034557.jpg??width=800', 0),
+    (78, 30, '仙草茶【1罐 | 微糖】', 99, 99, 'https://images.deliveryhero.io/image/fd-tw/Products/82982013.jpg??width=800', 0),
+    (79, 30, '仙草茶【1杯】', 45, 45, 'https://images.deliveryhero.io/image/fd-tw/Products/82982015.jpg??width=800', 0),
+    (80, 30, '仙草茶【1罐 | 無糖】', 99, 99, 'https://images.deliveryhero.io/image/fd-tw/Products/82982014.jpg??width=800', 0),
+    (81, 31, '芝麻冰【1球】', 35, 35, 'https://images.deliveryhero.io/image/fd-tw/Products/82981996.jpg??width=800', 0);
     
 
 -- Insert Orders

@@ -8,10 +8,6 @@ from SQL import email_confirm, password_confirm, update_password, insert_user
 from randmopassword import generate_formatted_password
 
 app = Flask(__name__)
-# Configuration for SQLite database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/YPLab/AppData/Local/anaconda3/envs/foodpanda/Code/Food-Delivery/foodpanda/backend/db/foodpanda.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
 CORS(app)
 
 # 註冊資訊射進資料庫
@@ -84,7 +80,7 @@ def check_email_api():
             print(user_info)
             return jsonify({'user_info':user_info})
         else:
-            return jsonify(None), 404
+            return jsonify({'user_info': None})
     except Exception as e:
         print(e)
         return jsonify({'error': str(e)}), 500
@@ -443,46 +439,93 @@ def get_order_detail():
         return jsonify({'error': str(e)}), 500
 
 
+@app.route('/user-details', methods=['GET'])
+def get_user_details():
+    try:
+        user_id = request.args.get('user_id', type=int)
 
-class User(db.Model):
-    __tablename__ = 'users'
-    user_id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(50), nullable=False)
-    password = db.Column(db.String(255), nullable=False)
-    email = db.Column(db.String(100))
-    phone = db.Column(db.String(15))
-    address = db.Column(db.String(255))
-    user_type = db.Column(db.Text, nullable=False)
-    membership_status = db.Column(db.Text)
+        if not user_id:
+            return jsonify({'error': 'User ID is required'}), 400
 
-# Route to fetch user data by ID
-@app.route('/users/<int:user_id>', methods=['GET'])
-def get_user(user_id):
-    user = User.query.get(user_id)
-    if user:
-        return jsonify({
-            "firstName": user.username.split(" ")[0] if " " in user.username else user.username,
-            "lastName": user.username.split(" ")[1] if " " in user.username else "",
-            "phone": user.phone,
-            "email": user.email,
-            "address": user.address,
-        })
-    return jsonify({"error": "User not found"}), 404
+        conn = sqlite3.connect('./db/foodpanda.db')
+        cursor = conn.cursor()
 
-# Route to update user data by ID
+        query = """
+            SELECT username, email, phone, address
+            FROM users
+            WHERE user_id = ?
+        """
+        cursor.execute(query, (user_id,))
+        user = cursor.fetchone()
+
+        if not user:
+            return jsonify({'error': 'User not found'}), 404
+
+        result = {
+            'firstName': user[0],  # Assuming the first name is stored in the `username` field
+            'lastName': '',        # Not available in your schema; leave blank or handle as needed
+            'phone': user[2],
+            'email': user[1],
+            'address': user[3],
+        }
+
+        conn.close()
+        return jsonify(result), 200
+
+    except Exception as e:
+        print(e)
+        return jsonify({'error': str(e)}), 500
+
+
 @app.route('/users/<int:user_id>', methods=['PUT'])
-def update_user(user_id):
-    user = User.query.get(user_id)
-    if not user:
-        return jsonify({"error": "User not found"}), 404
+def update_user_details(user_id):
+    try:
+        data = request.get_json()
 
-    data = request.json
-    user.username = f"{data.get('firstName')} {data.get('lastName')}".strip()
-    user.phone = data.get("phoneNumber", user.phone)
-    user.email = data.get("email", user.email)
-    user.address = data.get("address", user.address)
-    db.session.commit()
-    return jsonify({"message": "User updated successfully"})
+        if not data:
+            return jsonify({'error': 'No data provided'}), 400
+
+        # Extract fields to be updated
+        first_name = data.get('firstName')
+        last_name = data.get('lastName')
+        phone = data.get('phoneNumber')
+        email = data.get('email')
+        address = data.get('address')
+        new_password = data.get('newPassword')
+
+        # Validation (optional but recommended)
+        if not email or not phone:
+            return jsonify({'error': 'Email and phone number are required'}), 400
+
+        conn = sqlite3.connect('./db/foodpanda.db')
+        cursor = conn.cursor()
+
+        # Update query
+        update_query = """
+            UPDATE users
+            SET username = ?, email = ?, phone = ?, address = ?
+            WHERE user_id = ?
+        """
+        cursor.execute(update_query, (first_name, email, phone, address, user_id))
+
+        # Update password only if a new password is provided
+        if new_password:
+            password_update_query = """
+                UPDATE users
+                SET password = ?
+                WHERE user_id = ?
+            """
+            cursor.execute(password_update_query, (new_password, user_id))
+
+        conn.commit()
+        conn.close()
+
+        return jsonify({'message': 'User updated successfully'}), 200
+
+    except Exception as e:
+        print(e)
+        return jsonify({'error': str(e)}), 500
+
 
 
 if __name__ == '__main__':

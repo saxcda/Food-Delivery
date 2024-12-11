@@ -4,7 +4,7 @@ import "./PaymentPage.css";
 import HeaderLocation from "../components/HeaderLocation";
 import AddressDialog from "../components/AddressDialog";
 
-const PaymentPage = ({ setlogin, setlogout }) => {
+const PaymentPage = ({setlogin, setlogout, loginState,  user, setUser}) => {
   const [deliveryOption, setDeliveryOption] = useState("standard");
   const [deliveryFee, setDeliveryFee] = useState(35);
   const [contactless, setContactless] = useState(false);
@@ -85,7 +85,7 @@ const PaymentPage = ({ setlogin, setlogout }) => {
 
   return (
     <div>
-      <HeaderLocation setlogin={setlogin} setlogout={setlogout} />
+      <HeaderLocation setlogin={setlogin} setlogout={setlogout} loginState={loginState}  user={user} setUser={setUser}/>
       <div className="payment-page">
         <div className="main">
           {/* Left Section */}

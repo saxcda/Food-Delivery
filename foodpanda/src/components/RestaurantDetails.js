@@ -143,29 +143,24 @@ const RestaurantDetails = () => {
   
 
   useEffect(() => {
-    const observerOptions = {
-      root: null,
-      rootMargin: "0px",
-      threshold: 0.3, // 30% 可见性时触发
-    };
-
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          const index = categoryRefs.current.indexOf(entry.target);
+          const index = categoryRefs.current.findIndex(
+            (ref) => ref === entry.target
+          );
           setActiveCategory(index);
         }
       });
-    }, observerOptions);
-
+    });
+  
     categoryRefs.current.forEach((ref) => {
       if (ref) observer.observe(ref);
     });
-
-    return () => {
-      observer.disconnect();
-    };
+  
+    return () => observer.disconnect();
   }, []);
+  
 
   if (!restaurant || !Array.isArray(restaurant.categories)) {
     return (
@@ -389,33 +384,28 @@ const RestaurantDetails = () => {
         />
         {restaurant.categories.map((category, index) => (
           <Button
-            key={index}
-            variant={activeCategory === index ? "contained" : "outlined"}
-            color={activeCategory === index ? "secondary" : "default"}
-            onClick={() => scrollToCategory(index)}
-            sx={{
-              border:"none",
-              backgroundColor: activeCategory === index ? "#ffffff" : "transparent",
-              color: activeCategory === index ? "black" : "none",
-              boxShadow: activeCategory === index ? "none" : "none",
-              position: "relative", // Required for positioning the underline
-                "&::after": {
-                  content: '""', // Empty content to create the underlinedisplay_name
-                  position: "absolute",
-                  left: 0,
-                  bottom: -2, // Position slightly below the button
-                  width: "100%",
-                  height: "2px", // Thickness of the underline
-                  backgroundColor: activeCategory === index ? "black" : "transparent", // Active color
-                  transition: "background-color 0.3s ease", // Smooth transition for the underline
-                },
-              "&:hover":{
-                backgroundColor: activeCategory === index ? "#transparent" : "#f5f5f5",
-              }
-            }}
-          >
-            {category.display_name} ({category.items.length})
-          </Button>
+          key={index}
+          variant="text"
+          onClick={() => scrollToCategory(index)}
+          sx={{
+            position: "relative",
+            padding: "8px 16px",
+            color: activeCategory === index ? "black" : "gray",
+            "&::after": {
+              content: '""',
+              position: "absolute",
+              left: 0,
+              bottom: -4, // Adjust distance from the text
+              width: "100%",
+              height: "2px",
+              backgroundColor: activeCategory === index ? "black" : "transparent",
+              transition: "background-color 0.3s ease",
+            },
+          }}
+        >
+          {category.display_name} ({category.items.length})
+        </Button>
+        
         ))}
       </Box>
 
