@@ -98,3 +98,13 @@
   fill: #888;
   margin-right: 8px;
 }
+
+div::-webkit-scrollbar {
+  width: 8px;
+}
+
+div::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
+

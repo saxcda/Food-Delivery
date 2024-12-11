@@ -1,7 +1,14 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { Grid, Typography } from "@mui/material";
 import RestaurantCard from "./RestaurantCard";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
 import "./Tab1.css";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+
+const GOOGLE_MAPS_API_KEY = "AIzaSyAqqcudDyo4itlY1bqbDyByPh_L6GMy9cs";
+
 
 const Tab1 = ({ handleRestaurantClick, restaurantData }) => {
   const [filters, setFilters] = useState({});
@@ -216,6 +223,165 @@ const Tab1 = ({ handleRestaurantClick, restaurantData }) => {
 
     return filtered;
   }, [filters, filteredSearch, restaurantData]);
+
+  const [open, setOpen] = useState(false);
+const [map, setMap] = useState(null);
+const [latlng, setLatlng] = useState([]); // 存储经纬度
+
+const loadGoogleMapsApi = () => {
+  console.log("loadGoogleMapsApi");
+  return new Promise((resolve, reject) => {
+    if (window.google && window.google.maps) {
+      resolve();
+      return;
+    }
+    const script = document.createElement("script");
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}`;
+    script.async = true;
+    script.defer = true;
+    script.onload = resolve;
+    script.onerror = reject;
+    document.head.appendChild(script);
+  });
+};
+
+const getLatLngFromAddress = async (address) => {
+  console.log("getLatLngFromAddress");
+  try {
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+      address
+    )}&key=${GOOGLE_MAPS_API_KEY}`;
+    const response = await fetch(url);
+    const data = await response.json();
+
+    console.log("Parsed Data:", data);
+    if (data.status === "OK" && data.results.length > 0) {
+      const { location } = data.results[0].geometry;
+      return location;
+    } else {
+      console.error("Geocoding failed:", data.status, data.error_message);
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching Geocoding API:", error);
+    return null;
+  }
+};
+
+const fetchLatLngForRestaurants = async () => {
+  console.log("Fetching lat/lng for all restaurants...");
+  const updatedRestaurants = [];
+  console.log(filteredAndSortedRestaurants)
+
+  for (const restaurant of filteredAndSortedRestaurants) {
+    const { location } = restaurant;
+    if (location) {
+      const loc = await getLatLngFromAddress(location);
+      updatedRestaurants.push({
+        ...restaurant,
+        latlng: loc || null,
+      });
+    }
+  }
+
+  console.log("Updated restaurants with lat/lng:", updatedRestaurants);
+  return updatedRestaurants;
+};
+
+useEffect(() => {
+  const fetchLatLng = async () => {
+    console.log("Fetching lat/lng on page load...");
+    const updatedRestaurants = await fetchLatLngForRestaurants();
+    setLatlng(updatedRestaurants); // 存储到状态
+  };
+
+  fetchLatLng(); // 页面加载时执行
+}, []);
+
+useEffect(() => {
+  const fetchLatLng = async () => {
+    console.log("Fetching lat/lng because filteredAndSortedRestaurants changed...");
+    const updatedRestaurants = await fetchLatLngForRestaurants(); // 调用获取经纬度函数
+    setLatlng(updatedRestaurants); // 更新 latlng 状态
+  };
+
+  if (filteredAndSortedRestaurants.length > 0) {
+    fetchLatLng(); // 如果有数据则获取经纬度
+  }
+}, [filteredAndSortedRestaurants]); // 监听 filteredAndSortedRestaurants
+
+
+
+
+const initializeMap = (restaurantsWithLatLng) => {
+  console.log("Initializing map...");
+  const defaultLocation = { lat: 25.03548, lng: 121.39206 };
+
+  const mapInstance = new window.google.maps.Map(
+    document.getElementById("dialog-map"),
+    {
+      center: defaultLocation,
+      zoom: 12,
+    }
+  );
+
+  const blackPinIcon = {
+    path: "M12 2C8.13 2 5 5.13 5 9c0 5.25 7 11 7 11s7-5.75 7-11c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z", // 从 MUI 图标提取的路径
+    fillColor: "black", // 设置图标颜色
+    fillOpacity: 1,
+    strokeWeight: 0,
+    scale: 1.5, // 缩放比例
+  };
+  
+  
+
+  restaurantsWithLatLng.forEach((restaurant) => {
+    const { latlng, name } = restaurant;
+    if (latlng) {
+      new window.google.maps.Marker({
+        position: latlng,
+        map: mapInstance,
+        title: name,
+        icon:blackPinIcon,
+      });
+    }
+  });
+
+  new window.google.maps.Marker({
+    position: defaultLocation,
+    map: mapInstance,
+    title: "默认位置",
+  });
+
+  setMap(mapInstance);
+};
+
+const handleOpenDialog = () => {
+  console.log("Opening dialog...");
+  setOpen(true);
+
+  loadGoogleMapsApi()
+    .then(() => {
+      console.log("Using preloaded latlng data:", latlng);
+      initializeMap(latlng); // 使用预先存储的数据
+    })
+    .catch((err) => {
+      console.error("加载 Google Maps API 失败:", err);
+    });
+};
+
+const handleCloseDialog = () => {
+  console.log("Closing dialog...");
+  setOpen(false); // 将 `open` 设置为 false，关闭弹窗
+  if (map) {
+    map.set(null); // 如果需要，可以清理地图实例
+    setMap(null); // 清理状态中的地图实例
+  }
+};
+
+
+
+  
 
   return (
     <div
@@ -666,63 +832,141 @@ const Tab1 = ({ handleRestaurantClick, restaurantData }) => {
         >
           {/* 地圖入口區域 */}
           <div
-            className="map-and-input-box"
-            style={{
-              width: "100%",
-              display: "flex",
-              flexDirection: "column",
-              padding: "8px",
-              gap: "10px",
-            }}
-          >
-            <div
-              className="cl-neutral-primary"
-              style={{ fontSize: "16px", fontWeight: "bold" }}
-            >
-              探索附近的美食
-            </div>
-            <a
-              href="#"
-              style={{
-                width: "100px",
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: "8px 16px",
-                backgroundColor: "#fff",
-                borderRadius: "20px",
-                textDecoration: "none",
-                boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", // 添加按鈕陰影
-                cursor: "pointer",
-              }}
-            >
-              <span
-                style={{
-                  fontSize: "14px",
-                  fontWeight: "bold",
-                  color: "#333",
-                  marginRight: "8px", // 與箭頭之間的間距
-                }}
-              >
-                顯示地圖
-              </span>
-              <svg
-                aria-hidden="true"
-                focusable="false"
-                class="fl-interaction-primary"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="#ff3366"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M12.6032 4.39702L12.6874 4.46963L19.8828 11.6639C20.0386 11.8197 20.0391 12.0722 19.8839 12.2286L12.6382 19.5284C12.3464 19.8223 11.8716 19.8241 11.5776 19.5323C11.3103 19.267 11.2846 18.8505 11.5013 18.556L11.5736 18.4716L17.0818 12.9204C17.1207 12.8812 17.1205 12.8179 17.0813 12.779C17.0625 12.7604 17.0372 12.75 17.0108 12.75L4.75 12.75C4.33579 12.75 4 12.4142 4 12C4 11.5858 4.33579 11.25 4.75 11.25L17.1055 11.25C17.1607 11.25 17.2055 11.2052 17.2055 11.15C17.2055 11.1235 17.195 11.098 17.1762 11.0793L11.6268 5.53037C11.3605 5.26413 11.3363 4.84747 11.5541 4.55384L11.6267 4.46971C11.8929 4.20343 12.3096 4.17918 12.6032 4.39702Z"
-                ></path>
-              </svg>
-            </a>
+      className="map-and-input-box"
+      style={{
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        padding: "8px",
+        gap: "10px",
+      }}
+    >
+      <div
+        className="cl-neutral-primary"
+        style={{ fontSize: "16px", fontWeight: "bold" }}
+      >
+        探索附近的美食
+      </div>
+      <a
+        href="#"
+        onClick={(e) => {
+          e.preventDefault();
+          handleOpenDialog();
+        }}
+        style={{
+          width: "100px",
+          display: "inline-flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "8px 16px",
+          backgroundColor: "#fff",
+          borderRadius: "20px",
+          textDecoration: "none",
+          boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+          cursor: "pointer",
+        }}
+      >
+        <span
+          style={{
+            fontSize: "14px",
+            fontWeight: "bold",
+            color: "#333",
+            marginRight: "8px",
+          }}
+        >
+          顯示地圖
+        </span>
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          className="fl-interaction-primary"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="#ff3366"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M12.6032 4.39702L12.6874 4.46963L19.8828 11.6639C20.0386 11.8197 20.0391 12.0722 19.8839 12.2286L12.6382 19.5284C12.3464 19.8223 11.8716 19.8241 11.5776 19.5323C11.3103 19.267 11.2846 18.8505 11.5013 18.556L11.5736 18.4716L17.0818 12.9204C17.1207 12.8812 17.1205 12.8179 17.0813 12.779C17.0625 12.7604 17.0372 12.75 17.0108 12.75L4.75 12.75C4.33579 12.75 4 12.4142 4 12C4 11.5858 4.33579 11.25 4.75 11.25L17.1055 11.25C17.1607 11.25 17.2055 11.2052 17.2055 11.15C17.2055 11.1235 17.195 11.098 17.1762 11.0793L11.6268 5.53037C11.3605 5.26413 11.3363 4.84747 11.5541 4.55384L11.6267 4.46971C11.8929 4.20343 12.3096 4.17918 12.6032 4.39702Z"
+          ></path>
+        </svg>
+      </a>
+      <Dialog open={open} onClose={handleCloseDialog} maxWidth="xl" fullWidth>
+  <DialogTitle>顯示地圖</DialogTitle>
+  <DialogContent>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        height: "calc(100vh - 200px)", // 动态调整高度
+      }}
+    >
+      {/* 左侧餐厅列表 */}
+      <div
+  style={{
+    width: "30%", // 左侧占30%的宽度
+    overflowY: "auto", // 支持滚动
+    padding: "10px",
+    borderRight: "1px solid #ddd", // 添加右侧分隔线
+  }}
+>
+  {filteredAndSortedRestaurants.map((restaurant, index) => (
+    <div
+      key={index}
+      style={{
+        marginBottom: "15px",
+        cursor: "pointer",
+        padding: "10px",
+        border: "1px solid #ddd",
+        borderRadius: "10px",
+        boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        backgroundColor: "#fff",
+      }}
+      onClick={() => handleRestaurantClick(restaurant.name)} // 点击事件
+    >
+      {/* 餐厅图片 */}
+      <img
+        src={restaurant.image} // 假设餐厅对象中有 `image` 属性
+        alt={restaurant.name}
+        style={{
+          width: "100%",
+          height: "150px",
+          objectFit: "cover",
+          borderRadius: "10px 10px 0 0",
+        }}
+      />
+
+      {/* 餐厅信息 */}
+      <div style={{ padding: "10px", textAlign: "center", width: "100%" }}>
+        <strong style={{ fontSize: "16px" }}>{restaurant.name}</strong>
+        <p style={{ fontSize: "14px", color: "#666", margin: "5px 0" }}>
+          {restaurant.cuisine || "未知类型"} | 評分: {restaurant.rating || "N/A"}
+        </p>
+      </div>
+    </div>
+  ))}
+</div>
+
+
+      {/* 右侧地图 */}
+      <div
+        id="dialog-map"
+        style={{
+          flexGrow: 1, // 右侧占剩余空间
+          height: "100%", // 填满高度
+          borderRadius: "10px",
+          boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+        }}
+      ></div>
+    </div>
+  </DialogContent>
+</Dialog>
+
           </div>
         </div>
         {/* 全屏遮罩 */}
