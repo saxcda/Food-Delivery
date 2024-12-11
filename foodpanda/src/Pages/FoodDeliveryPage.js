@@ -268,7 +268,7 @@ const FoodDeliveryPage = ({
   }, [filters, sortKey, city, filteredSearch, restaurantData]);
 
   return (
-    <div>
+    <div style={{ width: "100%" }}>
       <HeaderLocation
         setlogin={setlogin}
         setlogout={setlogout}
@@ -282,10 +282,24 @@ const FoodDeliveryPage = ({
         aria-label="Food delivery tabs"
         indicatorColor="primary"
         textColor="primary"
+        sx={{
+          width: "100%",
+          marginLeft: "100px",
+          "& .MuiTabs-indicator": {
+            height: "3px", // 改為細條狀指示器
+            backgroundColor: "#333", // 指示器顏色
+            borderRadius: "4px", // 圓角效果
+            transition: "all 0.3s ease-in-out", // 切換時的過渡效果
+          },
+        }}
       >
         <Tab
           label={
-            <Box display="flex" alignItems="center">
+            <Box
+              display="flex"
+              alignItems="center"
+              sx={{ gap: "10px", fontSize: "12px", color: "#000" }}
+            >
               <svg
                 aria-hidden="true"
                 focusable="false"
@@ -313,7 +327,11 @@ const FoodDeliveryPage = ({
         />
         <Tab
           label={
-            <Box display="flex" alignItems="center">
+            <Box
+              display="flex"
+              alignItems="center"
+              sx={{ gap: "10px", fontSize: "12px", color: "#000" }}
+            >
               <svg
                 aria-hidden="true"
                 focusable="false"
@@ -360,7 +378,11 @@ const FoodDeliveryPage = ({
         />
         <Tab
           label={
-            <Box display="flex" alignItems="center">
+            <Box
+              display="flex"
+              alignItems="center"
+              sx={{ gap: "10px", fontSize: "12px", color: "#000" }}
+            >
               <svg
                 aria-hidden="true"
                 focusable="false"
@@ -382,7 +404,7 @@ const FoodDeliveryPage = ({
         />
       </Tabs>
       <div className="food-delivery-page">
-        {(activeTab === 0 ) && (
+        {activeTab === 0 && (
           <Tab1
             handleRestaurantClick={handleRestaurantClick}
             handleSortChange={handleSortChange}
@@ -391,7 +413,7 @@ const FoodDeliveryPage = ({
             restaurantData={filteredAndSortedRestaurants}
           />
         )}
-        {(activeTab === 1 ) && (
+        {activeTab === 1 && (
           <Tab2
             handleRestaurantClick={handleRestaurantClick}
             handleSortChange={handleSortChange}

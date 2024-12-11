@@ -61,6 +61,7 @@ VALUES
 ("生鮮雜貨新用戶", "享2次5折", "https://images.deliveryhero.io/image/fd-tw/campaign-assets/dbb5b4c8-8fee-11ee-a50b-8a74b1813098/desktop_tile_ZhkIdx.png?height=240&quality=95&width=560&"),
 ("派對取貨", "就愛PEPERO", "https://images.deliveryhero.io/image/fd-tw/campaign-assets/d735d20b-ad83-11ef-9536-eee1d84c0665/desktop_tile_ZhAiVD.png?height=240&quality=95&width=560&");
 
+
 INSERT INTO groceries_items (restaurant_id, category, name, price, original_price, image)
 VALUES
 -- 統一超商商品
@@ -189,23 +190,24 @@ INSERT INTO users (user_id, username, password, email, phone, address, user_type
 INSERT INTO merchants (merchant_id, name, image, rating, type, details, promotions, location, city)
 VALUES (
     1,
-    '阿春台菜海鮮',
-    'path/to/image6.png',
-    4.9,
-    '台式',
-    '阿春主打新鮮的台式海鮮與家常菜，是全家聚餐的好地方。',
-    '["滿 $500 享 85 折", "迎新禮：贈送小菜"]',
-    '桃園市龜山區',
+    '達美樂Domino(湖口中正店)',
+    'https://images.deliveryhero.io/image/fd-tw/tw-logos/cd8eg-logo.jpg?',
+    4.8,
+    '披薩，歐美，<店內價>',
+    '達美樂基於顧客至上的經營理念，不斷用心於食品安全及品質提升，以確保顧客滿意，特訂食品安全政策：產品、服務、形象，快樂送披薩的安心選擇。',
+    '["滿 $359 折 $60", "金額低於$ 179 的訂單，我們將收取少量訂單費用。"]',
+    '(#)新竹縣湖口鄉中正路一段219號',
     '桃園市'
 ),(
     2,
-    '小偉咖哩',
-    'path/to/image6.png',
+    'CoCo都可',
+    'https://images.deliveryhero.io/image/fd-tw/tw-logos/cs2ww-logo.jpg?',
     4.9,
-    '日式',
-    '阿春主打新鮮的台式海鮮與家常菜，是全家聚餐的好地方。',
-    '["滿 $500 享 85 折", "迎新禮：贈送小菜"]',
-    '桃園市龜山區',
+    '飲料',
+    '營業人名稱：富宏行
+    1. 本店每筆訂單酌收餐點包裝費1元。因應環保署公告，店家不得免費提供購物用環保袋，為確保送餐品質，餐點皆由塑膠袋包裝。',
+    '["滿 $500 享 85 折", "精選商品 5 折"]',
+    '(O)桃園市楊梅區富岡里中正路84號',
     '桃園市'
 ),(
     3,
@@ -441,14 +443,86 @@ VALUES (
     '["滿 $200 享 85 折", "滿 $200 享 9 折"]',
     '桃園市桃園區中正路671-1號',
     '桃園市'
+),(
+    26,
+    '八方雲集 (楊梅富岡店)',
+    'https://images.deliveryhero.io/image/fd-tw/tw-logos/cf2ih-logo.jpg?',
+    4.9,
+    '台式，餃子',
+    '八方雲集創立1998年，全台最多門市的餐飲連鎖店，提供鍋貼、水餃、麵點、餛飩、酸辣湯玉米湯等，提供消費者安全、新鮮、美味的餐點，用銅板價就能享用的庶民飲食。',
+    '["滿 $200 享 85 折", "滿 $200 享 9 折"]',
+    '(O)桃園市楊梅區中正路2號',
+    '桃園市'
+),(
+    27,
+    '達美樂Domino(健康店)',
+    'https://images.deliveryhero.io/image/fd-tw/tw-logos/cd8eg-logo.jpg?',
+    4.8,
+    '披薩，歐美，<店內價>',
+    '達美樂基於顧客至上的經營理念，不斷用心於食品安全及品質提升，以確保顧客滿意，特訂食品安全政策：產品、服務、形象，快樂送披薩的安心選擇。',
+    '["滿 $359 折 $60", "金額低於$ 179 的訂單，我們將收取少量訂單費用。"]',
+    '(#)台北市松山區健康路212號',
+    '台北市'
+),(
+    28,
+    'CoCo都可 (台北建國店)',
+    'https://images.deliveryhero.io/image/fd-tw/tw-logos/cs2ww-logo.jpg?',
+    4.9,
+    '飲料',
+    '營業人名稱：富宏行
+    1. 本店每筆訂單酌收餐點包裝費1元。因應環保署公告，店家不得免費提供購物用環保袋，為確保送餐品質，餐點皆由塑膠袋包裝。',
+    '["滿 $500 享 85 折", "精選商品 5 折"]',
+    '(O)台北市大安區建國南路二段17號',
+    '台北市'
+),(
+    29,
+    '八方雲集 (台北大安店)',
+    'https://images.deliveryhero.io/image/fd-tw/tw-logos/cf2ih-logo.jpg?',
+    4.9,
+    '台式，餃子',
+    '八方雲集創立1998年，全台最多門市的餐飲連鎖店，提供鍋貼、水餃、麵點、餛飩、酸辣湯玉米湯等，提供消費者安全、新鮮、美味的餐點，用銅板價就能享用的庶民飲食。',
+    '["滿 $200 享 85 折", "滿 $200 享 9 折"]',
+    '(O) 台北市大安區大安路二段23號',
+    '台北市'
+),(
+    30,
+    '達美樂Domino(中和積穗店)',
+    'https://images.deliveryhero.io/image/fd-tw/tw-logos/cd8eg-logo.jpg?',
+    4.8,
+    '披薩，歐美，<店內價>',
+    '達美樂基於顧客至上的經營理念，不斷用心於食品安全及品質提升，以確保顧客滿意，特訂食品安全政策：產品、服務、形象，快樂送披薩的安心選擇。',
+    '["滿 $359 折 $60", "金額低於$ 179 的訂單，我們將收取少量訂單費用。"]',
+    '(#)新北市中和區中山路二段553號',
+    '新北市'
+),(
+    31,
+    'CoCo都可 (新北樹林店)',
+    'https://images.deliveryhero.io/image/fd-tw/tw-logos/cs2ww-logo.jpg?',
+    4.9,
+    '飲料',
+    '營業人名稱：富宏行
+    1. 本店每筆訂單酌收餐點包裝費1元。因應環保署公告，店家不得免費提供購物用環保袋，為確保送餐品質，餐點皆由塑膠袋包裝。',
+    '["滿 $500 享 85 折", "精選商品 5 折"]',
+    '(O)新北市樹林區博愛一街19號',
+    '新北市'
+),(
+    32,
+    '八方雲集 (新北中和德民店)',
+    'https://images.deliveryhero.io/image/fd-tw/tw-logos/cf2ih-logo.jpg?',
+    4.9,
+    '台式，餃子',
+    '八方雲集創立1998年，全台最多門市的餐飲連鎖店，提供鍋貼、水餃、麵點、餛飩、酸辣湯玉米湯等，提供消費者安全、新鮮、美味的餐點，用銅板價就能享用的庶民飲食。',
+    '["滿 $200 享 85 折", "滿 $200 享 9 折"]',
+    '(O)新北市中和區德光路70號',
+    '新北市'
 );
 
 
 -- 插入分類資料
 INSERT INTO categories (category_id, merchant_id, name, display_name)
 VALUES
-    (1, 1, 'seafood', '海鮮 🦐'),
-    (2, 2, 'curry', '咖哩'),
+    (1, 1, 'Popular', '人氣精選✨'),
+    (2, 2, 'Popular', '人氣精選✨'),
     (3, 3, 'breakfast,taiwanese', '早餐，台式'),
     (4, 4, 'American', '歐美'),
     (5, 5, 'Korean', '韓式'),
@@ -477,16 +551,59 @@ VALUES
     (28, 25, 'Popular', '人氣精選✨'),
     (29, 25, 'Winter Sweet Soup', '冬季甜湯'),
     (30, 25, 'Tea', '仙草茶'),
-    (31, 25, 'Mian Mian Ice', '綿綿冰單點');
+    (31, 25, 'Mian Mian Ice', '綿綿冰單點'),
+-- 補類別 add domino 1
+    (32, 1, 'Limited', '期間限定【起司火山披薩】'),
+    (33, 1, 'Fragrant', '美味獨享餐'),
+    (34, 1, 'My Box', 'My Box個人獨享餐'),
+-- end 補類別 domino 1
+-- 補類別 add coco 2
+    (35, 2, 'Limited', '指定餐點專區'),
+    (36, 2, 'Recommended', '精選推薦'),
+    (37, 2, 'Milky', '濃醇鮮乳'),
+-- end 補類別 coco 2
+    (38, 26, 'Popular', '人氣精選✨'),
+    (39, 26, 'Beef', '金牌牛肉系列產品'),
+    (40, 26, 'Fried Dumpling', '鍋貼'),
+    (41, 26, 'Dumpling', '水餃'),
+    
+    (42, 27, 'Popular', '人氣精選✨'),
+    (43, 27, 'Limited', '期間限定【起司火山披薩】'),
+    (44, 27, 'Fragrant', '美味獨享餐'),
+    (45, 27, 'My Box', 'My Box個人獨享餐'),
 
+    (46, 28, 'Popular', '人氣精選✨'),
+    (47, 28, 'Limited', '指定餐點專區'),
+    (48, 28, 'Recommended', '精選推薦'),
+    (49, 28, 'Milky', '濃醇鮮乳'),
+
+    (50, 29, 'Popular', '人氣精選✨'),
+    (51, 29, 'Beef', '金牌牛肉系列產品'),
+    (52, 29, 'Fried Dumpling', '鍋貼'),
+    (53, 29, 'Dumpling', '水餃'),
+
+    (54, 30, 'Popular', '人氣精選✨'),
+    (55, 30, 'Limited', '期間限定【起司火山披薩】'),
+    (56, 30, 'Fragrant', '美味獨享餐'),
+    (57, 30, 'My Box', 'My Box個人獨享餐'),
+
+    (58, 31, 'Popular', '人氣精選✨'),
+    (59, 31, 'Limited', '指定餐點專區'),
+    (60, 31, 'Recommended', '精選推薦'),
+    (61, 31, 'Milky', '濃醇鮮乳'),
+
+    (62, 32, 'Popular', '人氣精選✨'),
+    (63, 32, 'Beef', '金牌牛肉系列產品'),
+    (64, 32, 'Fried Dumpling', '鍋貼'),
+    (65, 32, 'Dumpling', '水餃');
 
 -- 插入菜單項目資料
 INSERT INTO menu_items (item_id, category_id, name, price, original_price, image, isPri)
 VALUES
-    (1, 1, '炒花枝', 320, 340, 'path/to/menu12.png', 0),
-    (2, 1, '蒜香蝦仁', 280, 300, 'path/to/menu13.png', 0),
-    (3, 2, '小及咖哩', 280, 300, 'path/to/menu14.png', 0),
-    (4, 2, '小小咖哩', 280, 300, 'path/to/menu15.png', 0),
+    (1, 1, '【招牌系列】大披薩，買1送1', 710, 710, 'https://images.deliveryhero.io/image/fd-tw/Products/125961518.jpg??width=800', 0),
+    (2, 1, '如意拼盤【1份】', 249, 249, 'https://images.deliveryhero.io/image/fd-tw/Products/116543123.jpg??width=800', 0),
+    (3, 2, 'QQ奶茶(L) X2', 70, 140, 'https://images.deliveryhero.io/image/fd-tw/Products/134312576.jpg??width=800', 0),
+    (4, 2, '日式焙茶(L) X2', 50, 100, 'https://images.deliveryhero.io/image/fd-tw/Products/134312577.jpg??width=800', 0),
     (5, 3, '脆皮卡啦雞腿堡蛋', 105, 105, 'https://images.deliveryhero.io/image/fd-tw/Products/22335114.jpg?width=%25s', 0),
     (6, 3, '玉米濃湯', 65, 65, 'https://images.deliveryhero.io/image/fd-tw/Products/22335702.jpg?width=%25s', 0),
     (7, 3, '燻雞蛋可頌', 105, 105, 'https://images.deliveryhero.io/image/fd-tw/Products/3040635.jpg?width=%25s', 0),
@@ -563,8 +680,109 @@ VALUES
     (78, 30, '仙草茶【1罐 | 微糖】', 99, 99, 'https://images.deliveryhero.io/image/fd-tw/Products/82982013.jpg??width=800', 0),
     (79, 30, '仙草茶【1杯】', 45, 45, 'https://images.deliveryhero.io/image/fd-tw/Products/82982015.jpg??width=800', 0),
     (80, 30, '仙草茶【1罐 | 無糖】', 99, 99, 'https://images.deliveryhero.io/image/fd-tw/Products/82982014.jpg??width=800', 0),
-    (81, 31, '芝麻冰【1球】', 35, 35, 'https://images.deliveryhero.io/image/fd-tw/Products/82981996.jpg??width=800', 0);
-    
+    (81, 31, '芝麻冰【1球】', 35, 35, 'https://images.deliveryhero.io/image/fd-tw/Products/82981996.jpg??width=800', 0),
+-- 補菜單 add domino 1
+    (82, 1, 'Mybox 個人獨享餐【招牌系列】', 229, 229, 'https://images.deliveryhero.io/image/fd-tw/Products/130649609.jpg??width=800', 0),
+    (83, 32, '起司火山披薩】大披薩買1送1', 1030, 1030, 'https://images.deliveryhero.io/image/fd-tw/Products/134502777.jpg??width=800', 0),
+    (84, 32, '起司火山披薩】火山派對套餐', 1279, 1279, 'https://images.deliveryhero.io/image/fd-tw/Products/134502812.jpg??width=800', 0),
+    (85, 33, '韓風三角飯糰My Box獨享餐', 219, 219, 'https://images.deliveryhero.io/image/fd-tw/Products/133421428.jpg??width=800', 0),
+    (86, 33, '披薩魂丼飯】199獨享餐', 199, 199, 'https://images.deliveryhero.io/image/fd-tw/Products/131821668.jpg??width=800', 0),
+    (87, 33, '燒肉捲】豪想吃219', 219, 219, 'https://images.deliveryhero.io/image/fd-tw/Products/132353654.jpg??width=800', 0),
+    (88, 34, 'Mybox 個人獨享餐【經典系列】', 199, 199, 'https://images.deliveryhero.io/image/fd-tw/Products/130649563.jpg??width=800', 0),
+    (89, 34, 'Mybox 個人獨享餐【招牌系列】', 229, 229, 'https://images.deliveryhero.io/image/fd-tw/Products/130649609.jpg??width=800', 0),
+    (90, 34, 'Mybox 個人獨享餐【極致系列】', 249, 249, 'https://images.deliveryhero.io/image/fd-tw/Products/130649610.jpg??width=800', 0),
+-- end 補菜單
+-- 補菜單 add coco 2
+    (91, 2, '百香雙響炮', 80, 80, 'https://images.deliveryhero.io/image/fd-tw/Products/32473384.jpg??width=800', 0),
+    (92, 35, 'QQ奶茶(L) X2', 70, 140, 'https://images.deliveryhero.io/image/fd-tw/Products/134312576.jpg??width=800', 0),
+    (93, 35, '日式焙茶(L) X2', 50, 100, 'https://images.deliveryhero.io/image/fd-tw/Products/134312577.jpg??width=800', 0),
+    (94, 36, '冬韻擂焙珍奶', 80, 80, 'https://images.deliveryhero.io/image/fd-tw/Products/132877004.jpg??width=800', 0),
+    (95, 36, '蜜香檸凍紅茶', 65, 65, 'https://images.deliveryhero.io/image/fd-tw/Products/32473386.jpg??width=800', 0),
+    (96, 36, '珍珠鮮奶茶', 90, 90, 'https://images.deliveryhero.io/image/fd-tw/Products/32473387.jpg??width=800', 0),
+    (97, 36, '檸檬奇遇桔', 65, 65, 'https://images.deliveryhero.io/image/fd-tw/Products/82021113.jpg??width=800', 0),
+    (98, 37, '芋頭牛奶', 90, 90, 'https://images.deliveryhero.io/image/fd-tw/Products/32473388.jpg??width=800', 0),
+    (99, 37, '3Q鮮奶茶', 90, 90, 'https://images.deliveryhero.io/image/fd-tw/Products/32472364.jpg??width=800', 0),
+-- end 補菜單
+    (101, 38, '招牌鍋貼', 93, 93, 'https://images.deliveryhero.io/image/fd-tw/Products/2385430.jpg??width=800', 0),
+    (102, 38, '韓式辣味鍋貼', 93, 93, 'https://images.deliveryhero.io/image/fd-tw/Products/2014271.jpg??width=800', 0),
+    (103, 38, '招牌水餃', 93, 93, 'https://images.deliveryhero.io/image/fd-tw/Products/2014297.jpg??width=800', 0),
+    (104, 39, '金牌清燉牛肉冬粉', 220, 220, 'https://images.deliveryhero.io/image/fd-tw/Products/134367951.jpg??width=800', 0),
+    (105, 39, '紅燒牛肉麵', 220, 220, 'https://images.deliveryhero.io/image/fd-tw/Products/91349369.jpg??width=800', 0),
+    (106, 39, '金牌紅燒牛肉冬粉', 220, 220, 'https://images.deliveryhero.io/image/fd-tw/Products/134367950.jpg??width=800', 0),
+    (107, 40, '招牌鍋貼', 93, 93, 'https://images.deliveryhero.io/image/fd-tw/Products/2385430.jpg??width=800', 0),
+    (108, 40, '韓式辣味鍋貼', 93, 93, 'https://images.deliveryhero.io/image/fd-tw/Products/2014271.jpg??width=800', 0),
+    (109, 41, '招牌水餃', 93, 93, 'https://images.deliveryhero.io/image/fd-tw/Products/2014297.jpg??width=800', 0),
+    (110, 41, '咖哩雞肉水餃', 90, 90, 'https://images.deliveryhero.io/image/fd-tw/Products/48793324.jpg??width=800', 0),
+
+    (111, 42, '【招牌系列】大披薩，買1送1', 710, 710, 'https://images.deliveryhero.io/image/fd-tw/Products/125961518.jpg??width=800', 0),
+    (112, 42, '如意拼盤【1份】', 249, 249, 'https://images.deliveryhero.io/image/fd-tw/Products/116543123.jpg??width=800', 0),
+    (113, 42, 'Mybox 個人獨享餐【招牌系列】', 229, 229, 'https://images.deliveryhero.io/image/fd-tw/Products/130649609.jpg??width=800', 0),
+    (114, 43, '起司火山披薩】大披薩買1送1', 1030, 1030, 'https://images.deliveryhero.io/image/fd-tw/Products/134502777.jpg??width=800', 0),
+    (115, 43, '起司火山披薩】火山派對套餐', 1279, 1279, 'https://images.deliveryhero.io/image/fd-tw/Products/134502812.jpg??width=800', 0),
+    (116, 44, '韓風三角飯糰My Box獨享餐', 219, 219, 'https://images.deliveryhero.io/image/fd-tw/Products/133421428.jpg??width=800', 0),
+    (117, 44, '披薩魂丼飯】199獨享餐', 199, 199, 'https://images.deliveryhero.io/image/fd-tw/Products/131821668.jpg??width=800', 0),
+    (118, 44, '燒肉捲】豪想吃219', 219, 219, 'https://images.deliveryhero.io/image/fd-tw/Products/132353654.jpg??width=800', 0),
+    (119, 45, 'Mybox 個人獨享餐【經典系列】', 199, 199, 'https://images.deliveryhero.io/image/fd-tw/Products/130649563.jpg??width=800', 0),
+    (120, 45, 'Mybox 個人獨享餐【招牌系列】', 229, 229, 'https://images.deliveryhero.io/image/fd-tw/Products/130649609.jpg??width=800', 0),
+    (121, 45, 'Mybox 個人獨享餐【極致系列】', 249, 249, 'https://images.deliveryhero.io/image/fd-tw/Products/130649610.jpg??width=800', 0),
+
+    (122, 46, 'QQ奶茶(L) X2', 70, 140, 'https://images.deliveryhero.io/image/fd-tw/Products/134312576.jpg??width=800', 0),
+    (123, 46, '日式焙茶(L) X2', 50, 100, 'https://images.deliveryhero.io/image/fd-tw/Products/134312577.jpg??width=800', 0),
+    (124, 46, '百香雙響炮', 80, 80, 'https://images.deliveryhero.io/image/fd-tw/Products/32473384.jpg??width=800', 0),
+    (125, 47, 'QQ奶茶(L) X2', 70, 140, 'https://images.deliveryhero.io/image/fd-tw/Products/134312576.jpg??width=800', 0),
+    (126, 47, '日式焙茶(L) X2', 50, 100, 'https://images.deliveryhero.io/image/fd-tw/Products/134312577.jpg??width=800', 0),
+    (127, 48, '冬韻擂焙珍奶', 80, 80, 'https://images.deliveryhero.io/image/fd-tw/Products/132877004.jpg??width=800', 0),
+    (128, 48, '蜜香檸凍紅茶', 65, 65, 'https://images.deliveryhero.io/image/fd-tw/Products/32473386.jpg??width=800', 0),
+    (129, 48, '珍珠鮮奶茶', 90, 90, 'https://images.deliveryhero.io/image/fd-tw/Products/32473387.jpg??width=800', 0),
+    (130, 48, '檸檬奇遇桔', 65, 65, 'https://images.deliveryhero.io/image/fd-tw/Products/82021113.jpg??width=800', 0),
+    (131, 49, '芋頭牛奶', 90, 90, 'https://images.deliveryhero.io/image/fd-tw/Products/32473388.jpg??width=800', 0),
+    (132, 49, '3Q鮮奶茶', 90, 90, 'https://images.deliveryhero.io/image/fd-tw/Products/32472364.jpg??width=800', 0),
+
+    (133, 50, '招牌鍋貼', 93, 93, 'https://images.deliveryhero.io/image/fd-tw/Products/2385430.jpg??width=800', 0),
+    (134, 50, '韓式辣味鍋貼', 93, 93, 'https://images.deliveryhero.io/image/fd-tw/Products/2014271.jpg??width=800', 0),
+    (135, 50, '招牌水餃', 93, 93, 'https://images.deliveryhero.io/image/fd-tw/Products/2014297.jpg??width=800', 0),
+    (136, 51, '金牌清燉牛肉冬粉', 220, 220, 'https://images.deliveryhero.io/image/fd-tw/Products/134367951.jpg??width=800', 0),
+    (137, 51, '紅燒牛肉麵', 220, 220, 'https://images.deliveryhero.io/image/fd-tw/Products/91349369.jpg??width=800', 0),
+    (138, 51, '金牌紅燒牛肉冬粉', 220, 220, 'https://images.deliveryhero.io/image/fd-tw/Products/134367950.jpg??width=800', 0),
+    (139, 52, '招牌鍋貼', 93, 93, 'https://images.deliveryhero.io/image/fd-tw/Products/2385430.jpg??width=800', 0),
+    (140, 52, '韓式辣味鍋貼', 93, 93, 'https://images.deliveryhero.io/image/fd-tw/Products/2014271.jpg??width=800', 0),
+    (141, 53, '招牌水餃', 93, 93, 'https://images.deliveryhero.io/image/fd-tw/Products/2014297.jpg??width=800', 0),
+    (142, 53, '咖哩雞肉水餃', 90, 90, 'https://images.deliveryhero.io/image/fd-tw/Products/48793324.jpg??width=800', 0),
+--54
+    (143, 54, '【招牌系列】大披薩，買1送1', 710, 710, 'https://images.deliveryhero.io/image/fd-tw/Products/125961518.jpg??width=800', 0),
+    (144, 54, '如意拼盤【1份】', 249, 249, 'https://images.deliveryhero.io/image/fd-tw/Products/116543123.jpg??width=800', 0),
+    (145, 54, 'Mybox 個人獨享餐【招牌系列】', 229, 229, 'https://images.deliveryhero.io/image/fd-tw/Products/130649609.jpg??width=800', 0),
+    (146, 55, '起司火山披薩】大披薩買1送1', 1030, 1030, 'https://images.deliveryhero.io/image/fd-tw/Products/134502777.jpg??width=800', 0),
+    (147, 55, '起司火山披薩】火山派對套餐', 1279, 1279, 'https://images.deliveryhero.io/image/fd-tw/Products/134502812.jpg??width=800', 0),
+    (148, 56, '韓風三角飯糰My Box獨享餐', 219, 219, 'https://images.deliveryhero.io/image/fd-tw/Products/133421428.jpg??width=800', 0),
+    (149, 56, '披薩魂丼飯】199獨享餐', 199, 199, 'https://images.deliveryhero.io/image/fd-tw/Products/131821668.jpg??width=800', 0),
+    (150, 56, '燒肉捲】豪想吃219', 219, 219, 'https://images.deliveryhero.io/image/fd-tw/Products/132353654.jpg??width=800', 0),
+    (151, 57, 'Mybox 個人獨享餐【經典系列】', 199, 199, 'https://images.deliveryhero.io/image/fd-tw/Products/130649563.jpg??width=800', 0),
+    (152, 57, 'Mybox 個人獨享餐【招牌系列】', 229, 229, 'https://images.deliveryhero.io/image/fd-tw/Products/130649609.jpg??width=800', 0),
+    (153, 57, 'Mybox 個人獨享餐【極致系列】', 249, 249, 'https://images.deliveryhero.io/image/fd-tw/Products/130649610.jpg??width=800', 0),
+
+    (154, 58, 'QQ奶茶(L) X2', 70, 140, 'https://images.deliveryhero.io/image/fd-tw/Products/134312576.jpg??width=800', 0),
+    (155, 58, '日式焙茶(L) X2', 50, 100, 'https://images.deliveryhero.io/image/fd-tw/Products/134312577.jpg??width=800', 0),
+    (156, 58, '百香雙響炮', 80, 80, 'https://images.deliveryhero.io/image/fd-tw/Products/32473384.jpg??width=800', 0),
+    (157, 59, 'QQ奶茶(L) X2', 70, 140, 'https://images.deliveryhero.io/image/fd-tw/Products/134312576.jpg??width=800', 0),
+    (158, 59, '日式焙茶(L) X2', 50, 100, 'https://images.deliveryhero.io/image/fd-tw/Products/134312577.jpg??width=800', 0),
+    (159, 60, '冬韻擂焙珍奶', 80, 80, 'https://images.deliveryhero.io/image/fd-tw/Products/132877004.jpg??width=800', 0),
+    (160, 60, '蜜香檸凍紅茶', 65, 65, 'https://images.deliveryhero.io/image/fd-tw/Products/32473386.jpg??width=800', 0),
+    (161, 60, '珍珠鮮奶茶', 90, 90, 'https://images.deliveryhero.io/image/fd-tw/Products/32473387.jpg??width=800', 0),
+    (162, 60, '檸檬奇遇桔', 65, 65, 'https://images.deliveryhero.io/image/fd-tw/Products/82021113.jpg??width=800', 0),
+    (163, 61, '芋頭牛奶', 90, 90, 'https://images.deliveryhero.io/image/fd-tw/Products/32473388.jpg??width=800', 0),
+    (164, 61, '3Q鮮奶茶', 90, 90, 'https://images.deliveryhero.io/image/fd-tw/Products/32472364.jpg??width=800', 0),
+
+    (165, 62, '招牌鍋貼', 93, 93, 'https://images.deliveryhero.io/image/fd-tw/Products/2385430.jpg??width=800', 0),
+    (166, 62, '韓式辣味鍋貼', 93, 93, 'https://images.deliveryhero.io/image/fd-tw/Products/2014271.jpg??width=800', 0),
+    (167, 62, '招牌水餃', 93, 93, 'https://images.deliveryhero.io/image/fd-tw/Products/2014297.jpg??width=800', 0),
+    (168, 63, '金牌清燉牛肉冬粉', 220, 220, 'https://images.deliveryhero.io/image/fd-tw/Products/134367951.jpg??width=800', 0),
+    (169, 63, '紅燒牛肉麵', 220, 220, 'https://images.deliveryhero.io/image/fd-tw/Products/91349369.jpg??width=800', 0),
+    (170, 63, '金牌紅燒牛肉冬粉', 220, 220, 'https://images.deliveryhero.io/image/fd-tw/Products/134367950.jpg??width=800', 0),
+    (171, 64, '招牌鍋貼', 93, 93, 'https://images.deliveryhero.io/image/fd-tw/Products/2385430.jpg??width=800', 0),
+    (172, 64, '韓式辣味鍋貼', 93, 93, 'https://images.deliveryhero.io/image/fd-tw/Products/2014271.jpg??width=800', 0),
+    (173, 65, '招牌水餃', 93, 93, 'https://images.deliveryhero.io/image/fd-tw/Products/2014297.jpg??width=800', 0),
+    (174, 65, '咖哩雞肉水餃', 90, 90, 'https://images.deliveryhero.io/image/fd-tw/Products/48793324.jpg??width=800', 0);
 
 -- Insert Orders
 INSERT INTO orders (order_id, user_id, merchant_id, delivery_id, order_status, total_price, order_time, delivery_address)
