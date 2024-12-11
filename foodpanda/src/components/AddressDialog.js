@@ -38,7 +38,7 @@ const AddressDialog = ({ open, onClose, onSubmit, defaultAddress }) => {
   };
 
   const initializeMap = () => {
-    const defaultLocation = { lat: 25.033, lng: 121.5654 }; // 預設座標
+    const defaultLocation = { lat: 25.03548, lng: 121.39206 }; // 預設座標
     const mapInstance = new window.google.maps.Map(
       document.getElementById("map"),
       {
