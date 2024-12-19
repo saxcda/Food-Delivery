@@ -16,7 +16,6 @@ import "./GroceriesDetailPage.css"; // 加入 CSS 檔案的導入
 import Header from "../components/Header";
 
 const GroceriesDetailPage = ({ setlogin, setlogout, loginState,  user, setUser}) => {
-const GroceriesDetailPage = ({ setlogin, setlogout, loginState,  user, setUser}) => {
   const { storeName } = useParams();
   const navigate = useNavigate();
   const [store, setStore] = useState(null);
@@ -123,9 +122,7 @@ const GroceriesDetailPage = ({ setlogin, setlogout, loginState,  user, setUser})
           width:"75%",
         }}
       >
-          width:"75%",
-        }}
-      >
+          
 
         {/* search */}
         <Box
@@ -171,25 +168,7 @@ const GroceriesDetailPage = ({ setlogin, setlogout, loginState,  user, setUser})
           />
           
         </Box>
-          />
-
-         
-          <TextField
-            variant="outlined"
-            placeholder="搜尋商品..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value.toLowerCase())}
-            sx={{
-              position: "absolute", 
-              width:"400px",
-              height:"50px",
-              bottom:"0px",
-              left:"10%",
-              backgroundColor:"#ffffff"
-            }}
-          />
           
-        </Box>
 
         {/* 商店信息 */}
         <Box sx={{ display: "flex", flexDirection: "row", padding: "20px 5%" }}>
@@ -286,31 +265,6 @@ const GroceriesDetailPage = ({ setlogin, setlogout, loginState,  user, setUser})
                               height: "160px",
                             }}
                             >
-                            <Box
-                            component="img"
-                            src={item.image}
-                            alt={item.name}
-                            sx={{
-                              width: "160px",
-                              height: "160px",
-                              position: "relative",
-                              objectFit:"cover"
-                              
-                            }}
-                            />
-                            <IconButton
-                            onClick={() => addToCart(item)}
-                            sx={{
-                              position: "absolute",
-                              bottom: "10px",        // Position it 10px from the bottom of the parent Box
-                              right: "10px",  
-                              backgroundColor:"#ffffff",
-                              border:"1px solid "
-                            }}
-                          >
-                            <HiPlus />
-                          </IconButton>
-                          </Box>
                             <Box
                             component="img"
                             src={item.image}
