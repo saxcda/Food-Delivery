@@ -31,7 +31,7 @@ const VerifyEmail = ({ email, onBack, onClose, setlogin, setlogout }) => {
 
   const verifyEmail = async () => {
     if (!email) {
-      alert("無法發送, 請稍後再試。");
+      console.log("無法發送, 請稍後再試。");
       return;
     }
     try {
@@ -45,14 +45,14 @@ const VerifyEmail = ({ email, onBack, onClose, setlogin, setlogout }) => {
         setIsCompleted(false);
         setCountdown(3);
       } else {
-        alert("發送失敗，請稍後再試！");
+        console.log("發送失敗，請稍後再試！");
       }
     } catch (error) {
       console.error(
         "檢查郵件時發生錯誤：",
         error.response?.data || error.message
       );
-      alert("檢查失敗，請稍後再試！");
+      console.log("檢查失敗，請稍後再試！");
     }
   };
 

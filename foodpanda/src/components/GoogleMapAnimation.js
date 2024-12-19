@@ -1,6 +1,9 @@
 import React, { useEffect, useRef } from 'react';
+import TwoWheelerIcon from '@mui/icons-material/TwoWheeler';
 
 const GOOGLE_MAPS_API_KEY = "AIzaSyAqqcudDyo4itlY1bqbDyByPh_L6GMy9cs";
+
+
 
 const GoogleMapAnimation = ({ startLat, startLng, endLat, endLng, duration }) => {
   const mapRef = useRef(null);
@@ -14,9 +17,16 @@ const GoogleMapAnimation = ({ startLat, startLng, endLat, endLng, duration }) =>
       center: { lat: parseFloat(startLat) || 0, lng: parseFloat(startLng) || 0 },
       zoom: 16, // 預設放大比例
     });
+    const icon = {
+      url: './main.png', // url
+      scaledSize: new window.google.maps.Size(90, 90), // scaled size
+      origin: new window.google.maps.Point(0,0), // origin
+      anchor: new window.google.maps.Point(0, 0) // anchor
+    };
     markerRef.current = new window.google.maps.Marker({
       position: { lat: parseFloat(startLat) || 0, lng: parseFloat(startLng) || 0 },
       map,
+      icon:icon
     });
 
     directionsService.current = new window.google.maps.DirectionsService();

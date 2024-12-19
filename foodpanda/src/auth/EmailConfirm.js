@@ -35,7 +35,7 @@ const EmailConfirm = ({ open, onClose, onBack, setlogin, setlogout, user, setUse
   const checkEmail = async () => {
     console.log("123");
     if (!email) {
-      alert("請輸入電子郵件");
+      console.log("請輸入電子郵件");
       return;
     }
   

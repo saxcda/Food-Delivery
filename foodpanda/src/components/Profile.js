@@ -69,14 +69,14 @@ const Profile = ({ setlogin, setlogout, loginState,  user, setUser}) => {
       if (response.ok) {
         const data = await response.json();
         console.log("Saved Data:", data);
-        alert("Profile updated successfully!");
+        // console.log("Profile updated successfully!");
       } else {
         console.error("Failed to save profile:", response.statusText);
-        alert("Failed to save profile.");
+        // console.log("Failed to save profile.");
       }
     } catch (error) {
       console.error("Error saving profile:", error);
-      alert("Failed to save profile.");
+      // console.log("Failed to save profile.");
     }
   };
 

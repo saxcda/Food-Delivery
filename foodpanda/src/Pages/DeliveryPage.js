@@ -22,6 +22,7 @@ const DeliveryPage = ({ setlogin, setlogout, loginState, user, setUser }) => {
   const lng1 = queryParams.get("lng1");
   const lat2 = queryParams.get("lat2");
   const lng2 = queryParams.get("lng2");
+  const restaurantaddress = queryParams.get("restaurantaddress");
   console.log(cart)
   const [showChatBox, setShowChatBox] = useState(false);
   const [isCancelScreen, setIsCancelScreen] = useState(false);
@@ -35,14 +36,20 @@ const DeliveryPage = ({ setlogin, setlogout, loginState, user, setUser }) => {
     },
   ]);
   const [userInput, setUserInput] = useState("");
+  const [imgUrl, setImageurl] = useState('');
+  const [deliveryType, setDeliveryType] = useState('');
 
   useEffect(() => {
     if (location.state) {
       // 从 location.state 中提取数据
-      const { restaurant_name, total_price, items, address, remarks } =
+      const { restaurant_name, total_price, items, address, remarks, imgUrl, deliveryType } =
         location.state;
+
+      setImageurl(imgUrl)
+      setDeliveryType(deliveryType)
+
       setCart(items || []);
-      
+
     }
   }, [location]);
 
@@ -69,7 +76,7 @@ const DeliveryPage = ({ setlogin, setlogout, loginState, user, setUser }) => {
 
   const handleCancelOrder = () => {
     if (!cancelReason) {
-      alert("请选择取消订单的原因！");
+      console.log("请选择取消订单的原因！");
       return;
     }
 
@@ -87,15 +94,15 @@ const DeliveryPage = ({ setlogin, setlogout, loginState, user, setUser }) => {
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          alert("订单取消成功！");
+          console.log("订单取消成功！");
           setShowChatBox(false);
         } else {
-          alert("取消订单失败，请稍后再试！");
+          console.log("取消订单失败，请稍后再试！");
         }
       })
       .catch((error) => {
         console.error("Error:", error);
-        alert("网络错误，请稍后再试！");
+        console.log("网络错误，请稍后再试！");
       });
   };
 
@@ -118,6 +125,7 @@ const DeliveryPage = ({ setlogin, setlogout, loginState, user, setUser }) => {
     } else {
       // 當倒數結束時，更新訂單狀態
       setOrderStatus("訂單完成");
+      alert("訂單完成")
     }
   }, [timeLeft]);
 
@@ -159,17 +167,18 @@ const DeliveryPage = ({ setlogin, setlogout, loginState, user, setUser }) => {
 
           {/* 訂單詳情 */}
           <div className="order-details-container">
+
             <h2 className="order-cart-title">訂單詳情</h2>
             <div className="order-item">
               <img
                 className="order-image"
-                src="https://images.deliveryhero.io/image/fd-tw/LH/b5bm-listing.jpg?width=235&height=170"
+                src={imgUrl}
                 alt="Pasta Hut"
               />
               <div className="order-info">
                 <p className="order-name">{restaurant}</p>
                 <p className="order-id">訂單編號 #pn3u-2439-4yd8</p>
-                <div className="deliveryAddress">送餐地址: {address}</div>
+                <div className="deliveryAddress">送餐地址: {address}</div>69
                 <div className="reMark">外送備註: {remarks || "無備註"}</div>
               </div>
               <p className="order-price">$ {totalprice}</p>
@@ -221,6 +230,16 @@ const DeliveryPage = ({ setlogin, setlogout, loginState, user, setUser }) => {
                 </span>
               </span>
             </button>
+            {showDetails ? (
+              <div className="show-ass">{cart.map((item, index) => (
+                <li key={index}>
+                  {item.quantity} x {item.name} - $
+                  {item.price * item.quantity}
+                </li>
+              ))}</div>
+            ) : (
+              <div className="show-gg"></div>
+            )}
           </div>
         </div>
         {/* 右邊客服區域 */}

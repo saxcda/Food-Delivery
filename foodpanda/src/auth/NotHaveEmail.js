@@ -10,7 +10,7 @@ const NotHaveEmail = ({ email, onClose, onBack, setlogin, setlogout }) => {
   const [showVerifyEmail, setShowVerifyEmail] = useState(false);
   const sendEmail = async () => {
     if (!email) {
-      alert("無法發送, 請稍後再試。");
+      console.log("無法發送, 請稍後再試。");
       return;
     }
     try {
@@ -23,14 +23,14 @@ const NotHaveEmail = ({ email, onClose, onBack, setlogin, setlogout }) => {
       if (response.status === 200) {
         setShowVerifyEmail(true);
       } else {
-        alert("發送失敗，請稍後再試！");
+        console.log("發送失敗，請稍後再試！");
       }
     } catch (error) {
       console.error(
         "檢查郵件時發生錯誤：",
         error.response?.data || error.message
       );
-      alert("檢查失敗，請稍後再試！");
+      console.log("檢查失敗，請稍後再試！");
     }
   };
 

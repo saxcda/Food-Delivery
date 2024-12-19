@@ -719,7 +719,7 @@ def get_restaurant_address():
 
         if not restaurant_name:
             return jsonify({"error": "restaurantName parameter is required."}), 400
-
+ 
         # Connect to the database
         conn = sqlite3.connect('./db/foodpanda.db')
         cursor = conn.cursor()

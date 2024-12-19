@@ -241,7 +241,7 @@ const RestaurantDetails = () => {
                 variant="contained"
                 color="primary"
                 size="large"
-                onClick={() => alert("已收藏該餐廳！")} // 收藏按鈕功能，替換為你的收藏邏輯
+                onClick={() => console.log("已收藏該餐廳！")} // 收藏按鈕功能，替換為你的收藏邏輯
                 sx={{
                   ml: "auto", // 靠右對齊
                   backgroundColor: "transparent",
@@ -813,12 +813,14 @@ const RestaurantDetails = () => {
                       })), // 訂單的產品列表
                     };
 
+                    const imgUrl = restaurant.image
+
                     // 打印或传递订单内容
                     console.log("Order Details:", orderDetails);
 
                     // 示例：将订单数据传递到支付页面
                     navigate("/payment", {
-                      state: { ...orderDetails, deliveryType },
+                      state: { ...orderDetails, deliveryType, imgUrl },
                     });
                   }}
                 >

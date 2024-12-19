@@ -15,7 +15,7 @@ const CheckEmail = ({ email, onBack, onClose }) => {
   const [isOpen, setIsOpen] = useState(true); // 控制彈窗開關
 
   const handleConfirm = () => {
-    alert("確認操作！");
+    console.log("確認操作！");
   };
 
   if (!isOpen) return null; // 如果彈窗未開啟，返回 null

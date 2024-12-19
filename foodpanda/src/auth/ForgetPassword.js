@@ -11,7 +11,7 @@ const ForgetPassword = ({ onClose, onBack }) => {
   const handleSubmit = async (e) => {
     e.preventDefault(); // 防止預設的表單提交行為
     if (!email) {
-      alert("請輸入電子郵件");
+      console.log("請輸入電子郵件");
       return;
     }
     try {
@@ -24,14 +24,14 @@ const ForgetPassword = ({ onClose, onBack }) => {
       );
       // 檢查回應狀態
       if (response.status === 200) {
-        alert("密碼修改成功，請至 Email 查看新密碼!");
+        console.log("密碼修改成功，請至 Email 查看新密碼!");
         onClose();
       } else {
         console.log(`錯誤: ${response.data.message}`);
       }
     } catch (error) {
       // 處理錯誤
-      alert("無法連接到伺服器，請稍後再試");
+      console.log("無法連接到伺服器，請稍後再試");
       console.error("檢查郵件時發生錯誤：", error);
     }
   };

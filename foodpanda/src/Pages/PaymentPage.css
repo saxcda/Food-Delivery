@@ -8,12 +8,12 @@ body {
 .payment-page {
   max-width: 1200px;
   margin: 20px auto;
-  padding: 16px;
+  padding: 10px;
 }
 
 .main {
   display: flex;
-  gap: 16px;
+  gap: 10px;
 }
 
 /* Left Section */
@@ -35,7 +35,7 @@ body {
   border-radius: 8px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   border: 1px solid #ddd;
-  margin-bottom: 16px;
+  margin-bottom: 5px;
 }
 
 /* Delivery Address */
@@ -227,16 +227,21 @@ body {
   font-weight: bold;
 }
 
-.personal-info .email-input {
+.sbb-input {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   padding: 8px;
   font-size: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background-color: #f6f6f6;
-  color: #666;
   cursor: not-allowed;
 }
+
+.sbbANDlbb {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
 
 /* Payment Method */
 .payment-method .payment-title {

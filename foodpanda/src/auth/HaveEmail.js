@@ -42,7 +42,7 @@ const HaveEmail = ({ email, onClose, onBack, setlogin, setlogout }) => {
 
   const checkpassword = async () => {
     if (!password) {
-      alert("請輸入密碼!");
+      console.log("請輸入密碼!");
       return;
     }
 
@@ -55,20 +55,20 @@ const HaveEmail = ({ email, onClose, onBack, setlogin, setlogout }) => {
         }
       );
       if (response.status === 200) {
-        alert("登入成功");
+        console.log("登入成功");
         console.log(typeof setlogin);
         setlogin();
         
         navigate("/");
       } else {
-        alert("密碼錯誤");
+        console.log("密碼錯誤");
         setlogout();
       }
     } catch (error) {
       console.error(
         "檢查郵件時發生錯誤：",
         error.response?.data || error.message,
-        alert("檢查郵件時發生錯誤："),
+        console.log("檢查郵件時發生錯誤："),
         console.log(error)
       );
       setlogout();

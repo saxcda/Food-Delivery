@@ -67,14 +67,14 @@ const Register = () => {
         password,
       });
       if (response.status === 200) {
-        alert("註冊成功！");
+        console.log("註冊成功！");
         navigate("/"); // 成功後跳轉到首頁或其他頁面
       } else {
-        alert(response.data.error || "註冊失敗，請稍後再試！");
+        console.log(response.data.error || "註冊失敗，請稍後再試！");
       }
     } catch (error) {
       console.error("註冊時發生錯誤：", error.response?.data || error.message);
-      alert("註冊失敗，請稍後再試！");
+      console.log("註冊失敗，請稍後再試！");
     }
   };
 

@@ -181,7 +181,7 @@ const GroceriesDetailPage = ({ setlogin, setlogout, loginState,  user, setUser})
               
               alignSelf: "flex-end", // This will align the button to the bottom right of the parent container
             }}
-            onClick={() => alert("Happy Shopping！")}
+            onClick={() => console.log("Happy Shopping！")}
           >
             商店資訊
           </Button>

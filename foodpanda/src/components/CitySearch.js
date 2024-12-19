@@ -123,7 +123,7 @@ const CitySearch = ({ location }) => {
     if (town) {
       navigate(`/area/${location}/${town}`); // 跳转到对应区域页面
     } else {
-      alert('請選擇區域！');
+      console.log('請選擇區域！');
     }
   };
 

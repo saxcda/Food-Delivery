@@ -41,7 +41,7 @@ const Tab1 = ({ handleRestaurantClick, restaurantData }) => {
   const handleSearch = (term) => {
     setSearchTerm(term);
     setShowSuggestions(false);
-    alert(`搜尋：${term}`);
+    console.log(`搜尋：${term}`);
   };
 
   // Save state to localStorage on change

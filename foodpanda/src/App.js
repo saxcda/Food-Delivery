@@ -138,7 +138,7 @@ const App = () => {
         <Route path="/historyPage" element={<HistoryPage setlogin={setlogin} setlogout={setlogout} loginState={true} user={user} setUser={setUser}/>} />
         <Route path="/history-detail/:order_id" element={<HistoryPageDetail setlogin={setlogin} setlogout={setlogout} loginState={true} user={user} setUser={setUser}/>} />
 
-        <Route
+        <Route 
           path="/restaurants/:city"
           element={<RestaurantPage setlogin={setlogin} setlogout={setlogout} loginState={true} user={user} setUser={setUser} />}
         />

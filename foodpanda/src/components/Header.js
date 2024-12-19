@@ -385,7 +385,7 @@ const Header = ({ setlogin, setlogout, loginState,  user, setUser}) => {
                     fontWeight: "bold",
                   }}
                 >
-                  {userName}
+                  <div className="hansLSB" style={{display: "flex", justifyContent: "center", alignItems: "center"}}>{userName}</div>
                   <svg
                     aria-hidden="true"
                     focusable="false"

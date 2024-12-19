@@ -49,7 +49,7 @@ const TakewayPage = ({setlogin, setlogout, loginState,  user, setUser}) => {
 
   const handleCancelOrder = () => {
     if (!cancelReason) {
-      alert("请选择取消订单的原因！");
+      console.log("请选择取消订单的原因！");
       return;
     }
 
@@ -67,15 +67,15 @@ const TakewayPage = ({setlogin, setlogout, loginState,  user, setUser}) => {
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          alert("订单取消成功！");
+          console.log("订单取消成功！");
           setShowChatBox(false);
         } else {
-          alert("取消订单失败，请稍后再试！");
+          console.log("取消订单失败，请稍后再试！");
         }
       })
       .catch((error) => {
         console.error("Error:", error);
-        alert("网络错误，请稍后再试！");
+        console.log("网络错误，请稍后再试！");
       });
   };
 
